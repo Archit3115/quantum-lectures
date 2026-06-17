@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>arcane · quantum optimization & ai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@200;300;400;500;600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#08080A; --paper:#FFFFFF; --paper-2:#F4F5F7;
+  --text-d:#F6F7FB; --text-d2:#9EA5B6;
+  --text-l:#0A0A0E; --text-l2:#565B66; --line-l:#E6E8EC;
+  --accent:#01A982; --accent-2:#17EBA0; --accent-deep:#006b52;
+  --display:'Space Grotesk',system-ui,sans-serif; --body:'Outfit',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;font-family:var(--body)}
+body{background:#fff;transition:background 1.3s ease;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body.on-dark{background:var(--ink)}
+#field{position:fixed;inset:0;z-index:1;pointer-events:none}
+.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity 1.2s ease;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body.on-dark .grain{opacity:.06}
+#deck{position:fixed;inset:0;z-index:3}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:3.4vh 4.4vw 4.6vh;
+  color:var(--text-l);opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s linear .9s}
+.slide.active{opacity:1;visibility:visible;transition:opacity 1.6s ease .25s}
+.slide.dark{color:var(--text-d)}
+.slide.dark::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(125% 95% at 50% 42%,transparent 40%,rgba(0,0,0,.55) 100%)}
+.slide.active .r{animation:rise .9s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--i,0)*60ms + .3s)}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* full-height skeleton */
+.wrap{position:relative;max-width:1480px;width:100%;margin:0 auto;height:92vh;display:flex;flex-direction:column;justify-content:center}
+.head{flex:0 0 auto}
+.head h2{margin-top:.3rem}
+.lead{margin-top:.45rem;max-width:120ch}
+.body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:.7rem;margin-top:.85rem}
+.row{flex:1 1 auto;min-height:0;display:grid;gap:.65rem}
+.row.b{flex:0 0 auto}
+.r1{grid-template-columns:1fr}.r2{grid-template-columns:1fr 1fr}.r3{grid-template-columns:1fr 1fr 1fr}.r4{grid-template-columns:repeat(4,1fr)}
+.r-21{grid-template-columns:2fr 1fr}.r-12{grid-template-columns:1fr 2fr}.r-31{grid-template-columns:3fr 1.4fr}.r-32{grid-template-columns:1.4fr 1fr}
+
+.frag{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.frag.shown{opacity:1;transform:none}
+
+h1{font-family:var(--display);font-weight:700;letter-spacing:-.02em;line-height:1}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(1.75rem,3.7vw,3rem);line-height:1.03;letter-spacing:-.02em}
+h3{font-family:var(--display);font-weight:600;letter-spacing:-.01em}
+h4{font-family:var(--display);font-weight:600;font-size:1.02rem;letter-spacing:-.01em}
+p{font-family:var(--body);font-weight:300;line-height:1.5;color:var(--text-l2);font-size:clamp(.98rem,1.2vw,1.18rem)}
+.dark p{color:var(--text-d2)}
+.eyebrow{font-family:var(--mono);font-weight:400;font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.dark .eyebrow{color:var(--accent-2)}
+strong{color:var(--text-l);font-weight:600}.dark strong{color:var(--text-d)}
+.muted{color:var(--text-l2)}.dark .muted{color:var(--text-d2)}
+em{font-style:italic;color:inherit}
+
+.metric{font-family:var(--mono);font-weight:300;font-size:clamp(1.7rem,3.5vw,2.7rem);line-height:.9;letter-spacing:-.03em;color:var(--accent)}
+.dark .metric{color:var(--accent-2)}
+.mini .metric{font-size:clamp(1.45rem,2.7vw,2.05rem)}
+.lbl{font-family:var(--body);font-weight:300;color:var(--text-l2);font-size:.92rem;line-height:1.38;margin-top:.35rem}
+.dark .lbl{color:var(--text-d2)}
+
+.src{font-family:var(--mono);font-size:.64rem;letter-spacing:.02em;color:#9aa0ad;margin-top:.3rem}
+
+.card{background:#fff;border:1px solid var(--line-l);border-radius:11px;box-shadow:0 8px 24px rgba(10,12,22,.05);padding:.8rem .9rem .85rem;position:relative;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.dark .card{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.12);box-shadow:none;backdrop-filter:blur(14px)}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 16px 38px rgba(1,169,130,.13)}
+.dark .card:hover{border-color:var(--accent-2);box-shadow:0 16px 38px rgba(23,235,160,.16)}
+.card .edge{position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+.card.soft .edge{background:var(--line-l)}.dark .card.soft .edge{background:rgba(255,255,255,.18)}
+.card.sb{justify-content:center;gap:.55rem}
+
+.eq{font-family:var(--mono);font-size:clamp(.84rem,1vw,.96rem);line-height:1.5;color:var(--accent);background:var(--paper-2);border:1px solid var(--line-l);border-radius:8px;padding:.45rem .65rem}
+.dark .eq{color:var(--accent-2);background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
+.eq .c{color:var(--text-l2)}.dark .eq .c{color:var(--text-d2)}
+sub,sup{font-size:.72em}
+
+.blist{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-top:.6rem}
+.blist li{display:flex;gap:.6rem;align-items:flex-start;font-weight:300;color:var(--text-l2);line-height:1.5;font-size:clamp(1rem,1.18vw,1.17rem)}
+.dark .blist li{color:var(--text-d2)}
+.blist .bullet{flex:0 0 auto;width:7px;height:7px;border-radius:50%;margin-top:.5em;background:var(--accent)}
+.dark .blist .bullet{background:var(--accent-2)}
+.blist.tight{gap:.5rem}.blist.tight li{font-size:clamp(.92rem,1.08vw,1.05rem);line-height:1.42}
+.blist.fill{flex:1 1 auto;justify-content:space-evenly;gap:.4rem}
+
+/* feedback: distribute card content to fill dead vertical space on laptop screens */
+[data-name="what — convergence"] .row.r4 .card .blist{flex:1 1 auto;justify-content:space-evenly}
+[data-name="why — proof"] .row.r3 .card .blist{flex:1 1 auto;justify-content:space-evenly}
+[data-name="finance"] .row.r-21 .card.fillcard .blist{flex:1 1 auto;justify-content:space-evenly}
+[data-name="life sciences & energy"] .row.r2 .card .blist{flex:1 1 auto;justify-content:space-evenly}
+[data-name="why — economics"] .row.r-31 .card .blist{flex:1 1 auto;justify-content:space-between}
+[data-name="security & sovereignty"] .row.r3 .card .blist{flex:1 1 auto;justify-content:space-evenly}
+.statrow{display:flex;gap:.5rem}
+.statrow .stcell{flex:1;border:1px solid rgba(255,255,255,.13);border-radius:9px;padding:.45rem .6rem;background:rgba(255,255,255,.045)}
+.statrow .stcell b{display:block;font-family:var(--mono);font-weight:500;color:var(--accent-2);font-size:1.02rem;line-height:1}
+.statrow .stcell span{display:block;font-size:.66rem;color:var(--text-d2);line-height:1.16;margin-top:.12rem}
+
+.colhead{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem}
+.dark .colhead{color:var(--accent-2)}
+.colhead::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--line-l),transparent)}
+.dark .colhead::after{background:linear-gradient(90deg,rgba(255,255,255,.16),transparent)}
+
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);text-align:left;padding:.45rem .5rem;border-bottom:1.5px solid var(--accent)}
+.tbl td{font-family:var(--body);font-size:clamp(.88rem,1.02vw,1.02rem);color:var(--text-l2);padding:.5rem .5rem;border-bottom:1px solid var(--line-l);vertical-align:top;line-height:1.36}
+.tbl td strong{color:var(--text-l)}.tbl td.n{font-family:var(--mono);color:var(--accent);white-space:nowrap;font-size:clamp(.88rem,1.02vw,1.02rem)}
+.tbl tr:hover td{background:rgba(1,169,130,.05)}
+.dark .tbl td{color:var(--text-d2);border-color:rgba(255,255,255,.1)}.dark .tbl th{color:var(--accent-2);border-color:var(--accent-2)}.dark .tbl td.n{color:var(--accent-2)}.dark .tbl tr:hover td{background:rgba(23,235,160,.06)}
+
+.viz{display:flex;align-items:center;justify-content:center;height:100%}.viz svg{width:100%;height:100%;max-height:100%;overflow:visible}
+.title-slide{justify-content:center}.title-slide .wrap{justify-content:center}.title-slide h1{font-size:clamp(4rem,15vw,11rem);text-transform:lowercase}
+.subhead{font-family:var(--display);font-weight:400;font-size:clamp(1.15rem,2.4vw,1.7rem);color:var(--text-d2);margin-top:.9rem;max-width:36ch;line-height:1.2}
+
+.photo-frame{position:relative;border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5);height:100%}
+.photo-frame img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05)}
+.photo-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 56%,rgba(8,8,10,.5))}
+.photo-frame .rim{position:absolute;inset:0;border-radius:14px;box-shadow:inset 0 0 50px rgba(23,235,160,.18),inset 0 0 0 1px rgba(255,255,255,.08);z-index:2}
+.chips{display:flex;flex-wrap:wrap;gap:.36rem}
+.chip{font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;padding:.26em .65em;border-radius:999px;border:1px solid rgba(255,255,255,.16);color:var(--text-d2)}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:.42rem;flex:0 0 auto}
+.about-stats .as{border:1px solid rgba(255,255,255,.13);border-radius:9px;padding:.42rem .55rem;background:rgba(255,255,255,.045);display:flex;flex-direction:column;gap:.06rem}
+.about-stats .as b{font-family:var(--mono);font-weight:500;color:var(--accent-2);font-size:1.12rem;line-height:1}
+.about-stats .as span{font-size:.66rem;color:var(--text-d2);line-height:1.12;letter-spacing:.01em}
+
+.tn{font-family:var(--mono);font-weight:300;font-size:clamp(1.55rem,3vw,2.35rem);color:var(--accent-2);line-height:.95;letter-spacing:-.02em}
+.logo-wall{display:flex;flex-wrap:wrap;gap:.36rem;margin-top:.4rem}
+.lg{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .7rem;border:1px solid var(--line-l);border-radius:7px;background:#fff;font-family:var(--display);font-weight:600;font-size:.86rem;color:var(--text-l);line-height:1;transition:.2s}
+.lg:hover{border-color:var(--accent);color:var(--accent)}
+.dark .lg{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.13);color:var(--text-d)}.dark .lg:hover{border-color:var(--accent-2);color:var(--accent-2)}
+.lg svg{display:block;flex:0 0 auto}
+
+.draw{stroke-dasharray:2000;stroke-dashoffset:2000}
+.frag.shown .draw{animation:draw 1.7s cubic-bezier(.16,1,.3,1) forwards;animation-delay:.25s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.pt{opacity:0}.frag.shown .pt{animation:pop .5s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes pop{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+.gv{font-family:var(--mono)}
+
+.tl{position:relative}.tl .axis{position:absolute;left:0;right:0;top:50%;height:2px;background:var(--line-l)}.dark .tl .axis{background:rgba(255,255,255,.16)}
+.tl-row{display:flex;justify-content:space-between;gap:.2rem;position:relative}
+.tl-item{flex:1;text-align:center}
+
+.tl-item .yr{font-family:var(--mono);font-size:.82rem;color:var(--accent);font-weight:500}.dark .tl-item .yr{color:var(--accent-2)}
+
+.tl-item .ev{font-family:var(--body);font-weight:300;font-size:.74rem;color:var(--text-l2);line-height:1.16;margin-top:.18rem}.dark .tl-item .ev{color:var(--text-d2)}
+.tl-item .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);margin:.3rem auto}.dark .tl-item .dot{background:var(--accent-2)}
+
+.kpi{display:flex;align-items:baseline;gap:.5rem}.kpi .v{font-family:var(--mono);color:var(--accent);font-size:1.25rem;font-weight:500}.dark .kpi .v{color:var(--accent-2)}
+
+.kpi .k{font-size:.88rem;color:var(--text-l2)}.dark .kpi .k{color:var(--text-d2)}
+
+.sidelabel{position:absolute;left:1.1vw;top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;font-family:var(--mono);font-size:.82rem;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);font-weight:500;opacity:.9}
+.dark .sidelabel{color:var(--accent-2)}
+.flag{display:inline-flex;flex-direction:column;width:1.5em;height:1em;border-radius:2px;overflow:hidden;border:1px solid rgba(0,0,0,.22);vertical-align:-.16em;margin:0 .34em;box-shadow:0 1px 5px rgba(0,0,0,.35)}
+.flag i{flex:1 1 0;width:100%;display:block}
+.flag .s{background:#FF9933}.flag .w{background:#fff;display:flex;align-items:center;justify-content:center}.flag .g{background:#138808}
+.flag .chakra{display:block;height:88%;width:auto;color:#0a3293}
+.brand{position:fixed;top:2.4vh;left:2.8vw;z-index:40;font-family:var(--display);font-weight:600;font-size:.95rem;letter-spacing:.01em;color:var(--text-l);transition:color 1s}
+body.on-dark .brand{color:var(--text-d)} .brand span{color:var(--accent)} body.on-dark .brand span{color:var(--accent-2)}
+.hud{position:fixed;z-index:40;font-family:var(--mono);font-size:.64rem;color:var(--text-l2);letter-spacing:.06em;transition:color 1s}
+body.on-dark .hud{color:var(--text-d2)}
+.hud.br{bottom:2.2vh;right:2.8vw;display:flex;align-items:center;gap:.7rem}.hud.bl{bottom:2.2vh;left:2.8vw;text-transform:lowercase}
+.navbtn{width:28px;height:28px;border-radius:8px;border:1px solid var(--line-l);background:#fff;color:var(--text-l2);cursor:pointer;display:grid;place-items:center;font-size:.82rem;transition:.18s}
+body.on-dark .navbtn{border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:var(--text-d2)}
+.navbtn:hover{border-color:var(--accent);color:var(--accent)}body.on-dark .navbtn:hover{border-color:var(--accent-2);color:var(--accent-2)}
+.navbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.count{min-width:46px;text-align:center}.count b{color:var(--accent);font-weight:500}body.on-dark .count b{color:var(--accent-2)}
+#prog{position:fixed;top:0;left:0;height:2px;z-index:40;background:var(--accent);width:0;transition:width 1.4s cubic-bezier(.16,1,.3,1)}body.on-dark #prog{background:var(--accent-2)}
+#dots{position:fixed;bottom:2.2vh;left:50%;transform:translateX(-50%);z-index:40;display:flex;gap:4px}
+#dots i{width:5px;height:5px;border-radius:50%;background:rgba(120,120,140,.3);transition:.3s}body.on-dark #dots i{background:rgba(255,255,255,.22)}
+#dots i.on{background:var(--accent);width:14px;border-radius:3px}body.on-dark #dots i.on{background:var(--accent-2)}
+.zone{position:fixed;top:0;bottom:0;width:13%;z-index:30;cursor:pointer}.zone.left{left:0}.zone.right{right:0}
+
+@media (max-width:1000px){
+  .r2,.r3,.r4,.r-21,.r-12,.r-31,.r-32{grid-template-columns:1fr}
+  .row{min-height:auto}.body{overflow:auto}#dots{display:none}.zone{width:10%}.tl-item .ev{font-size:.52rem}
+  .wrap{height:auto;min-height:88vh}.slide{justify-content:flex-start;padding-top:8vh}
+}
+@media (prefers-reduced-motion:reduce){
+  .slide,.slide.active,.slide.active .r,.frag{transition:opacity .4s ease;animation:none!important;transform:none}
+  #field,.grain{display:none}.draw{stroke-dashoffset:0}.pt,.frag{opacity:1}
+}
+</style>
+</head>
+<body class="on-dark">
+<div class="brand">araqnum<span>.</span></div>
+<div id="prog"></div>
+<canvas id="field"></canvas>
+<div class="grain"></div>
+<div id="deck">
+
+<!-- 1 · TITLE -->
+<section class="slide dark title-slide active" data-name="title">
+  <div class="wrap">
+    <div class="eyebrow r" style="--i:0">quantum optimization × ai · icqia 2026</div>
+    <h1 class="r" style="--i:1;margin-top:.8rem">arcane</h1>
+    <div class="subhead r" style="--i:2">the convergence of quantum optimization &amp; artificial intelligence in the industrial landscape</div>
+    <p class="r" style="--i:3;font-family:var(--mono);font-size:.96rem;letter-spacing:.08em;color:var(--text-d2);margin-top:2.4rem">archit srivastava · araqnum</p>
+  </div>
+</section>
+
+<!-- 2 · ABOUT -->
+<section class="slide dark" data-name="about">
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">About the speaker</div><h2 class="r" style="--i:1">Archit Srivastava</h2></div>
+    <div class="body">
+      <div class="row r-31">
+        <div class="frag" style="display:grid;grid-template-columns:.78fr 1.22fr;gap:1.7vw">
+          <div style="display:flex;flex-direction:column;gap:.55rem;min-height:0">
+          <div class="photo-frame" style="flex:1 1 auto;min-height:0"><span class="rim"></span><img src="data:image/jpeg;base64,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" alt="Archit Srivastava"></div>
+            <div class="about-stats"><div class="as"><b>5+</b><span>research papers</span></div><div class="as"><b>25+</b><span>invited talks</span></div><div class="as"><b>10+</b><span>universities</span></div><div class="as"><b>200+</b><span>faculty engaged</span></div></div>
+          </div>
+          <div>
+            <div class="chips" style="margin-bottom:.5rem"><span class="chip">quantum × ai</span><span class="chip">photonic hardware</span><span class="chip">gw &amp; black holes</span><span class="chip">enterprise tech</span></div>
+            <ul class="blist tight">
+              <li><span class="bullet"></span><span>Senior Technical Consultant, <strong>o9 Solutions</strong> — enterprise AI &amp; decision systems</span></li>
+              <li><span class="bullet"></span><span>Founder, <strong>AiQyaM</strong> — India's first quantum-hardware community, est. <strong>2020</strong></span></li>
+              <li><span class="bullet"></span><span>Founder, <strong>CIRQuIT Quantum Research</strong>, RV College of Engineering</span></li>
+              <li><span class="bullet"></span><span>Senior Research Associate, <strong>Quantum Computing India</strong></span></li>
+              <li><span class="bullet"></span><span><strong>GKQCTP &amp; IQDC</strong> with Innogress Ventures — PoC frameworks toward a sovereign Quantum Tech Park</span></li>
+              <li><span class="bullet"></span><span>Early intern, <strong>BosonQ Psi</strong> · quantum PoCs at <strong>HPE</strong> &amp; <strong>o9</strong> · <strong>Conf42</strong> speaker</span></li>
+              <li><span class="bullet"></span><span>Background in <strong>Electronics &amp; Instrumentation Eng.</strong> · 4 yrs industry experience</span></li>
+            </ul>
+            <p style="font-family:var(--mono);font-size:.9rem;color:var(--text-d2);margin-top:.55rem">architsrivastava3115@gmail.com</p>
+          </div>
+        </div>
+        <div class="frag" style="display:flex;flex-direction:column;gap:.5rem">
+          <div class="colhead">current focus</div>
+          <div class="card sb" style="flex:1"><div class="edge"></div><h4>Black holes &amp; gravitational waves</h4><p>Modelling GW solutions &amp; black-hole physics with quantum computing + AI.</p></div>
+          <div class="card sb" style="flex:1"><div class="edge"></div><h4>Photonic quantum computing</h4><p>Photonic hardware architectures &amp; light-based qubit platforms.</p></div>
+          <div class="card sb" style="flex:1"><div class="edge"></div><h4>Quantum × AI for enterprise</h4><p>QAOA, annealing &amp; QML applied to real industry decision problems.</p></div>
+          <div class="card sb" style="flex:1"><div class="edge"></div><h4>Earlier work</h4><p>Quantum cryptography, quantum finance &amp; multiple hardware paradigms.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · WHAT / CONVERGENCE -->
+<section class="slide" data-name="what — convergence">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow r" style="--i:0">What · the epoch of computational convergence</div>
+      <h2 class="r" style="--i:1">Moore's Law is ending. The next leap is quantum × AI.</h2>
+      <p class="lead r" style="--i:2">As silicon nears its atomic limits, AI's hunger for hyper-dimensional optimization outpaces classical hardware. Quantum processors compute in <strong>hyper-dimensional states</strong>; converged with AI they become a catalyst for previously intractable bottlenecks. This talk separates what's <em>measured on real hardware</em> from what's still projection.</p>
+    </div>
+    <div class="body">
+      <div class="row r4">
+        <div class="card frag"><div class="edge"></div><h4>Quantum</h4><div class="eq" style="margin:.4rem 0">|ψ⟩ = α|0⟩+β|1⟩&nbsp; <span class="c">|α|²+|β|²=1</span></div><ul class="blist tight" style="margin-top:.4rem"><li><span class="bullet"></span><span><strong>2<sup>n</sup></strong> amplitudes from n qubits</span></li><li><span class="bullet"></span><span>superposition — many states at once</span></li><li><span class="bullet"></span><span>entanglement — non-local correlation</span></li><li><span class="bullet"></span><span>interference selects the answer</span></li><li><span class="bullet"></span><span>measurement collapses to one outcome</span></li></ul><div class="kpi" style="margin-top:auto;padding-top:.4rem"><span class="v">why</span><span class="k">hyper-dimensional space</span></div></div>
+        <div class="card frag"><div class="edge"></div><h4>Optimization</h4><div class="eq" style="margin:.4rem 0">min Σ J<sub>ij</sub>s<sub>i</sub>s<sub>j</sub>+Σ h<sub>i</sub>s<sub>i</sub></div><ul class="blist tight" style="margin-top:.4rem"><li><span class="bullet"></span><span>the "<strong>curse of dimensionality</strong>"</span></li><li><span class="bullet"></span><span>variables explode combinatorially</span></li><li><span class="bullet"></span><span>classical solvers stall in local minima</span></li><li><span class="bullet"></span><span>quantum tunnels to the global minimum</span></li><li><span class="bullet"></span><span>60% of leaders call it critical</span></li></ul><div class="kpi" style="margin-top:auto;padding-top:.4rem"><span class="v">why</span><span class="k">classical HPC stalls</span></div></div>
+        <div class="card frag"><div class="edge"></div><h4>+ AI · QML</h4><div class="eq" style="margin:.4rem 0">AI → QPU&nbsp;<span class="c">ships</span> · QPU → AI&nbsp;<span class="c">native</span></div><ul class="blist tight" style="margin-top:.4rem"><li><span class="bullet"></span><span>AI tames noisy hardware today</span></li><li><span class="bullet"></span><span>quantum-behavior AI training</span></li><li><span class="bullet"></span><span>native spectral &amp; kernel operations</span></li><li><span class="bullet"></span><span>wins on <strong>structured</strong> data</span></li><li><span class="bullet"></span><span>dequantization sets the boundary</span></li></ul><div class="kpi" style="margin-top:auto;padding-top:.4rem"><span class="v">why</span><span class="k">a new compute substrate</span></div></div>
+        <div class="card frag"><div class="edge"></div><h4>The stakes</h4><div class="metric" style="margin:.3rem 0">$2.7T</div><ul class="blist tight" style="margin-top:.4rem"><li><span class="bullet"></span><span>economic value by 2035</span></li><li><span class="bullet"></span><span>$1.07T AI-training market alone</span></li><li><span class="bullet"></span><span>6.3× YoY investment growth</span></li><li><span class="bullet"></span><span>sovereigns + enterprise racing</span></li><li><span class="bullet"></span><span>software captures the value</span></li></ul><div class="kpi" style="margin-top:auto;padding-top:.4rem"><span class="v">why</span><span class="k">decisions now lock the future</span></div></div>
+      </div>
+      <div class="row b r-21">
+        <div class="card frag" style="flex-direction:row;align-items:center;gap:1.2rem">
+          <svg viewBox="0 0 220 90" style="width:200px;height:80px" aria-label="Moore's law flattening">
+            <line x1="14" y1="78" x2="210" y2="78" stroke="var(--line-l)" stroke-width="1.2"/><line x1="14" y1="78" x2="14" y2="8" stroke="var(--line-l)" stroke-width="1.2"/>
+            <path d="M16 74 C70 70,110 30,140 18 C160 10,180 9,205 8" fill="none" stroke="var(--text-l2)" stroke-width="2" class="draw"/>
+            <path d="M140 18 C165 14,180 6,206 -2" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 4"/>
+            <text x="150" y="36" font-family="IBM Plex Mono" font-size="8" fill="var(--accent)">demand</text>
+            <text x="150" y="70" font-family="IBM Plex Mono" font-size="8" fill="var(--text-l2)">silicon</text>
+          </svg>
+          <div><div class="colhead">the bottleneck</div><p>Transistor scaling stalls while AI's compute demand keeps climbing. Quantum opens a new axis — <strong>hyper-dimensional</strong> rather than smaller.</p></div>
+        </div>
+        <div class="card frag"><div class="colhead">three converging forces</div><div class="kpi"><span class="v">QC</span><span class="k">hyper-dimensional state space</span></div><div class="kpi" style="margin-top:.3rem"><span class="v">QML</span><span class="k">native spectral &amp; kernel ops</span></div><div class="kpi" style="margin-top:.3rem"><span class="v">opt.</span><span class="k">global minima at scale</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · WHY — proof -->
+<section class="slide dark" data-name="why — proof">
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">Why now · 2025, the year it got real</div><h2 class="r" style="--i:1">"Beyond classical" — three peer-reviewed firsts in one year.</h2><p class="lead r" style="--i:2">For decades quantum advantage was a promise. In a single year, three results — each in <em>Nature</em> or <em>Science</em> — crossed from theory into measured fact, on three different machines.</p></div>
+    <div class="body">
+      <div class="row r3">
+        <div class="card frag"><div class="edge"></div><div class="tn">10<sup>25</sup> yrs</div><div class="lbl"><strong>Google Willow</strong> — a random-circuit benchmark in &lt;5 min vs ten septillion years classically.</div>
+          <div class="colhead" style="margin-top:.5rem">what it showed</div>
+          <ul class="blist tight"><li><span class="bullet"></span><span>105 superconducting qubits</span></li><li><span class="bullet"></span><span>first <strong>below-threshold</strong> error correction</span></li><li><span class="bullet"></span><span>logical error shrinks as the code grows</span></li><li><span class="bullet"></span><span>error suppression <strong>Λ ≈ 2.14</strong> per code step</span></li></ul>
+          <div class="kpi" style="margin-top:auto;padding-top:.5rem"><span class="v">tier 1</span><span class="k">raw quantum speed</span></div><div class="src">Nature · Dec 2024</div></div>
+        <div class="card frag"><div class="edge"></div><div class="tn">~10<sup>6</sup> yrs</div><div class="lbl"><strong>D-Wave Advantage2</strong> — magnetic-materials simulation in minutes.</div>
+          <div class="colhead" style="margin-top:.5rem">what it showed</div>
+          <ul class="blist tight"><li><span class="bullet"></span><span>a real scientific target, not a toy</span></li><li><span class="bullet"></span><span>programmable quantum spin glass</span></li><li><span class="bullet"></span><span><strong>contested</strong> — EPFL/Simons matched parts on GPUs</span></li><li><span class="bullet"></span><span>ran on <strong>Advantage2</strong> · 4,400+ qubits</span></li></ul>
+          <div class="kpi" style="margin-top:auto;padding-top:.5rem"><span class="v">tier 2</span><span class="k">useful-problem, debated</span></div><div class="src">Science · Mar 2025</div></div>
+        <div class="card frag"><div class="edge"></div><div class="tn">13,000×</div><div class="lbl"><strong>Quantum Echoes</strong> — first <em>verifiable</em> advantage, via out-of-time-order correlators.</div>
+          <div class="colhead" style="margin-top:.5rem">what it showed</div>
+          <ul class="blist tight"><li><span class="bullet"></span><span>time-reversal probe of information spread</span></li><li><span class="bullet"></span><span><strong>checkable</strong> on a second machine</span></li><li><span class="bullet"></span><span>repeatable, not a one-shot stunt</span></li><li><span class="bullet"></span><span>a path toward <strong>molecular-structure</strong> readouts</span></li></ul>
+          <div class="kpi" style="margin-top:auto;padding-top:.5rem"><span class="v">tier 4</span><span class="k">verifiable advantage</span></div><div class="src">Nature · Oct 2025</div></div>
+      </div>
+      <div class="row b r-21">
+        <div class="card frag"><div class="colhead">google willow · time to solve one benchmark (log scale)</div>
+          <div style="display:flex;gap:1.2rem;align-items:center">
+            <div class="viz" style="flex:1.3;height:150px"><svg viewBox="0 0 360 150" preserveAspectRatio="xMidYMid meet" style="max-height:150px" aria-label="Willow runtime">
+              <line x1="40" y1="128" x2="350" y2="128" stroke="rgba(255,255,255,.18)" stroke-width="1.3"/><line x1="40" y1="14" x2="40" y2="128" stroke="rgba(255,255,255,.18)" stroke-width="1.3"/>
+              <g font-family="IBM Plex Mono" font-size="10" fill="var(--text-d2)" text-anchor="end"><text x="34" y="120">min</text><text x="34" y="92">yr</text><text x="34" y="64">10¹²</text><text x="34" y="22">10²⁵</text></g>
+              <rect x="95" y="22" width="58" height="106" rx="3" fill="#9AA3B2"><title>classical supercomputer ≈ 10²⁵ years</title></rect>
+              <rect x="240" y="118" width="58" height="10" rx="3" fill="var(--accent-2)"><title>Willow ≈ under 5 minutes</title></rect>
+              <path d="M124 22 C170 60,210 110,269 118" fill="none" stroke="var(--accent-2)" stroke-width="2.2" stroke-dasharray="5 4"><title>collapse in runtime</title></path>
+              <circle cx="124" cy="22" r="4.5" fill="#9AA3B2"/><circle cx="269" cy="118" r="4.5" fill="var(--accent-2)"/>
+              <text x="124" y="142" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#9AA3B2">classical</text>
+              <text x="269" y="142" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--accent-2)">Willow</text>
+            </svg></div>
+            <div style="flex:1"><div class="metric">10<sup>25</sup> yrs → 5 min</div><p style="margin-top:.4rem">A random-circuit task that would take a classical supercomputer ten septillion years finishes on Willow in under five minutes — while its error rate <em>drops</em> as the chip grows.</p></div>
+          </div>
+        </div>
+        <div class="card frag"><div class="colhead">the market signal</div>
+          <div class="kpi" style="margin-bottom:.5rem"><span class="v"><span data-count="60">0</span>%</span><span class="k">of leaders: optimization is critical</span></div>
+          <div class="kpi" style="margin-bottom:.5rem"><span class="v"><span data-count="88">0</span>%</span><span class="k">would go all-in for a 5% gain</span></div>
+          <div class="kpi"><span class="v"><span data-count="6.3" data-dec="1">0</span>×</span><span class="k">YoY funding · 90% to applications</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · WHY — economics -->
+<section class="slide" data-name="why — economics">
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">Why now · the trillion-dollar ecosystem</div><h2 class="r" style="--i:1">The value isn't in selling processors — it's in the outcomes.</h2></div>
+    <div class="body">
+      <div class="row r-31">
+        <div class="card frag"><div class="colhead">market projections · 2026 → 2035</div>
+          <table class="tbl">
+            <tr><th>Segment</th><th>2026</th><th>2035</th><th>CAGR</th><th>Focus</th></tr>
+            <tr><td><strong>Quantum-behavior AI training</strong></td><td class="n">$55.9B</td><td class="n">$1,073.7B</td><td class="n">38.9%</td><td>hybrid AI · cloud platforms</td></tr>
+            <tr><td><strong>Quantum computing</strong></td><td class="n">$0.58B</td><td class="n">$8.98B</td><td class="n">35.2%</td><td>hardware · cloud · enterprise SW</td></tr>
+            <tr><td><strong>Quantum-AI solutions</strong></td><td class="n">$0.55B</td><td class="n">$1.78B<sup>’30</sup></td><td class="n">34.0%</td><td>algorithmic licensing</td></tr>
+            <tr><td><strong>Quantum-AI components</strong></td><td class="n">$0.28B<sup>’25</sup></td><td class="n">$7.79B</td><td class="n">35.3%</td><td>component HW · consulting</td></tr>
+            <tr><td><strong>Quantum communications · QKD</strong></td><td class="n">~$0.6B</td><td class="n">~$6.5B</td><td class="n">~30%</td><td>secure networks · post-quantum</td></tr>
+            <tr><td><strong>Quantum sensing</strong></td><td class="n">~$0.5B</td><td class="n">~$1.5B<sup>’30</sup></td><td class="n">~28%</td><td>metrology · imaging · defense</td></tr>
+            <tr><td><strong>Total economic value</strong></td><td class="n">—</td><td class="n">$1.3–2.7T</td><td class="n">—</td><td>McKinsey · BCG $450–850B by ’40</td></tr>
+          </table>
+          <ul class="blist tight" style="margin-top:.6rem"><li><span class="bullet"></span><span>Funding rose <strong>6.3× YoY</strong> — 90% to bridging hardware &amp; applications</span></li><li><span class="bullet"></span><span>The hardware enables; the <strong>software &amp; AI layers</strong> capture the value</span></li><li><span class="bullet"></span><span><strong>100+</strong> national programs · over <strong>$40B</strong> public funding committed globally</span></li><li><span class="bullet"></span><span>McKinsey: chemicals, life sciences, finance &amp; mobility capture most value</span></li></ul>
+        </div>
+        <div class="card frag"><div class="colhead">the AI-training surge</div>
+          <div class="viz" style="flex:1;min-height:0"><svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid meet" style="max-height:100%" aria-label="AI-training market growth">
+            <line x1="40" y1="206" x2="312" y2="206" stroke="var(--line-l)" stroke-width="1.4"/><line x1="40" y1="14" x2="40" y2="206" stroke="var(--line-l)" stroke-width="1.4"/>
+            <g fill="var(--accent-deep)">
+              <rect x="58" y="200" width="30" height="6" rx="2"><title>2026 · $56B</title></rect>
+              <rect x="112" y="190" width="30" height="16" rx="2"><title>2028 · ~$108B</title></rect>
+              <rect x="166" y="170" width="30" height="36" rx="2"><title>2030 · ~$208B</title></rect>
+              <rect x="220" y="136" width="30" height="70" rx="2"><title>2032 · ~$401B</title></rect>
+              <rect x="274" y="24" width="30" height="182" rx="3" fill="var(--accent)"><title>2035 · $1,073.7B</title></rect>
+            </g>
+            <polyline points="73,200 127,188 181,166 235,132 289,24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="6 4"/>
+            <g class="pt" style="animation-delay:1.2s"><circle cx="73" cy="200" r="3.5" fill="var(--accent)"/><circle cx="127" cy="188" r="3.5" fill="var(--accent)"/><circle cx="181" cy="166" r="3.5" fill="var(--accent)"/><circle cx="235" cy="132" r="3.5" fill="var(--accent)"/><circle cx="289" cy="24" r="4.5" fill="var(--accent)"/></g>
+            <g font-family="IBM Plex Mono" font-size="11" fill="var(--text-l2)" text-anchor="middle"><text x="73" y="222">'26</text><text x="181" y="222">'30</text><text x="289" y="222">'35</text></g>
+            <text x="289" y="18" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--accent)">$1.07T</text>
+          </svg></div>
+          <div class="kpi" style="margin-top:.4rem"><span class="v">≈1,900×</span><span class="k">growth · 38.9% CAGR</span></div>
+          <p style="font-size:.9rem;margin-top:.3rem">NISQ hardware is young, but the ecosystem around it scales <strong>exponentially</strong>.</p>
+        </div>
+      </div>
+      <div class="row b r3">
+        <div class="card mini frag"><div class="edge"></div><div class="metric">$1.3–2.7T</div><div class="lbl">total economic value by 2035 (McKinsey)</div></div>
+        <div class="card mini frag"><div class="edge"></div><div class="metric">≫ 99%</div><div class="lbl">of value captured by software + AI layers, not hardware</div></div>
+        <div class="card mini frag"><div class="edge"></div><div class="metric">6.3×</div><div class="lbl">YoY funding growth · 90% to applications</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · HOW — engines + QUBO -->
+<section class="slide" data-name="how — engines">
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">How · the engines &amp; the bridge</div><h2 class="r" style="--i:1">Three solvers, one goal: reach the lowest energy.</h2></div>
+    <p class="lead r" style="--i:2">Optimization is the immediate commercial catalyst. Three families of quantum solver attack it — each evaluating a vast landscape of interconnected variables at once, tunneling toward the global minimum that classical heuristics miss.</p>
+    <div class="body">
+      <div class="row r3">
+        <div class="card frag"><div class="edge"></div><div style="display:flex;justify-content:space-between;align-items:baseline"><h4>QAOA</h4><span style="font-family:var(--mono);font-size:.9rem;color:var(--accent)">gate-based</span></div>
+          <div class="eq" style="margin:.4rem 0">|γ,β⟩ = ∏<sub>k</sub> e<sup>−iβ<sub>k</sub>H<sub>M</sub></sup>e<sup>−iγ<sub>k</sub>H<sub>C</sub></sup>|+⟩<sup>n</sup></div>
+          <p style="font-size:.9rem">Alternating <strong>cost</strong> &amp; <strong>mixer</strong> layers; a classical optimizer tunes the angles.</p>
+          <div class="colhead" style="margin-top:.5rem">strengths</div>
+          <ul class="blist tight"><li><span class="bullet"></span><span><strong>2p</strong> tunable angles · depth p</span></li><li><span class="bullet"></span><span>p=1 MaxCut ratio ≥ <strong>0.6924</strong></span></li><li><span class="bullet"></span><span>multi-angle ≈ 3× shallower circuits</span></li></ul>
+          <div class="kpi" style="margin-top:auto;padding-top:.5rem"><span class="v">use</span><span class="k">routing · scheduling · max-cut</span></div>
+        </div>
+        <div class="card frag"><div class="edge"></div><div style="display:flex;justify-content:space-between;align-items:baseline"><h4>VQE</h4><span style="font-family:var(--mono);font-size:.9rem;color:var(--accent)">hybrid</span></div>
+          <div class="eq" style="margin:.4rem 0">E(θ) = ⟨ψ(θ)|H|ψ(θ)⟩ ≥ E<sub>0</sub></div>
+          <p style="font-size:.9rem">A classical loop drives a quantum <strong>ansatz</strong> to the lowest eigenstate of H.</p>
+          <div class="colhead" style="margin-top:.5rem">strengths</div>
+          <ul class="blist tight"><li><span class="bullet"></span><span>variational principle bounds E<sub>0</sub></span></li><li><span class="bullet"></span><span>noise-resilient, shallow ansätze</span></li><li><span class="bullet"></span><span>measures expectation values directly</span></li></ul>
+          <div class="kpi" style="margin-top:auto;padding-top:.5rem"><span class="v">use</span><span class="k">chemistry · materials · catalysis</span></div>
+        </div>
+        <div class="card frag"><div class="edge"></div><div style="display:flex;justify-content:space-between;align-items:baseline"><h4>Annealing</h4><span style="font-family:var(--mono);font-size:.9rem;color:var(--accent)">analog</span></div>
+          <div class="eq" style="margin:.4rem 0">H(t) = (1−s)H<sub>M</sub> + s·H<sub>C</sub></div>
+          <p style="font-size:.9rem">Slowly morph from mixer to problem Hamiltonian; the system <strong>relaxes</strong> to its ground state.</p>
+          <div class="colhead" style="margin-top:.5rem">strengths</div>
+          <ul class="blist tight"><li><span class="bullet"></span><span><strong>tunnels</strong> through energy barriers</span></li><li><span class="bullet"></span><span>physical ground-state relaxation</span></li><li><span class="bullet"></span><span>D-Wave Advantage2 · 4,400+ qubits</span></li></ul>
+          <div class="kpi" style="margin-top:auto;padding-top:.5rem"><span class="v">use</span><span class="k">logistics · QUBO / Ising at scale</span></div>
+        </div>
+      </div>
+      <div class="row r3">
+        <div class="card frag"><div class="colhead">why it works · the landscape</div>
+          <div class="viz" style="flex:1;min-height:0"><svg viewBox="0 0 360 180" preserveAspectRatio="xMidYMid meet" style="max-height:100%" aria-label="energy landscape">
+            <path d="M12 54 C64 54,72 118,116 118 C162 118,168 72,216 80 C268 88,266 156,320 156 C350 156,354 46,360 46" fill="none" stroke="var(--text-l2)" stroke-width="2.4" class="draw"/>
+            <circle cx="116" cy="118" r="7.5" fill="#9AA3B2" class="pt" style="animation-delay:1.0s"><title>local minimum — classical gets stuck</title></circle>
+            <circle cx="320" cy="156" r="9" fill="var(--accent)" class="pt" style="animation-delay:1.2s"><title>global minimum — the true optimum</title></circle>
+            <path d="M216 80 q18 46 88 70" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="4 4" class="pt" style="animation-delay:1.4s"/>
+            <text x="116" y="106" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#9AA3B2">local</text>
+            <text x="320" y="144" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="var(--accent)">global · tunnel</text>
+            <text x="20" y="40" font-family="IBM Plex Mono" font-size="11" fill="var(--text-l2)">energy</text>
+          </svg></div>
+          <p style="font-size:.9rem">Classical solvers get trapped in local minima. Quantum systems tunnel through barriers and feel the whole surface at once.</p>
+        </div>
+        <div class="card frag"><div class="colhead">the universal form</div>
+          <div class="eq" style="margin-bottom:.45rem">min<sub>x</sub> xᵀQx, &nbsp;x∈{0,1}<sup>n</sup><br><span class="c">≡ Ising&nbsp; H(s)=Σ J<sub>ij</sub>s<sub>i</sub>s<sub>j</sub>+Σ h<sub>i</sub>s<sub>i</sub></span></div>
+          <ul class="blist tight"><li><span class="bullet"></span><span>Lucas (2014): all <strong>21</strong> of Karp's NP-complete problems map here</span></li><li><span class="bullet"></span><span>constraints become <strong>energy penalties</strong></span></li><li><span class="bullet"></span><span>QUBO even maps circuits onto multi-core QPUs</span></li><li><span class="bullet"></span><span>one formulation → any of the three engines</span></li></ul>
+        </div>
+        <div class="card frag"><div class="colhead">what maps to QUBO</div>
+          <table class="tbl"><tr><th>Problem</th><th>Binary encoding</th></tr>
+            <tr><td><strong>Vehicle routing</strong></td><td>order / arc selection</td></tr>
+            <tr><td><strong>Job scheduling</strong></td><td>task × time-slot bits</td></tr>
+            <tr><td><strong>Portfolio</strong></td><td>asset in / out</td></tr>
+            <tr><td><strong>Max-Cut</strong></td><td>spin sign per node</td></tr>
+            <tr><td><strong>Protein folding</strong></td><td>lattice position bits</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · HOW — AI x quantum both ways -->
+<section class="slide" data-name="how — ai × quantum">
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">How · the convergence runs both ways</div><h2 class="r" style="--i:1">AI tames the hardware; quantum reshapes the AI.</h2><p class="lead r" style="--i:2">The relationship is mutual. Machine learning is already making noisy quantum hardware usable, while quantum processors are finding a narrow but real edge for the kinds of structured data classical AI handles poorly.</p></div>
+    <div class="body">
+      <div class="row r2">
+        <div class="frag" style="display:flex;flex-direction:column;gap:.55rem;min-height:0">
+          <div class="colhead">ai → quantum · taming noisy qubits (ships today)</div>
+          <div class="card" style="flex:1;padding:.75rem .95rem"><div class="edge"></div><h4>AlphaQubit · DeepMind</h4><p style="margin-top:.25rem">A neural-network decoder that reads error syndromes with <strong>30% fewer errors</strong> than the best classical matching decoders.</p></div>
+          <div class="card" style="flex:1;padding:.75rem .95rem"><div class="edge"></div><h4>YAQQ &amp; KetGPT</h4><p style="margin-top:.25rem">Novelty-search <strong>gate-set design</strong> (in OpenQL) and generative AI that writes quantum circuits — the design space is too vast to compile by hand.</p></div>
+          <div class="card" style="flex:1;padding:.75rem .95rem"><div class="edge"></div><h4>ML4GST &amp; AI firmware</h4><p style="margin-top:.25rem">Energy-optimized control and QUBO circuit-mapping onto multi-core chips — AI-governed firmware carrying the field from NISQ to <strong>PISQ</strong>.</p></div>
+          <div class="card" style="flex:1;padding:.75rem .95rem"><div class="edge"></div><h4>QKSA · TU Delft</h4><p style="margin-top:.25rem">A reinforcement-learning "knowledge-seeking agent" merging AGI, constructor theory &amp; genetic programming — it <strong>learns physics</strong> via quantum process tomography.</p></div>
+        </div>
+        <div class="frag" style="display:flex;flex-direction:column;gap:.55rem;min-height:0">
+          <div class="colhead">quantum → ai · past the dequantization wall</div>
+          <div class="card" style="flex:1;padding:.75rem .95rem"><div class="edge"></div><h4>The dequantization wall</h4><p style="margin-top:.25rem">From 2018–2025, classical <strong>random-Fourier-feature</strong> methods reproduced purported "quantum" kernels — proof there's no edge on ordinary data.</p></div>
+          <div class="card" style="flex:1;padding:.75rem .95rem"><div class="edge"></div><h4>Native operations win</h4><p style="margin-top:.25rem">A Quantum Fourier Transform on the symmetric group gives a <em>super-exponential</em> speedup on <strong>permutation-structured</strong> data — beyond any classical reach.</p></div>
+          <div class="card" style="flex:1;padding:.75rem .95rem"><div class="edge"></div><h4>Quantum Gaussian processes</h4><p style="margin-top:.25rem">Los Alamos proved genuine quantum Gaussian processes exist — quantum states making <strong>educated extrapolations</strong> from chaos.</p></div>
+          <div class="card" style="flex:1;padding:.75rem .95rem"><div class="edge"></div><h4>Reservoir computing</h4><p style="margin-top:.25rem">A demonstrated <strong>exponential space advantage</strong> for spatiotemporal-chaos and temporal-sequence prediction.</p></div>
+        </div>
+      </div>
+      <div class="row b r1">
+        <div class="card frag"><div class="colhead">honest scorecard · technique → status</div>
+          <table class="tbl"><tr><th>Technique</th><th>Direction</th><th>Status</th><th>Note</th></tr>
+            <tr><td>Neural QEC decoding (AlphaQubit)</td><td class="n">AI→Q</td><td class="n">shipping</td><td>peer-reviewed, Nature 2024</td></tr>
+            <tr><td>AI gate-set / circuit synthesis (YAQQ, KetGPT)</td><td class="n">AI→Q</td><td class="n">deploying</td><td>research → tooling</td></tr>
+            <tr><td>Quantum kernels on generic data</td><td class="n">Q→AI</td><td class="n">dequantized</td><td>classically reproducible</td></tr>
+            <tr><td>Native QFT / Gaussian / reservoir QML</td><td class="n">Q→AI</td><td class="n">promising</td><td>structured data only · QRAM &amp; barren plateaus remain</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · HOW — error correction -->
+<section class="slide" data-name="how — error correction">
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">How · the biggest race — error correction</div><h2 class="r" style="--i:1">Many noisy qubits → one that doesn't fail.</h2></div>
+    <p class="lead r" style="--i:2">A physical qubit forgets its state in microseconds. Error correction spreads one logical qubit across many physical ones so errors are caught and fixed faster than they accumulate — the gating problem for everything fault-tolerant.</p>
+    <div class="body">
+      <div class="row b r4">
+        <div class="card frag soft mini"><div class="edge"></div><div class="metric">~<span data-count="1000">0</span>:1</div><div class="lbl">surface-code physical : logical — robust but hungry</div></div>
+        <div class="card frag mini"><div class="edge"></div><div class="metric"><span data-count="288">0</span>→<span data-count="12">0</span></div><div class="lbl">IBM gross code (qLDPC) — ~10× leaner</div><div class="src">[[144,12,12]]</div></div>
+        <div class="card frag mini"><div class="edge"></div><div class="metric"><span data-count="24">0</span> ns</div><div class="lbl">real-time qLDPC decode / iteration</div></div>
+        <div class="card frag mini"><div class="edge"></div><div class="metric"><span data-count="30">0</span>%</div><div class="lbl">AlphaQubit — fewer errors than matching</div><div class="src">Nature · Nov 2024</div></div>
+      </div>
+      <div class="row r-21">
+        <div class="card frag"><div class="colhead">below threshold — the proof that it works</div>
+          <div class="viz" style="flex:1;min-height:0"><svg viewBox="0 0 460 240" preserveAspectRatio="xMidYMid meet" style="max-height:100%" aria-label="below threshold">
+            <line x1="48" y1="200" x2="440" y2="200" stroke="var(--line-l)" stroke-width="1.4"/><line x1="48" y1="200" x2="48" y2="16" stroke="var(--line-l)" stroke-width="1.4"/>
+            <polyline points="120,52 250,118 390,170" fill="none" stroke="var(--accent)" stroke-width="3" class="draw"/>
+            <circle cx="120" cy="52" r="8" fill="var(--accent)" class="pt" style="animation-delay:1.0s"><title>distance 3 — higher logical error</title></circle>
+            <circle cx="250" cy="118" r="8" fill="var(--accent)" class="pt" style="animation-delay:1.2s"><title>distance 5</title></circle>
+            <circle cx="390" cy="170" r="8" fill="var(--accent)" class="pt" style="animation-delay:1.4s"><title>distance 7 — lower logical error</title></circle>
+            <g font-family="IBM Plex Mono" font-size="13" fill="var(--text-l2)"><text x="120" y="224" text-anchor="middle">d=3</text><text x="250" y="224" text-anchor="middle">d=5</text><text x="390" y="224" text-anchor="middle">d=7</text></g>
+            <text x="54" y="28" font-family="IBM Plex Mono" font-size="13" fill="var(--accent)">logical error ↓</text>
+            <text x="240" y="244" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--text-l2)">code distance →</text>
+          </svg></div>
+          <p style="font-size:.92rem;margin-top:.4rem">Willow's logical error <strong>shrinks</strong> as the code grows (d = 3→5→7) — correction is finally winning the race against noise, the field's first true below-threshold result.</p>
+          <div style="display:flex;gap:.8rem;align-items:center;margin-top:.4rem"><div class="eq" style="flex:1">p<sub>L</sub> ∝ (p / p<sub>th</sub>)<sup>⌊d/2⌋</sup></div><div class="kpi"><span class="v">Λ ≈ 2.14</span><span class="k">per step</span></div></div>
+        </div>
+        <div class="card frag"><div class="colhead">codes compared</div>
+          <table class="tbl"><tr><th>Code</th><th>Physical</th><th>Logical</th></tr>
+            <tr><td>Surface</td><td class="n">~3,000</td><td class="n">12</td></tr>
+            <tr><td>Gross (qLDPC)</td><td class="n">288</td><td class="n">12</td></tr>
+            <tr><td>Willow (d=7)</td><td class="n">~100</td><td class="n">1</td></tr>
+            <tr><td>Color code</td><td class="n">~900</td><td class="n">1</td></tr>
+            <tr><td>Cat-qubit (Alice&amp;Bob)</td><td class="n">bias↓</td><td class="n">1</td></tr>
+          </table>
+          <div class="colhead" style="margin-top:.7rem">takeaways</div>
+          <ul class="blist tight"><li><span class="bullet"></span><span>qLDPC = same protection, far fewer qubits</span></li><li><span class="bullet"></span><span>color codes enable cheaper <strong>transversal</strong> gates</span></li><li><span class="bullet"></span><span>bias-preserving <strong>cat qubits</strong> cut bit-flip overhead</span></li><li><span class="bullet"></span><span>AI decoders (AlphaQubit) close the speed gap · <strong>~24 ns</strong></span></li><li><span class="bullet"></span><span>but always: <strong>physical ≠ logical</strong></span></li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · HOW — history -->
+<section class="slide" data-name="how — history">
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">How · where these fields have been</div><h2 class="r" style="--i:1">Two histories, now converging.</h2></div>
+    <div class="body">
+      <div class="row r1 frag" style="align-content:center">
+        <div><div class="colhead">quantum computing</div>
+          <div class="tl"><div class="axis"></div><div class="tl-row">
+            <div class="tl-item"><div class="yr">1981</div><div class="dot"></div><div class="ev">Feynman: simulate physics with quantum</div></div>
+            <div class="tl-item"><div class="yr">1994</div><div class="dot"></div><div class="ev">Shor's algorithm</div></div>
+            <div class="tl-item"><div class="yr">1996</div><div class="dot"></div><div class="ev">Grover's search algorithm</div></div>
+            <div class="tl-item"><div class="yr">2011</div><div class="dot"></div><div class="ev">D-Wave One — first annealer</div></div>
+            <div class="tl-item"><div class="yr">2014</div><div class="dot"></div><div class="ev">QAOA &amp; VQE</div></div>
+            <div class="tl-item"><div class="yr">2019</div><div class="dot"></div><div class="ev">Sycamore "supremacy"</div></div>
+            <div class="tl-item"><div class="yr">2024</div><div class="dot"></div><div class="ev">Willow — below threshold</div></div>
+            <div class="tl-item"><div class="yr">2025</div><div class="dot"></div><div class="ev">Quantum Echoes — verifiable</div></div>
+          </div></div>
+          <p style="text-align:center;font-size:.84rem;margin-top:.85rem">Four decades from Feynman's <strong>1981</strong> proposal to the first <strong>verifiable advantage</strong> in 2025.</p>
+        </div>
+      </div>
+      <div class="row r1 frag" style="align-content:center">
+        <div><div class="colhead">artificial intelligence</div>
+          <div class="tl"><div class="axis"></div><div class="tl-row">
+            <div class="tl-item"><div class="yr">1956</div><div class="dot"></div><div class="ev">"AI" coined, Dartmouth</div></div>
+            <div class="tl-item"><div class="yr">1986</div><div class="dot"></div><div class="ev">Backpropagation</div></div>
+            <div class="tl-item"><div class="yr">1997</div><div class="dot"></div><div class="ev">Deep Blue beats Kasparov</div></div>
+            <div class="tl-item"><div class="yr">2012</div><div class="dot"></div><div class="ev">AlexNet — deep learning</div></div>
+            <div class="tl-item"><div class="yr">2017</div><div class="dot"></div><div class="ev">Transformers</div></div>
+            <div class="tl-item"><div class="yr">2022</div><div class="dot"></div><div class="ev">Generative AI mainstream</div></div>
+            <div class="tl-item"><div class="yr">2024</div><div class="dot"></div><div class="ev">AlphaQubit — AI meets quantum</div></div>
+            <div class="tl-item"><div class="yr">2026</div><div class="dot"></div><div class="ev">native QML · QKSA agents</div></div>
+          </div></div>
+          <p style="text-align:center;font-size:.84rem;margin-top:.85rem">From a <strong>1956</strong> summer workshop to generative models and quantum-aware learning agents.</p>
+        </div>
+      </div>
+      <div class="row b r4">
+        <div class="card frag"><div class="edge"></div><h4>Decades apart</h4><p style="font-size:.9rem">AI was named in <strong>1956</strong>; quantum computing began with Feynman in <strong>1981</strong>. For ~40 years they advanced on separate tracks — one in software, one in physics.</p></div>
+        <div class="card frag"><div class="edge"></div><h4>Shared mathematics</h4><p style="font-size:.9rem">Both run on linear algebra — state vectors, matrices, gradient optimization. Quantum just operates in an <strong>exponentially larger</strong> Hilbert space.</p></div>
+        <div class="card frag"><div class="edge"></div><h4>AI rescued the hardware</h4><p style="font-size:.9rem">From ~2018, deep-learning decoders &amp; AI compilers — <strong>AlphaQubit</strong> (2024), YAQQ — made noisy NISQ qubits usable. Quantum's progress now rides on ML.</p></div>
+        <div class="card frag"><div class="edge"></div><h4>Now quantum reshapes AI</h4><p style="font-size:.9rem">Since <strong>2024–25</strong>, native spectral/kernel ops &amp; quantum agents (QKSA) open learning regimes classical AI can't reach — the two tracks have finally merged.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · HOW — anatomy -->
+<section class="slide dark" data-name="how — anatomy">
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">How · anatomy of a quantum computer</div><h2 class="r" style="--i:1">The "chandelier" is mostly a fridge.</h2></div>
+    <div class="body">
+      <div class="row r-32">
+        <div class="frag" style="display:grid;grid-template-columns:.8fr 1.2fr;gap:1.4vw">
+          <div class="viz"><svg viewBox="0 0 280 360" aria-label="dilution refrigerator">
+            <defs>
+              <linearGradient id="plate" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0c5a44"/><stop offset=".5" stop-color="#3bffba"/><stop offset="1" stop-color="#0c5a44"/></linearGradient>
+              <radialGradient id="chipG" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="#aaffe0"/><stop offset="1" stop-color="#01A982"/></radialGradient>
+            </defs>
+            <g stroke="rgba(255,255,255,.16)" stroke-width="2"><line x1="88" y1="34" x2="88" y2="300"/><line x1="140" y1="24" x2="140" y2="318"/><line x1="192" y1="34" x2="192" y2="300"/></g>
+            <path d="M112 52 C140 96,104 130,132 178 C154 220,116 254,140 296" fill="none" stroke="var(--accent-2)" stroke-width="1.4" opacity=".5" class="draw"/>
+            <path d="M168 52 C140 96,180 130,152 178 C128 220,164 254,140 296" fill="none" stroke="#6BFFB8" stroke-width="1.4" opacity=".5" class="draw"/>
+            <g><ellipse cx="140" cy="52" rx="108" ry="13" fill="url(#plate)"/><ellipse cx="140" cy="52" rx="108" ry="13" fill="none" stroke="#aaffe0" stroke-width=".6" opacity=".6"/>
+            <ellipse cx="140" cy="112" rx="92" ry="11" fill="url(#plate)"/><ellipse cx="140" cy="172" rx="74" ry="10" fill="url(#plate)"/>
+            <ellipse cx="140" cy="230" rx="58" ry="8" fill="url(#plate)"/><ellipse cx="140" cy="286" rx="42" ry="6" fill="url(#plate)"/></g>
+            <rect x="124" y="300" width="32" height="18" rx="3" fill="#0a3a2c"/>
+            <rect x="129" y="322" width="22" height="22" rx="3" fill="url(#chipG)" class="pt" style="animation-delay:1.1s"/>
+            <circle cx="140" cy="333" r="17" fill="none" stroke="var(--accent-2)" stroke-width="1" opacity=".5" class="pt" style="animation-delay:1.3s"/>
+            <g font-family="IBM Plex Mono" font-size="8.5" fill="var(--text-d2)" text-anchor="start"><text x="252" y="54">4 K</text><text x="240" y="114">800 mK</text><text x="240" y="174">100 mK</text><text x="248" y="232">10 mK</text><text x="236" y="344">15 mK</text></g>
+          </svg></div>
+          <div>
+            <ul class="blist"><li><span class="bullet"></span><span>Plates cool the chip in stages: <strong>4 K → 15 mK</strong> — colder than deep space</span></li><li><span class="bullet"></span><span>Gold-plated coax lines carry the microwave pulses that gate qubits</span></li><li><span class="bullet"></span><span>The processor is the <strong>fingernail-sized chip</strong> at the very bottom</span></li><li><span class="bullet"></span><span>Everything above preserves coherence — superconducting T<sub>1</sub> ≈ <strong>100 µs</strong></span></li><li><span class="bullet"></span><span>Shielding blocks thermal &amp; magnetic noise that would collapse the state</span></li></ul>
+            <div class="eq" style="margin-top:.5rem">gate fidelity → <strong style="color:var(--accent-2)">99.99%</strong> (IonQ) · <strong style="color:var(--accent-2)">99.921%</strong> 2-qubit (Quantinuum Helios)</div>
+            <div class="colhead" style="margin-top:.55rem">interesting facts</div>
+            <ul class="blist tight"><li><span class="bullet"></span><span>15 mK is <strong>~250× colder</strong> than deep space (2.7 K)</span></li><li><span class="bullet"></span><span>Cooling uses a <strong>³He/⁴He dilution</strong> cycle — no moving parts at the cold stage</span></li><li><span class="bullet"></span><span>Qubits are driven by microwave pulses near <strong>5 GHz</strong></span></li><li><span class="bullet"></span><span>The whole fridge can weigh <strong>hundreds of kg</strong> for a chip you can't see</span></li></ul>
+          </div>
+        </div>
+        <div class="card frag" style="justify-content:space-between;gap:.4rem"><div><div class="colhead">the cooling stack</div>
+          <table class="tbl"><tr><th>Stage</th><th>Temp</th><th>Role</th></tr>
+            <tr><td>Vacuum can</td><td class="n">300 K</td><td>isolates from air</td></tr>
+            <tr><td>Top plate</td><td class="n">4 K</td><td>pulse-tube precool</td></tr>
+            <tr><td>Still</td><td class="n">800 mK</td><td>³He / ⁴He mix</td></tr>
+            <tr><td>Cold plate</td><td class="n">100 mK</td><td>thermal anchor</td></tr>
+            <tr><td>Mixing ch.</td><td class="n">10 mK</td><td>coldest stage</td></tr>
+            <tr><td>Magnetic shield</td><td class="n">—</td><td>blocks stray fields</td></tr>
+            <tr><td>Chip</td><td class="n">15 mK</td><td>the qubits</td></tr>
+          </table>
+          <p style="font-size:.86rem;margin-top:.45rem">Roughly <strong>2 m tall</strong>, yet every wire exists to keep one tiny chip coherent.</p></div>
+          <div><div class="colhead">by the numbers</div>
+          <div class="kpi" style="margin-bottom:.34rem"><span class="v">24–48 h</span><span class="k">full cooldown to base temperature</span></div>
+          <div class="kpi" style="margin-bottom:.34rem"><span class="v">~100s kg</span><span class="k">fridge mass for a fingernail-sized chip</span></div>
+          <div class="kpi"><span class="v">³He</span><span class="k">scarce isotope — the costly coolant</span></div>
+          <div class="kpi" style="margin-top:.34rem"><span class="v">~µW</span><span class="k">cooling power at the coldest stage</span></div></div>
+          <div><div class="colhead">the scaling catch</div>
+          <p style="font-size:.86rem">Each logical qubit needs ~1,000 physical — so wiring &amp; refrigeration, not the chip, become the bottleneck. A key reason <strong>photonic</strong> &amp; networked approaches are gaining ground.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · HOW — advantage -->
+<section class="slide" data-name="how — advantage">
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">How · the most-abused phrase in the field</div><h2 class="r" style="--i:1">"Quantum advantage" is four different claims.</h2></div>
+    <div class="body">
+      <div class="row r-21">
+        <div class="card frag"><div class="colhead">the four claims, mapped</div>
+          <div class="viz" style="flex:1 1 auto;min-height:0"><svg viewBox="0 0 470 300" preserveAspectRatio="xMidYMid meet" style="max-height:100%" aria-label="advantage claims mapped by usefulness and verifiability">
+            <rect x="60" y="145" width="197" height="115" fill="rgba(154,163,178,.06)"/><rect x="257" y="30" width="198" height="115" fill="rgba(1,169,130,.07)"/>
+            <line x1="60" y1="260" x2="455" y2="260" stroke="var(--line-l)" stroke-width="1.4"/><line x1="60" y1="24" x2="60" y2="260" stroke="var(--line-l)" stroke-width="1.4"/>
+            <line x1="257" y1="30" x2="257" y2="260" stroke="var(--line-l)" stroke-width="1" stroke-dasharray="3 5"/><line x1="60" y1="145" x2="455" y2="145" stroke="var(--line-l)" stroke-width="1" stroke-dasharray="3 5"/>
+            <text x="450" y="253" text-anchor="end" font-family="IBM Plex Mono" font-size="11" fill="var(--text-l2)">useful →</text>
+            <text x="66" y="38" font-family="IBM Plex Mono" font-size="11" fill="var(--text-l2)">verifiable ↑</text>
+            <text x="152" y="250" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#9AA3B2" opacity=".75">most headlines</text>
+            <text x="356" y="46" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--accent)" opacity=".8">where value lives</text>
+            <g class="pt" style="animation-delay:1.0s"><circle cx="120" cy="202" r="7" fill="#9AA3B2"/><text x="120" y="220" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#9AA3B2">Willow</text></g>
+            <g class="pt" style="animation-delay:1.15s"><circle cx="296" cy="214" r="7" fill="#9AA3B2"/><text x="296" y="232" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#9AA3B2">D-Wave</text></g>
+            <g class="pt" style="animation-delay:1.3s"><circle cx="392" cy="146" r="7.5" fill="var(--accent)"/><text x="392" y="134" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--accent)">HSBC</text></g>
+            <g class="pt" style="animation-delay:1.45s"><circle cx="236" cy="66" r="7.5" fill="var(--accent)"/><text x="236" y="54" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--accent)">Echoes</text></g>
+            <g class="pt" style="animation-delay:1.6s"><text x="404" y="58" text-anchor="middle" font-family="IBM Plex Mono" font-size="20" fill="var(--accent-deep)">★</text><text x="404" y="40" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--accent-deep)">the goal</text></g>
+          </svg></div>
+          <div class="eq" style="margin-top:.5rem">amplitude estimation → error O(1/M) <span class="c">vs classical O(1/√M) — provable quadratic speedup</span></div>
+        </div>
+        <div class="card frag sb">
+          <ul class="blist tight"><li><span class="bullet" style="background:#9AA3B2"></span><span><strong>01 Contrived</strong> — RCS/OTOC. Beats classical, solves nothing useful.</span></li><li><span class="bullet" style="background:#9AA3B2"></span><span><strong>02 Useful-problem</strong> — D-Wave's materials sim. Real target, contested.</span></li><li><span class="bullet"></span><span><strong>03 Production value</strong> — HSBC 34%, banking 100×. Money.</span></li><li><span class="bullet"></span><span><strong>04 Verifiable</strong> — Quantum Echoes, 13,000×, independently checkable.</span></li></ul>
+          <p style="margin-top:.4rem">Most headlines live at tiers 1–2. The honest question for any claim: <strong>which tier?</strong></p>
+        </div>
+      </div>
+      <div class="row b r1">
+        <div class="card frag"><div class="colhead">claim → example → status</div>
+          <table class="tbl"><tr><th>Tier</th><th>Example</th><th>What it proves</th><th>Status</th></tr>
+            <tr><td>01 contrived</td><td>random-circuit sampling (Willow)</td><td>raw quantum speed</td><td class="n">peer-reviewed</td></tr>
+            <tr><td>02 useful-problem</td><td>magnetic-materials sim (D-Wave)</td><td>a real scientific target</td><td class="n">contested</td></tr>
+            <tr><td>03 production value</td><td>bond trading (HSBC×IBM)</td><td>business dollars</td><td class="n">reported</td></tr>
+            <tr><td>04 verifiable</td><td>OTOC echoes (Google)</td><td>checkable advantage</td><td class="n">peer-reviewed</td></tr>
+            <tr><td>★ the goal</td><td>fault-tolerant business win</td><td>real-world scale, replicated</td><td class="n">~2030</td></tr>
+          </table>
+          <p style="margin-top:.5rem">Ask of every headline: <strong>which tier, on whose hardware, and has anyone reproduced it?</strong> Tiers 1–2 dominate the news; tiers 3–4 are where value lives.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · FINANCE -->
+<section class="slide" data-name="finance">
+  <div class="sidelabel">Finance</div>
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">In practice · restructuring global finance</div><h2 class="r" style="--i:1">A 100× edge in banking — a decade ahead of schedule.</h2></div>
+    <p class="lead r" style="--i:2">Finance is the primary beneficiary — markets are high-velocity, multidimensional optimization under hard risk constraints. Useful quantum finance arrived a decade early, with results major banks now report on real hardware.</p>
+    <div class="body">
+      <div class="row b r4">
+        <div class="card frag mini"><div class="edge"></div><div class="metric"><span data-count="100">0</span>×</div><div class="lbl">advantage in specific banking ops <strong>(Multiverse)</strong></div></div>
+        <div class="card frag mini"><div class="edge"></div><div class="metric"><span data-count="34">0</span>%</div><div class="lbl">HSBC × IBM bond-RFQ fill · 1.7M requests on Heron</div><div class="src">Sept 2025</div></div>
+        <div class="card frag mini"><div class="edge"></div><div class="metric">1.1<span style="font-size:.5em"> EFLOP</span></div><div class="lbl">JPMorgan × Quantinuum certified randomness</div><div class="src">Nature · Mar 2025</div></div>
+        <div class="card frag mini"><div class="edge"></div><div class="metric"><span data-count="60">0</span>/<span data-count="15">0</span></div><div class="lbl">BBVA × Multiverse — % return vs % volatility</div></div>
+      </div>
+      <div class="row r-21">
+        <div class="card frag"><div class="colhead">derivative pricing · quantum monte carlo</div>
+          <div class="viz" style="flex:1;min-height:0"><svg viewBox="0 0 420 200" preserveAspectRatio="xMidYMid meet" style="max-height:100%" aria-label="convergence">
+            <line x1="40" y1="168" x2="406" y2="168" stroke="var(--line-l)" stroke-width="1.4"/><line x1="40" y1="168" x2="40" y2="14" stroke="var(--line-l)" stroke-width="1.4"/>
+            <path d="M42 26 C140 96,240 138,404 152" fill="none" stroke="#9AA3B2" stroke-width="2.8" class="draw"><title>classical O(1/√M)</title></path>
+            <path d="M42 26 C100 122,180 156,404 160" fill="none" stroke="var(--accent)" stroke-width="3" class="draw"><title>quantum O(1/M) — quadratic speedup</title></path>
+            <text x="270" y="118" font-family="IBM Plex Mono" font-size="11" fill="#9AA3B2">classical · 1/√M</text>
+            <text x="210" y="152" font-family="IBM Plex Mono" font-size="11" fill="var(--accent)">quantum · 1/M</text>
+            <text x="48" y="24" font-family="IBM Plex Mono" font-size="11" fill="var(--text-l2)">error</text><text x="380" y="186" font-family="IBM Plex Mono" font-size="11" fill="var(--text-l2)">samples →</text>
+          </svg></div>
+          <p style="font-size:.9rem;margin-top:.3rem">Amplitude estimation gives a <strong>provable quadratic speedup</strong> — millions of pricing paths collapse to thousands, turning overnight risk batches into interactive analysis.</p>
+        </div>
+        <div class="card frag fillcard"><div class="colhead">portfolio optimization</div>
+          <p style="font-size:.9rem">Modern Portfolio Theory is bi-level — maximize return, bound risk, honor diversification &amp; holding constraints across thousands of assets.</p>
+          <ul class="blist tight" style="margin-top:.4rem"><li><span class="bullet"></span><span>annealers handle <strong>cardinality constraints</strong> natively</span></li><li><span class="bullet"></span><span>Multiverse <strong>Singularity SDK</strong> drops into workflows</span></li><li><span class="bullet"></span><span>BBVA: <strong>60% return @ 15%</strong> volatility, annealed</span></li><li><span class="bullet"></span><span>captures asset correlations classical models prune</span></li><li><span class="bullet"></span><span>rebalances dynamically as markets move</span></li><li><span class="bullet"></span><span>same engine → credit risk &amp; collateral</span></li></ul>
+        </div>
+      </div>
+      <div class="row r3">
+        <div class="card frag"><div class="colhead">instruments · timeline</div>
+          <table class="tbl"><tr><th>Instrument</th><th>Status</th></tr>
+            <tr><td>European options</td><td class="n">priced now</td></tr>
+            <tr><td>Asian options</td><td class="n">priced now</td></tr>
+            <tr><td>Rainbow / autocallables</td><td class="n">≈ 2029</td></tr>
+            <tr><td>Real-time risk (VaR)</td><td class="n">post-FTQC</td></tr>
+          </table>
+        </div>
+        <div class="card frag"><div class="colhead">fraud &amp; regulatory</div>
+          <ul class="blist tight"><li><span class="bullet"></span><span><strong>QML</strong> lifts deep-learning fraud accuracy across millions of payment variables</span></li><li><span class="bullet"></span><span>simultaneous processing of disparate risk signals</span></li><li><span class="bullet"></span><span>minimizes illicit transactions across payment gateways</span></li></ul>
+        </div>
+        <div class="card frag"><div class="colhead">who's deploying</div>
+          <div class="logo-wall"><span class="lg"><svg width="13" height="13" viewBox="0 0 24 24"><polygon points="12,2 22,7 22,17 12,22 2,17 2,7" fill="none" stroke="#01A982" stroke-width="1.6"/></svg>HSBC</span><span class="lg">JPMorgan</span><span class="lg">Goldman</span><span class="lg">BBVA</span><span class="lg">Multiverse</span><span class="lg">IBM</span><span class="lg">Quantinuum</span></div>
+          <p style="font-size:.88rem;margin-top:.5rem">Banks now publish results on real hardware — the "decade away" framing is gone.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · LOGISTICS -->
+<section class="slide" data-name="logistics & manufacturing">
+  <div class="sidelabel">Supply Chain</div>
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">In practice · supply chains &amp; manufacturing</div><h2 class="r" style="--i:1">Days of classical compute → minutes on hybrid solvers.</h2></div>
+    <div class="body">
+      <div class="row r-21">
+        <div class="frag" style="display:flex;flex-direction:column;gap:.6rem;min-height:0">
+        <div class="card" style="flex:0 0 auto"><div class="colhead">real-world deployments</div>
+          <table class="tbl"><tr><th>Deployment</th><th>Application</th><th>Impact</th></tr>
+            <tr><td><strong>Port of LA</strong> — SavantX/D-Wave</td><td>crane &amp; truck routing</td><td class="n">+60% / crane</td></tr>
+            <tr><td><strong>Ford Otosan</strong></td><td>1,000 vehicles, 30→&lt;5 min</td><td class="n">83%</td></tr>
+            <tr><td><strong>Pattison Food</strong></td><td>workforce scheduling, 80h → 15h</td><td class="n">80%</td></tr>
+            <tr><td><strong>Airbus × IonQ</strong></td><td>aircraft loading (MAL-VQA)</td><td class="n">28 qubits</td></tr>
+            <tr><td><strong>Volkswagen</strong></td><td>paint lines · fleet · Lisbon buses</td><td class="n">live</td></tr>
+            <tr><td><strong>Demand forecasting</strong></td><td>folds historical + real-time data</td><td class="n">top-4</td></tr>
+            <tr><td><strong>Procurement → control tower</strong></td><td>end-to-end digital twin</td><td class="n">days→min</td></tr>
+          </table>
+          </div>
+          <div class="card" style="flex:1 1 auto;min-height:0"><div class="colhead">the common pattern</div>
+            <ul class="blist tight fill"><li><span class="bullet"></span><span>routing, sequencing, scheduling &amp; loading all reduce to <strong>QUBO / Ising</strong></span></li><li><span class="bullet"></span><span>hybrid solvers run <strong>alongside</strong> classical systems — no rip-and-replace</span></li><li><span class="bullet"></span><span>overnight batches collapse to <strong>interactive minutes</strong></span></li></ul>
+          </div>
+        </div>
+        <div class="card frag"><div class="colhead">why classical stalls</div>
+          <ul class="blist fill"><li><span class="bullet"></span><span>the "<strong>curse of dimensionality</strong>" — optimal paths grow exponentially with variables, overwhelming classical HPC</span></li><li><span class="bullet"></span><span>annealers evaluate the whole landscape at once, <strong>tunneling</strong> to the global minimum</span></li><li><span class="bullet"></span><span>classical models simplify variables to stay computable — and make <strong>sub-optimal</strong> calls</span></li><li><span class="bullet"></span><span>quantum decision tools run <strong>alongside</strong> classical systems, raising the efficiency bar</span></li></ul>
+          <div class="colhead" style="margin-top:.5rem">ford otosan · sequencing time</div>
+          <div class="viz" style="height:auto"><svg viewBox="0 0 300 96" preserveAspectRatio="xMidYMid meet" style="max-height:96px" aria-label="Ford sequencing time">
+            <line x1="24" y1="80" x2="288" y2="80" stroke="var(--line-l)" stroke-width="1.3"/>
+            <rect x="60" y="24" width="46" height="56" rx="3" fill="#9AA3B2"><title>classical ≈ 30 minutes</title></rect>
+            <rect x="190" y="66" width="46" height="14" rx="3" fill="var(--accent)"><title>quantum ≈ under 5 minutes</title></rect>
+            <polyline points="83,24 213,66" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="6 4"/>
+            <circle cx="83" cy="24" r="4.5" fill="#9AA3B2"/><circle cx="213" cy="66" r="4.5" fill="var(--accent)"/>
+            <text x="83" y="94" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#9AA3B2">30 min</text>
+            <text x="213" y="94" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="var(--accent)">&lt; 5 min</text>
+            <text x="150" y="40" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="var(--accent)">−83%</text>
+          </svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · LIFE SCIENCES & ENERGY -->
+<section class="slide" data-name="life sciences & energy">
+  <div class="sidelabel">Life Sciences</div>
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">In practice · life sciences &amp; sustainable energy</div><h2 class="r" style="--i:1">Simulating molecules natively; balancing the grid in real time.</h2><p class="lead r" style="--i:2">Quantum's combinatorial power reaches into biology and the physical sciences — accelerating drug discovery, sharpening diagnosis, and stabilizing the renewable grid.</p></div>
+    <div class="body">
+      <div class="row r2">
+        <div class="card frag"><div class="colhead">healthcare &amp; pharma</div>
+          <div class="row b r2" style="gap:.5rem;margin-bottom:.5rem">
+            <div class="card soft mini" style="box-shadow:none"><div class="edge"></div><div class="metric">&gt;<span data-count="20">0</span>×</div><div class="lbl">AstraZeneca + AWS · IonQ · NVIDIA — chemistry, months→days</div></div>
+            <div class="card soft mini" style="box-shadow:none"><div class="edge"></div><div class="metric"><span data-count="234">0</span>×</div><div class="lbl">PsiQuantum × Boehringer — P450 (278× FeMoco)</div></div>
+          </div>
+          <ul class="blist tight"><li><span class="bullet"></span><span>simulates molecular interactions <strong>natively</strong>, cutting drug-trial failure rates</span></li><li><span class="bullet"></span><span><strong>QML</strong> classifies cancer subtypes from radiomic &amp; genomic data</span></li><li><span class="bullet"></span><span>optimizes <strong>radiotherapy dosing</strong> — spares healthy tissue</span></li><li><span class="bullet"></span><span>predicts <strong>therapy resistance</strong> from tumor models</span></li><li><span class="bullet"></span><span><strong>Cleveland Clinic × IBM</strong> — first on-site quantum system for healthcare research</span></li><li><span class="bullet"></span><span>protein folding &amp; docking via <strong>QUBO lattice</strong> models</span></li></ul>
+        </div>
+        <div class="card frag"><div class="colhead">smart grids &amp; materials</div>
+          <ul class="blist tight"><li><span class="bullet"></span><span><strong>TNO</strong> hybrid solvers beat classical on multi-node power-grid optimization</span></li><li><span class="bullet"></span><span>real-time balancing of solar &amp; wind → fewer blackouts, less waste</span></li><li><span class="bullet"></span><span>analyzes massive streams of grid telemetry as it arrives</span></li><li><span class="bullet"></span><span>simulates next-gen <strong>photovoltaics &amp; batteries</strong></span></li><li><span class="bullet"></span><span><strong>EV battery &amp; electrolyte</strong> discovery — Mercedes-Benz, BMW chemistry pilots</span></li><li><span class="bullet"></span><span>unit-commitment &amp; grid-load balancing as QUBO; <strong>carbon-capture</strong> catalysts</span></li></ul>
+          <div class="eq" style="margin-top:.5rem">~10<sup>3</sup> logical qubits <span class="c">for ~99% of drug molecules — none exist yet</span></div>
+        </div>
+      </div>
+      <div class="row b r-21">
+        <div class="card frag"><div class="colhead">quantum vs classical · simulation speedup (reported / projected)</div>
+          <div style="display:flex;gap:1.2rem;align-items:center">
+            <div class="viz" style="flex:1.3;height:130px"><svg viewBox="0 0 340 130" preserveAspectRatio="xMidYMid meet" style="max-height:130px" aria-label="simulation speedup">
+              <line x1="36" y1="108" x2="330" y2="108" stroke="var(--line-l)" stroke-width="1.3"/><line x1="36" y1="12" x2="36" y2="108" stroke="var(--line-l)" stroke-width="1.3"/>
+              <rect x="64" y="100" width="50" height="8" rx="2" fill="var(--accent-deep)"><title>AstraZeneca chemistry ≈ 20×</title></rect>
+              <rect x="156" y="26" width="50" height="82" rx="3" fill="var(--accent)"><title>PsiQuantum P450 ≈ 234×</title></rect>
+              <rect x="248" y="14" width="50" height="94" rx="3" fill="var(--accent)"><title>PsiQuantum FeMoco ≈ 278×</title></rect>
+              <polyline points="89,100 181,26 273,14" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="6 4"/>
+              <g fill="var(--accent)"><circle cx="89" cy="100" r="4"/><circle cx="181" cy="26" r="4"/><circle cx="273" cy="14" r="4"/></g>
+              <g font-family="IBM Plex Mono" font-size="10" fill="var(--text-l2)" text-anchor="middle"><text x="89" y="124">20×</text><text x="181" y="124">234×</text><text x="273" y="124">278×</text></g>
+            </svg></div>
+            <div style="flex:1"><p style="font-size:.9rem">Simulating catalysts like P450 and FeMoco — central to drug metabolism and nitrogen fixation — is exponentially hard classically. Quantum chemistry promises order-of-magnitude leaps once logical qubits arrive.</p></div>
+          </div>
+        </div>
+        <div class="card frag"><div class="colhead">near-term readiness</div>
+          <div class="kpi" style="margin-bottom:.5rem"><span class="v">now</span><span class="k">hybrid QML diagnostics &amp; grid pilots</span></div>
+          <div class="kpi" style="margin-bottom:.5rem"><span class="v">~2030</span><span class="k">fault-tolerant molecular simulation</span></div>
+          <div class="kpi"><span class="v">10³</span><span class="k">logical qubits for most drug molecules</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 · SECURITY & SOVEREIGN (INDIA) -->
+<section class="slide dark" data-name="security & sovereignty">
+  <div class="sidelabel">India</div>
+  <svg viewBox="0 0 100 100" style="position:absolute;right:2.5vw;top:8vh;width:230px;height:230px;opacity:.12;z-index:0" aria-hidden="true">
+    <circle cx="50" cy="50" r="44" fill="none" stroke="var(--accent-2)" stroke-width="1.6"/>
+    <circle cx="50" cy="50" r="6" fill="var(--accent-2)"/>
+    <g stroke="var(--accent-2)" stroke-width="1.1">
+      <line x1="6" y1="50" x2="94" y2="50"/><line x1="50" y1="6" x2="50" y2="94"/>
+      <line x1="14.8" y1="27.5" x2="85.2" y2="72.5"/><line x1="27.5" y1="14.8" x2="72.5" y2="85.2"/>
+      <line x1="72.5" y1="14.8" x2="27.5" y2="85.2"/><line x1="85.2" y1="27.5" x2="14.8" y2="72.5"/>
+      <line x1="9.6" y1="38.5" x2="90.4" y2="61.5"/><line x1="38.5" y1="9.6" x2="61.5" y2="90.4"/>
+      <line x1="61.5" y1="9.6" x2="38.5" y2="90.4"/><line x1="90.4" y1="38.5" x2="9.6" y2="61.5"/>
+      <line x1="9.6" y1="61.5" x2="90.4" y2="38.5"/><line x1="61.5" y1="90.4" x2="38.5" y2="9.6"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">In practice · the sovereign race</div><h2 class="r" style="--i:1">India's quantum mission</h2><p class="lead r" style="--i:2">A national bet across mission funding, sovereign parks and state valleys — building hardware, secure networks and talent so India isn't dependent on foreign quantum stacks.</p></div>
+    <div class="body">
+      <div class="row r3">
+        <div class="card frag"><div class="edge"></div><h4>National Quantum Mission</h4><div class="metric" style="margin:.3rem 0">₹6,003<span style="font-size:.45em"> cr</span></div>
+          <ul class="blist tight"><li><span class="bullet"></span><span>8-year mission, approved <strong>2023</strong></span></li><li><span class="bullet"></span><span>target <strong>50–1,000 physical qubits</strong></span></li><li><span class="bullet"></span><span><strong>4 thematic hubs</strong> across 43 institutions — IISc, IIT-Bombay, IIT-Delhi, IIT-Madras</span></li><li><span class="bullet"></span><span>pillars: computing · comms · sensing · materials</span></li></ul></div>
+        <div class="card frag"><div class="edge"></div><h4>GKQCTP — India's first quantum park</h4><div class="metric" style="margin:.3rem 0">$50B<span style="font-size:.4em"> vision</span></div>
+          <ul class="blist tight"><li><span class="bullet"></span><span>Greater Karnavati QC Tech Park, <strong>Gujarat</strong> · ~₹4,000 cr seed</span></li><li><span class="bullet"></span><span>Innogress + <strong>IIT Gandhinagar</strong>; full value chain — fab, cryogenics, test beds, skilling</span></li><li><span class="bullet"></span><span>Tabor scaling toward <strong>1M qubits</strong>; S-Qube Rydberg radars &amp; comms</span></li><li><span class="bullet"></span><span><em>a program the speaker contributed to at Innogress</em></span></li></ul></div>
+        <div class="card frag"><div class="edge"></div><h4>The unbreakable network</h4><div class="metric" style="margin:.3rem 0"><span data-count="1000">0</span><span style="font-size:.4em"> km</span></div>
+          <ul class="blist tight"><li><span class="bullet"></span><span><strong>QNu Labs</strong> continuous QKD — VIAVI-validated, 2026</span></li><li><span class="bullet"></span><span>BB84 secured by <strong>physics, not math</strong></span></li><li><span class="bullet"></span><span>counters "<strong>harvest now, decrypt later</strong>"</span></li><li><span class="bullet"></span><span>NIST PQC standards finalized Aug 2024</span></li></ul></div>
+      </div>
+      <div class="row b r-21">
+        <div class="card frag" style="justify-content:space-between;gap:.5rem"><div><div class="colhead">public investment by initiative (₹ crore)</div>
+          <div style="display:flex;gap:1.1rem;align-items:center">
+            <div class="viz" style="flex:1.3;height:140px"><svg viewBox="0 0 340 140" preserveAspectRatio="xMidYMid meet" style="max-height:140px" aria-label="investment by initiative">
+              <line x1="40" y1="116" x2="332" y2="116" stroke="rgba(255,255,255,.18)" stroke-width="1.3"/><line x1="40" y1="12" x2="40" y2="116" stroke="rgba(255,255,255,.18)" stroke-width="1.3"/>
+              <g><rect x="60" y="22" width="44" height="94" rx="3" fill="var(--accent-2)"><title>NQM ₹6,003 cr</title></rect>
+                 <rect x="132" y="54" width="44" height="62" rx="3" fill="var(--accent)"><title>GKQCTP ≈ ₹4,000 cr</title></rect>
+                 <rect x="204" y="100" width="44" height="16" rx="3" fill="var(--accent-deep)"><title>Karnataka ₹1,000 cr</title></rect>
+                 <rect x="276" y="100" width="44" height="16" rx="3" fill="var(--accent-deep)"><title>Telangana ₹1,000 cr</title></rect></g>
+              <polyline points="82,22 154,54 226,100 298,100" fill="none" stroke="#6BFFB8" stroke-width="2.2" stroke-dasharray="6 4"/>
+              <g fill="#6BFFB8"><circle cx="82" cy="22" r="4"/><circle cx="154" cy="54" r="4"/><circle cx="226" cy="100" r="4"/><circle cx="298" cy="100" r="4"/></g>
+              <g font-family="IBM Plex Mono" font-size="9.5" fill="var(--text-d2)" text-anchor="middle"><text x="82" y="130">NQM</text><text x="154" y="130">GKQCTP</text><text x="226" y="130">K'taka</text><text x="298" y="130">T'gana</text></g>
+            </svg></div>
+            <div style="flex:1"><p style="font-size:.84rem">Beyond central funding, states compete — Andhra, Karnataka, Telangana &amp; Gujarat each anchoring quantum valleys.</p><ul class="blist tight" style="margin-top:.4rem"><li><span class="bullet"></span><span><strong>NQM ₹6,003 cr</strong> — among the world's larger national bets</span></li><li><span class="bullet"></span><span>states adding <strong>₹1,000 cr+</strong> each; Gujarat ~₹4,000 cr seed</span></li><li><span class="bullet"></span><span>Amaravati hosts an <strong>IBM Quantum System Two</strong></span></li><li><span class="bullet"></span><span>private capital rising — <strong>QpiAI, QNu Labs</strong> raising growth rounds</span></li><li><span class="bullet"></span><span>funding disbursed across <strong>4 hubs</strong> through 2031</span></li></ul></div>
+          </div>
+          </div>
+          <div>
+            <div class="colhead">scale &amp; momentum</div>
+            <div class="statrow"><div class="stcell"><b>₹12,000 cr+</b><span>public + state committed</span></div><div class="stcell"><b>4+ states</b><span>with dedicated budgets</span></div><div class="stcell"><b>4 hubs</b><span>43 institutions</span></div><div class="stcell"><b>2031</b><span>NQM mission horizon</span></div></div>
+          </div>
+        </div>
+        <div class="card frag"><div class="colhead">state quantum valleys</div>
+          <table class="tbl"><tr><th>State</th><th>Anchor</th><th>Target</th></tr>
+            <tr><td><strong>Andhra</strong> — Amaravati Quantum Valley</td><td>IBM System Two · TCS · QChipIN</td><td class="n">3,000 qubits ’29</td></tr>
+            <tr><td><strong>Karnataka</strong> — QCity, Hessarghatta</td><td>IISc Quantum Research</td><td class="n">$20B by ’35</td></tr>
+            <tr><td><strong>Telangana</strong> — IIIT-H CoE</td><td>QuantumBasel partner</td><td class="n">intl. hub</td></tr>
+            <tr><td><strong>Gujarat</strong> — GKQCTP</td><td>IIT Gandhinagar · Tabor</td><td class="n">→ 1M qubits</td></tr>
+          </table>
+          <p style="font-size:.88rem;margin-top:.4rem">Plus BRICS-framework collaboration with Russia on standards &amp; workforce.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 · HARDWARE + ROADMAP -->
+<section class="slide" data-name="hardware & roadmap">
+  <div class="wrap">
+    <div class="head"><div class="eyebrow r" style="--i:0">The machines · five modalities</div><h2 class="r" style="--i:1">Five horses, one race to useful scale.</h2><p class="lead r" style="--i:2">No qubit technology has won. Each trades away something — speed, fidelity, connectivity, temperature or scalability — so the field is hedging across all five at once.</p></div>
+    <div class="body">
+      <div class="row r2">
+        <div class="card frag"><div class="colhead">the five modalities — distinct bets</div>
+          <table class="tbl"><tr><th>Modality</th><th>Leaders</th><th>Edge / trade-off</th></tr>
+            <tr><td><strong>Superconducting</strong></td><td>IBM · Google</td><td>fast gates · needs 15 mK fridge</td></tr>
+            <tr><td><strong>Trapped-ion</strong></td><td>Quantinuum · IonQ</td><td>highest fidelity · slower gates</td></tr>
+            <tr><td><strong>Neutral-atom</strong></td><td>QuEra · Pasqal · Atom</td><td>large, reconfigurable arrays</td></tr>
+            <tr><td><strong>Photonic</strong></td><td>PsiQuantum · Xanadu</td><td>room-temp · networks naturally</td></tr>
+            <tr><td><strong>Annealing</strong></td><td>D-Wave</td><td>4,400+ qubits now · optimization-only</td></tr>
+          </table>
+          <p style="font-size:.9rem;margin-top:.5rem">Gate-based machines chase universality; annealers already ship at scale for optimization.</p>
+        </div>
+        <div class="card frag"><div class="colhead">modality profile · maturity vs scaling headroom</div>
+          <div class="viz" style="flex:1;min-height:0"><svg viewBox="0 0 300 215" preserveAspectRatio="xMidYMid meet" style="max-height:100%" aria-label="modality radar">
+            <polygon points="115,22 189.2,75.9 160.9,163.1 69.1,163.1 40.8,75.9" fill="none" stroke="var(--line-l)" stroke-width="1.2"/>
+            <polygon points="115,61 152.1,87.95 137.9,131.55 92.1,131.55 77.9,87.95" fill="none" stroke="var(--line-l)" stroke-width="1"/>
+            <g stroke="var(--line-l)" stroke-width="1"><line x1="115" y1="100" x2="115" y2="22"/><line x1="115" y1="100" x2="189.2" y2="75.9"/><line x1="115" y1="100" x2="160.9" y2="163.1"/><line x1="115" y1="100" x2="69.1" y2="163.1"/><line x1="115" y1="100" x2="40.8" y2="75.9"/></g>
+            <polygon points="115,29.8 174.3,80.7 142.5,137.9 92.1,131.6 63.1,83.1" fill="var(--accent)" fill-opacity="0.18" stroke="var(--accent)" stroke-width="2.2"/>
+            <polygon points="115,45.4 166.9,83.1 156.3,156.8 73.7,156.8 70.5,85.5" fill="none" stroke="var(--accent-deep)" stroke-width="2" stroke-dasharray="5 4"/>
+            <g font-family="IBM Plex Mono" font-size="10" fill="var(--text-l2)"><text x="115" y="14" text-anchor="middle">Superconducting</text><text x="193" y="74" text-anchor="start">Trapped-ion</text><text x="165" y="178" text-anchor="start">Neutral-atom</text><text x="65" y="178" text-anchor="end">Photonic</text><text x="37" y="74" text-anchor="end">Annealing</text></g>
+          </svg></div>
+          <div style="display:flex;gap:1.2rem;justify-content:center;font-family:var(--mono);font-size:.78rem;color:var(--text-l2)"><span><span style="color:var(--accent)">▬</span> maturity today</span><span><span style="color:var(--accent-deep)">┄</span> scaling headroom</span></div>
+        </div>
+      </div>
+      <div class="row r-21">
+        <div class="card frag"><div class="colhead">logical qubits · vendor roadmaps (log)</div>
+          <div class="viz" style="flex:1;min-height:0"><svg viewBox="0 0 460 250" preserveAspectRatio="xMidYMid meet" style="max-height:100%" aria-label="logical qubit roadmap">
+            <line x1="46" y1="14" x2="46" y2="208" stroke="#C9CDD4" stroke-width="1.3"/><line x1="46" y1="208" x2="446" y2="208" stroke="#C9CDD4" stroke-width="1.3"/>
+            <g font-family="IBM Plex Mono" font-size="11" fill="#9aa0ad" text-anchor="end"><text x="38" y="196">10</text><text x="38" y="148">100</text><text x="38" y="100">1k</text><text x="38" y="52">10k</text><text x="38" y="20">80k</text></g>
+            <g font-family="IBM Plex Mono" font-size="11" fill="#9aa0ad" text-anchor="middle"><text x="116" y="224">'25</text><text x="232" y="224">'27</text><text x="328" y="224">'29</text><text x="414" y="224">'30</text></g>
+            <polyline class="draw" points="232,110 328,62 414,22" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <g><circle class="pt" style="animation-delay:1.3s" cx="232" cy="110" r="5" fill="var(--accent)"><title>IonQ 2027</title></circle><circle class="pt" style="animation-delay:1.5s" cx="328" cy="62" r="5" fill="var(--accent)"/><circle class="pt" style="animation-delay:1.7s" cx="414" cy="22" r="5" fill="var(--accent)"><title>IonQ 80k by 2030</title></circle></g>
+            <text x="414" y="16" text-anchor="end" font-family="IBM Plex Mono" font-size="11" fill="var(--accent)">IonQ · 80k</text>
+            <polyline class="draw" points="328,128 440,78" fill="none" stroke="var(--accent-deep)" stroke-width="3" stroke-linecap="round"/>
+            <g><circle class="pt" style="animation-delay:1.5s" cx="328" cy="128" r="5" fill="var(--accent-deep)"><title>IBM Starling 200 (2029)</title></circle><circle class="pt" style="animation-delay:1.8s" cx="440" cy="78" r="5" fill="var(--accent-deep)"><title>IBM Blue Jay 2k (2033)</title></circle></g>
+            <text x="320" y="122" text-anchor="end" font-family="IBM Plex Mono" font-size="11" fill="var(--accent-deep)">IBM Starling · 200</text>
+            <circle class="pt" style="animation-delay:1.1s" cx="116" cy="158" r="5" fill="#17EBA0"><title>Quantinuum Helios 48</title></circle>
+            <text x="124" y="162" font-family="IBM Plex Mono" font-size="11" fill="#01A982">Quantinuum · 48</text>
+          </svg></div>
+          <p style="font-family:var(--mono);font-size:.86rem;color:var(--text-l2)">Vendor targets, aspirational. Google separately targets ~1,000,000 physical qubits.</p>
+        </div>
+        <div class="card frag"><div class="colhead">leading specs today</div>
+          <table class="tbl"><tr><th>Leader</th><th>Metric</th><th>Value</th></tr>
+            <tr><td>IonQ</td><td>2-qubit fidelity</td><td class="n">99.99%</td></tr>
+            <tr><td>Quantinuum Helios</td><td>physical / logical</td><td class="n">98 / 48</td></tr>
+            <tr><td>IBM Nighthawk</td><td>qubits</td><td class="n">120</td></tr>
+            <tr><td>D-Wave Adv2</td><td>annealing qubits</td><td class="n">4,400+</td></tr>
+            <tr><td>Coherence (SC)</td><td>T<sub>1</sub></td><td class="n">~100 µs</td></tr>
+            <tr><td>Google</td><td>physical target</td><td class="n">~1M</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 · THANK YOU -->
+<section class="slide dark title-slide" data-name="thank you">
+  <div class="wrap">
+    <h1 class="r" style="--i:0;font-size:clamp(3.5rem,12vw,9rem);margin-top:.4rem">thank you</h1>
+    <p class="r" style="--i:1;font-family:var(--mono);font-size:clamp(.95rem,1.5vw,1.2rem);letter-spacing:.06em;color:var(--text-d2);margin-top:2rem">Archit Srivastava · araqnum</p>
+    <p class="r" style="--i:2;font-family:var(--mono);font-size:clamp(.95rem,1.5vw,1.2rem);letter-spacing:.06em;color:var(--text-d2);margin-top:.6rem">architsrivastava3115@gmail.com</p>
+  </div>
+</section>
+
+</div>
+
+<div class="zone left" id="zL"></div>
+<div class="zone right" id="zR"></div>
+<div id="dots"></div>
+<div class="hud bl" id="hint">tap or → to advance · pages auto-build · f fullscreen</div>
+<div class="hud br">
+  <button class="navbtn" id="prev" aria-label="previous">‹</button>
+  <span class="count"><b id="cur">1</b> / <span id="tot">17</span></span>
+  <button class="navbtn" id="next" aria-label="next">›</button>
+  <button class="navbtn" id="fs" aria-label="fullscreen">⤢</button>
+</div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')], tot=slides.length;
+  let i=0, pending=[];
+  const cur=document.getElementById('cur'), prog=document.getElementById('prog'), dotsEl=document.getElementById('dots'), body=document.body;
+  document.getElementById('tot').textContent=tot;
+  slides.forEach((s,k)=>{const d=document.createElement('i');d.onclick=()=>jump(k);dotsEl.appendChild(d);});
+  const dots=[...dotsEl.children];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fragsOf=s=>[...s.querySelectorAll('.frag')];
+
+  function animateCounters(scope){
+    scope.querySelectorAll('[data-count]').forEach(el=>{
+      if(el.dataset.done)return; el.dataset.done='1';
+      const target=parseFloat(el.dataset.count), dur=1200, dec=el.dataset.dec?+el.dataset.dec:0; let st=null;
+      function step(ts){if(!st)st=ts;const p=Math.min((ts-st)/dur,1),e=1-Math.pow(1-p,3),v=target*e;
+        el.textContent=dec?v.toFixed(dec):Math.round(v).toLocaleString(); if(p<1)requestAnimationFrame(step);}
+      el.textContent=dec?'0.0':'0'; requestAnimationFrame(step);
+    });
+  }
+  function resetCounters(s){ s.querySelectorAll('[data-count]').forEach(el=>el.dataset.done=''); }
+  function applyMode(){ body.classList.toggle('on-dark', slides[i].classList.contains('dark')); }
+  function clearPending(){ pending.forEach(clearTimeout); pending=[]; }
+
+  function enter(s){
+    clearPending(); resetCounters(s);
+    const f=fragsOf(s); f.forEach(x=>x.classList.remove('shown'));
+    if(reduce){ f.forEach(x=>x.classList.add('shown')); animateCounters(s); return; }
+    f.forEach((x,idx)=> pending.push(setTimeout(()=>{ x.classList.add('shown'); animateCounters(x); }, 500 + idx*340)));
+  }
+  function paint(){ cur.textContent=i+1; prog.style.width=(i/(tot-1)*100)+'%'; dots.forEach((d,k)=>d.classList.toggle('on',k===i)); }
+  function show(n){ n=Math.max(0,Math.min(tot-1,n)); if(n===i)return;
+    slides[i].classList.remove('active'); clearPending(); i=n; const s=slides[i]; s.classList.add('active'); applyMode(); enter(s); paint(); }
+  const next=()=>show(i+1), prev=()=>show(i-1), jump=n=>show(n);
+
+  document.getElementById('next').onclick=next; document.getElementById('prev').onclick=prev;
+  document.getElementById('zR').onclick=next; document.getElementById('zL').onclick=prev;
+  const fsBtn=document.getElementById('fs');
+  fsBtn.onclick=()=>{if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}else{document.exitFullscreen&&document.exitFullscreen();}};
+  addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();next();}
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();prev();}
+    else if(e.key==='Home')jump(0); else if(e.key==='End')jump(tot-1);
+    else if(e.key==='f'||e.key==='F')fsBtn.click();});
+  setTimeout(()=>{const el=document.getElementById('hint');el.style.transition='opacity 1s';el.style.opacity='0';},5000);
+  applyMode(); enter(slides[0]); paint();
+
+  if(!reduce){
+    const field=document.getElementById('field'), ctx=field.getContext('2d'); let w,h,t=0,mx=.5,my=.5;
+    const dark=['23,235,160','107,255,184','255,255,255'], light=['1,169,130','0,107,82','23,235,160'];
+    function size(){w=field.width=innerWidth*devicePixelRatio;h=field.height=innerHeight*devicePixelRatio;field.style.width=innerWidth+'px';field.style.height=innerHeight+'px';}
+    addEventListener('mousemove',e=>{mx=e.clientX/innerWidth;my=e.clientY/innerHeight;});
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      const onDark=body.classList.contains('on-dark'), C=onDark?dark:light, base=onDark?.05:.045, lines=28, mxp=(mx-.5)*2;
+      for(let L=0;L<lines;L++){
+        const phase=t*0.00036 + L*0.16 + mxp*0.5;
+        const amp=(h*0.16)*(0.5+0.5*Math.sin(L*0.4));
+        const yBase=h*(0.3+my*0.4) + (L-lines/2)*(h*0.013);
+        const o=base+0.03*Math.sin(L);
+        ctx.beginPath();
+        for(let x=0;x<=w;x+=20*devicePixelRatio){
+          const y=yBase + Math.sin(x*0.0016+phase)*amp*0.5 + Math.sin(x*0.0007-phase*1.4)*amp*0.5;
+          x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+        }
+        ctx.strokeStyle='rgba('+C[L%3]+','+Math.max(0.02,o)+')';
+        ctx.lineWidth=devicePixelRatio*0.8; ctx.stroke();
+      }
+      t+=16; requestAnimationFrame(draw);
+    }
+    addEventListener('resize',size); size(); draw();
+  }
+})();
+</script>
+</body>
+</html>
