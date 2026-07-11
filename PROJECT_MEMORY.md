@@ -1,13 +1,14 @@
 # Lectures — Project Memory (reusable across sessions)
-*Persistent context for the QML-2026 FDP lecture decks. Read this first when resuming or starting Session 2.
-Last updated: 2026-07-11. To build a queryable knowledge graph, run `graphify .` with an LLM key set (GEMINI/ANTHROPIC/OPENAI) — the docs need semantic extraction; a key was not available at authoring time.*
+*Persistent context for the QML-2026 FDP lecture decks. Read this first when resuming.
+Last updated: 2026-07-11 (both sessions built). To build a queryable knowledge graph, run `graphify .` with an LLM key set (GEMINI/ANTHROPIC/OPENAI) — the docs need semantic extraction; a key was not available at authoring time.*
 
 ## Who / what
 - **Speaker:** Archit Srivastava — **Senior Manager, Data Engineering @ PUMA, Bengaluru** (current); prior o9 Solutions + HPE (quantum PoCs); early intern BosonQ Psi. Founder **AiQyaM** (India's first quantum-hardware community, 2020) & **CIRQuIT** (RVCE); Sr Research Associate, Quantum Computing India; GKQCTP/IQDC with Innogress. B.E. Electronics & Instrumentation, RVCE. Google Scholar **NbPUdWMAAAAJ** (6 papers incl. *Quantum Computing and LIGO*, IAC-20; *Quantum Finance—An Overview*, EasyChair 6071, 2021, Qiskit+PennyLane VQE). Speaks Conf42 QC 2023+2024. Email architsrivastava3115@gmail.com.
-- **Event:** QML-2026 FDP, E&ICT Academy **NIT Warangal × NIT Raipur**, **11 Jul 2026**. Session 1 (09:30–11:30) = Quantum Unsupervised Learning (Clustering) — **done**. Session 2 (14:30–16:30) = Classical & Quantum-Enhanced Computer Vision — **not yet built** (same pipeline applies).
+- **Event:** QML-2026 FDP, E&ICT Academy **NIT Warangal × NIT Raipur**, **11 Jul 2026**. Session 1 (09:30–11:30) = Quantum Unsupervised Learning (Clustering) — **done (62 slides)**. Session 2 (14:30–16:30) = Classical & Quantum-Enhanced Computer Vision — **done (56 slides)**.
 
-## Deliverable (Session 1)
-`NIT Warangal/session1_quantum_clustering_qiskit.pptx` — **62 slides**, editable, built on the IBM Qiskit template. Sections: Title · Contents · About(×2) · Roadmap · §1 Introduction · §2 Classical · §3 Quantum (incl. 3 live-notebook slides) · §4 Industry & Mega-Science · §5 India · §6 Future · Thanks.
+## Deliverables
+- **Session 1:** `NIT Warangal/session1_quantum_clustering_qiskit.pptx` — **62 slides**. Sections: Title · Contents · About(×2) · Roadmap · §1 Introduction · §2 Classical · §3 Quantum (incl. 3 live-notebook slides) · §4 Industry & Mega-Science · §5 India · §6 Future · Thanks. Notebook `notebooks/qml_clustering_demo.ipynb` (quantum-kernel clustering, ARI 0.42 vs 0.69).
+- **Session 2:** `NIT Warangal/session2_quantum_vision_qiskit.pptx` — **56 slides**. Sections: Title · Contents · About(×2) · Roadmap · §1 Introduction · §2 Classical Computer Vision · §3 Quantum-Enhanced Vision (incl. 3 live-notebook slides) · §4 Industry & Applications (incl. mega-science imaging) · §5 India · §6 Future · Thanks. Notebook `notebooks/qml_vision_demo.ipynb` (4-qubit quanvolution on digits, raw 0.978 vs untrained-quanv 0.950).
 
 ## Build pipeline (`NIT Warangal/build/`)
 Run order: `make_skeleton.py` → (content workflow) → `gen_diagrams.py` → `fetch_logos.py` → `notebook_demo.py` → `build_v2.py` → `verify.py`.
@@ -36,10 +37,16 @@ Run order: `make_skeleton.py` → (content workflow) → `gen_diagrams.py` → `
 6. **Strict margins:** `MX=0.55" left, RX=12.78" right, CT=1.66" top, CB=7.02" bottom`; two-column `LW=6.0"` + right col. Everything aligns to this grid.
 7. Animations: per-paragraph fade + card/image fly-in + page fade transitions. Entrance only (no exit — would hide read-aloud text).
 
-## For Session 2 (computer vision) — reuse
-- Same `build/` pipeline. Session-2 research already in `Research Reference Docs/session2_*.md` + `speaker_own_work.md` (Paper B: CNN + Quantum Visual Tracking, QFT on IBM hardware — the CV credibility anchor).
-- Write a `skeleton.json` for CV (CNN anatomy, convolution, pooling, quanvolution, QCNN, amplitude encoding, the vision demo `qml_vision_demo.ipynb`), run the same content workflow with the SAME style rules above, generate CV diagrams, build.
-- Shared India/Viksit-Bharat + market/talent modules can be reused verbatim from `session1_deep_research_2026.md` + `india_quantum_context.md`.
+## Session 2 (computer vision) — BUILT (how it was done, for future edits)
+Same `build/` pipeline, session-2 variants. **Build:** `python3 make_skeleton2.py && python3 gen_diagrams2.py && python3 build_v2.py session2 && python3 verify.py session2`.
+- **`make_skeleton2.py`** → `skeleton2.json` (56-slide CV backbone; image-as-grid, convolution atom, CNN anatomy + 3 priors, ViT, encodings, quanvolution hero, QCNN, hybrid sandwich, own-work QFT, industry incl. mega-science imaging).
+- **`gen_diagrams2.py`** → 16 new CV diagrams (white-bg Carbon). Real compute: `quanv_featuremaps.png` (3 digits × 4 quantum channels) + `quanv_result.png` (bars). Reuses S1 diagrams: timeline, talent_gap, nqm_targets, funding_bars, bloch_sphere, amplitude_growth, advantage_quadrant, featuremap.
+- **Content workflow** = `scratchpad/content_workflow_s2.js` (Workflow tool, **8 section-agents**, `agentType:'general-purpose'`, grounded in `session2_research.md` + `session2_deep_research_2026.md` + `speaker_own_work.md`); each writes `c2_<sec>.json`, merged → `content2.json` (47 content slides; dividers + notebook slides need none). Cap defs to 6/slide; side-image defbox renders `cols=2` when >3 defs.
+- **`build_v2.py`** now takes a session arg (default `session1`); per-session config in the `DECKS` dict (skeleton/content/out/title/agenda/divfoot/thanks_session/logos). `verify.py session2` too (+ added a strict 3rd-person voice audit).
+- **Notebook:** `build_vision_notebook.py` → executed standalone `qml_vision_demo.ipynb`(+HTML); `notebook_demo2.py` → cell shots `nbv_cell{1..4}.png`. 4-qubit quanvolution (RY angle-encode + RandomLayers + PauliZ), sklearn digits, **raw 0.978 vs untrained-quanv 0.950, ~39 ms/img**.
+- **Honesty spine (from deep research):** NO demonstrated quantum advantage on natural images in 2026 (Henderson's own random-vs-quantum tie; QCNN image benchmarks proven classically simulable, PRX Quantum 2026). Frame quantum vision as an early hybrid front-end feature extractor. Real industry results are hybrid/at-parity (IBM pathology GNN, ESA EuroSAT, Honda Scenes 72-qubit >90%, Multiverse×Ikerlan). India edge = imaging-data fuel (NISAR ~80 TB/day) + talent, not quantum-CV today.
+- **Logos:** `fetch_logos.py` extended (nvidia, esa, multiverse, terraquantum, nasa…); favicon API is flaky — if it clears the dir and some fail, restore committed ones from git (`git show HEAD:.../logos/X.png`). esa/tcs currently absent (graceful fallback).
+- Shared India/Viksit-Bharat + market/talent modules reused from `session1_deep_research_2026.md` + `india_quantum_context.md`.
 
 ## Key files
 - Research: `NIT Warangal/Research Reference Docs/` — session1_research.md, Quantum Unsupervised Learning Research Guide.md, india_quantum_context.md, **session1_deep_research_2026.md** (refreshed 2026 numbers + mega-science LIGO/CERN/ITER/SKA/DUNE), **archit_bio_research.md**, speaker_own_work.md, session{1,2}_speaker_notes.md.

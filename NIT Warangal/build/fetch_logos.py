@@ -12,6 +12,9 @@ COMPANIES={
  "mckinsey":"mckinsey.com","bcg":"bcg.com","cern":"home.cern","iter":"iter.org",
  "skao":"skao.int","fermilab":"fnal.gov","caltech":"caltech.edu","iisc":"iisc.ac.in",
  "iitmadras":"iitm.ac.in","nitw":"nitw.ac.in",
+ # --- Session 2 (computer vision) brands ---
+ "nvidia":"nvidia.com","esa":"esa.int","multiverse":"multiversecomputing.com",
+ "terraquantum":"terraquantum.swiss","nasa":"nasa.gov","isro":"isro.gov.in",
 }
 def fetch(url):
     req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0"})

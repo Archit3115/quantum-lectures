@@ -1,0 +1,3273 @@
+{
+ "title": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Teaching machines to see — a bottom-up journey from a bare grid of brightness numbers all the way to a quantum feature map, told honestly and from first principles."
+   }
+  ]
+ },
+ "agenda": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Computer vision, at heart, is the craft of learning good representations of an image, and this session walks that craft in six steps — ending at the exact spot where a small quantum circuit can replace the classical feature extractor at the front."
+   },
+   {
+    "t": "b",
+    "x": "Introduction — why an Indian university should invest attention in teaching machines to see, with quantum, right now.",
+    "b": [
+     "Introduction"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Classical Computer Vision — the bottom-up story from a grid of numbers to the convolutional neural network, the field faculty already teach, and where it strains.",
+    "b": [
+     "Classical Computer Vision"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Quantum-Enhanced Vision — just enough quantum from first principles, then the precise point where a circuit slots into a vision pipeline through data encoding and quanvolution.",
+    "b": [
+     "Quantum-Enhanced Vision"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Industry & Applications — where quantum-enhanced vision is being tried today, from clinics and satellites to factories and the biggest cameras ever built.",
+    "b": [
+     "Industry & Applications"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The Indian Landscape — the hardware India is building and the vast imaging-data footprint the country already holds.",
+    "b": [
+     "The Indian Landscape"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The Future — where the move from convolution to quanvolution goes next, and why the real bottleneck is people who can teach it.",
+    "b": [
+     "The Future"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Every quantum idea in this session is introduced from a classical anchor the room already knows."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Computer vision",
+    "def": "Getting a computer to extract meaning — edges, shapes, objects — from images."
+   },
+   {
+    "term": "Representation",
+    "def": "The transformed, more useful form of an image's raw numbers that a model actually learns from."
+   },
+   {
+    "term": "Convolutional neural network (CNN)",
+    "def": "The standard image model that learns small filters and stacks them into a hierarchy of features."
+   },
+   {
+    "term": "Quanvolution",
+    "def": "A quantum version of the convolution step, where a tiny quantum circuit transforms each small image patch."
+   },
+   {
+    "term": "Feature extractor",
+    "def": "The part of a vision system that turns raw pixels into informative features before any decision is made."
+   }
+  ]
+ },
+ "aboutbio": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The session is led by Archit Srivastava, an engineer whose day job, research and community work all sit on the same line this talk walks — from applied machine learning to quantum hardware."
+   },
+   {
+    "t": "head",
+    "x": "Current role"
+   },
+   {
+    "t": "p",
+    "x": "Srivastava is a Senior Manager of Data Engineering at PUMA in Bengaluru, where the daily work is building the large-scale data systems that modern machine learning runs on."
+   },
+   {
+    "t": "head",
+    "x": "Industry path"
+   },
+   {
+    "t": "b",
+    "x": "Earlier roles at o9 Solutions and Hewlett Packard Enterprise included hands-on quantum proof-of-concept projects, giving roughly four years of industry experience on top of an Electronics and Instrumentation Engineering background.",
+    "b": [
+     "o9 Solutions",
+     "Hewlett Packard Enterprise",
+     "quantum proof-of-concept"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Community builder"
+   },
+   {
+    "t": "b",
+    "x": "Srivastava founded AiQyaM, described as India's first quantum-hardware community, in 2020, and started the CIRQuIT quantum-computing initiative at RV College of Engineering.",
+    "b": [
+     "AiQyaM",
+     "CIRQuIT"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Alongside that, Srivastava serves as a Senior Research Associate with Quantum Computing India and contributes to the GKQCTP and IQDC programmes with Innogress Ventures, after an early internship at the quantum-software startup BosonQ Psi.",
+    "b": [
+     "Quantum Computing India",
+     "BosonQ Psi"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why this is first-hand"
+   },
+   {
+    "t": "b",
+    "x": "Crucially for today, Srivastava co-authored a published paper that contains both a real five-layer convolutional-network vision pipeline and a quantum-visual-tracking section actually run on IBM quantum hardware — so the arc of this talk, from the classical CNN to the quantum frontier, is literally the path of his own research.",
+    "b": [
+     "five-layer convolutional-network",
+     "IBM quantum hardware"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "In short, the classical half and the quantum half of this session are two ends of one person's work."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Data engineering",
+    "def": "The discipline of building the pipelines and storage that feed data into analytics and machine-learning systems."
+   },
+   {
+    "term": "Proof-of-concept (PoC)",
+    "def": "A small trial build that tests whether an idea works before investing in a full product."
+   },
+   {
+    "term": "Quantum hardware",
+    "def": "The physical machines — real qubits — that run quantum programs, as opposed to simulations on ordinary computers."
+   },
+   {
+    "term": "Convolutional neural network (CNN)",
+    "def": "The standard image-recognition model built from stacked learnable filters."
+   },
+   {
+    "term": "Quantum visual tracking",
+    "def": "An early-stage research idea for following a moving object using quantum computation."
+   },
+   {
+    "term": "AiQyaM",
+    "def": "The quantum-hardware community Srivastava founded in 2020, described as India's first."
+   }
+  ]
+ },
+ "aboutresearch": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Srivastava's research and outreach span several fields, but they share one thread — using quantum computing and artificial intelligence together on hard, high-dimensional problems."
+   },
+   {
+    "t": "head",
+    "x": "Published and spoken"
+   },
+   {
+    "t": "b",
+    "x": "The record includes more than five papers and over twenty-five invited talks delivered across more than ten universities to over two hundred faculty, along with a Conf42 developer-conference appearance.",
+    "b": [
+     "five papers",
+     "twenty-five invited talks",
+     "two hundred faculty"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Research areas"
+   },
+   {
+    "t": "b",
+    "x": "The work ranges over computer vision — including a real convolutional-network eye-contact detection pipeline — and quantum visual tracking and quantum image processing, the quantum side of vision.",
+    "b": [
+     "computer vision",
+     "quantum image processing"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "It also reaches into black-hole physics and gravitational-wave analysis using combined quantum and AI methods, photonic quantum computing, and quantum finance.",
+    "b": [
+     "gravitational-wave",
+     "photonic quantum computing",
+     "quantum finance"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why first-hand"
+   },
+   {
+    "t": "p",
+    "x": "Because these methods were actually built and, in the quantum case, run on real hardware, today's material is drawn from experiments the speaker has performed rather than results read second-hand."
+   },
+   {
+    "t": "note",
+    "x": "The full paper list is rendered here from the speaker's Google Scholar record."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Computer vision",
+    "def": "Getting machines to interpret images — to recognise edges, shapes and objects."
+   },
+   {
+    "term": "Quantum visual tracking",
+    "def": "An early research idea for following a moving object with quantum computation."
+   },
+   {
+    "term": "Quantum image processing",
+    "def": "Representing and manipulating whole images directly as quantum states."
+   },
+   {
+    "term": "Gravitational waves",
+    "def": "Tiny ripples in space-time from violent cosmic events, detected by instruments such as LIGO."
+   },
+   {
+    "term": "Photonic quantum computing",
+    "def": "Building quantum computers using particles of light rather than superconducting circuits."
+   },
+   {
+    "term": "Quantum finance",
+    "def": "Applying quantum algorithms to financial problems such as portfolio optimization."
+   }
+  ]
+ },
+ "roadmap": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "This session follows one simple teaching rule — every quantum idea is introduced from a classical anchor the audience already teaches, so nothing arrives out of nowhere."
+   },
+   {
+    "t": "head",
+    "x": "The design principle"
+   },
+   {
+    "t": "b",
+    "x": "Start from what the room already knows — a picture, a filter, a neural network — and add exactly one quantum idea at a time, so the quantum part is always a small step from familiar ground.",
+    "b": [
+     "one quantum idea at a time"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The spine of the session"
+   },
+   {
+    "t": "p",
+    "x": "The single sentence that holds everything together is that computer vision is the task of learning good representations of an image — features that are local, hierarchical and invariant to small shifts."
+   },
+   {
+    "t": "b",
+    "x": "Classical vision learns those representations with the convolution atom, and the quantum turn simply replaces that atom with a small quantum circuit that acts as a feature extractor.",
+    "b": [
+     "convolution atom",
+     "feature extractor"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Runnable today"
+   },
+   {
+    "t": "b",
+    "x": "To keep it honest and concrete, the session ends at a live PennyLane notebook that runs a quanvolution on handwritten digits entirely on a laptop's ordinary processor, needing no quantum hardware at all.",
+    "b": [
+     "PennyLane notebook",
+     "no quantum hardware"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The whole arc is a straight line: a grid of numbers, then the CNN, then the quantum turn, then an honest demo, then real-world impact."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Representation",
+    "def": "The more useful transformed form of an image that a model learns from, rather than the raw pixels."
+   },
+   {
+    "term": "Local",
+    "def": "A feature that depends only on a small neighbouring patch of the image."
+   },
+   {
+    "term": "Hierarchical",
+    "def": "Built in layers, where simple features combine into more complex ones."
+   },
+   {
+    "term": "Invariant",
+    "def": "Unchanged when the image is shifted or slightly altered — a cat is still a cat two pixels to the right."
+   },
+   {
+    "term": "Convolution",
+    "def": "Sliding a small window over an image and combining the pixels under it, the basic operation of classical vision."
+   },
+   {
+    "term": "Quanvolution",
+    "def": "The quantum version of that step, where a tiny quantum circuit transforms each patch."
+   }
+  ]
+ },
+ "whynow1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The year 2025 is when quantum computing stopped being a promise on a whiteboard and became a result that other laboratories could independently check and confirm."
+   },
+   {
+    "t": "head",
+    "x": "From promise to proof"
+   },
+   {
+    "t": "p",
+    "x": "For two decades quantum advantage was a projection on a slide; in a single twelve-month span three separate results, each published in a top peer-reviewed journal, turned that projection into measured fact."
+   },
+   {
+    "t": "head",
+    "x": "Willow — error correction that finally improves"
+   },
+   {
+    "t": "b",
+    "x": "Google's Willow chip, built from 105 superconducting qubits and reported in Nature in December 2024, was the first machine to cross the 'below-threshold' line, meaning that as the error-correcting code was made larger the leftover error actually shrank rather than grew, by a factor of about 2.14 at each step.",
+    "b": [
+     "Willow",
+     "105",
+     "below-threshold",
+     "2.14"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Quantum Echoes — a verifiable first"
+   },
+   {
+    "t": "b",
+    "x": "Google's 'Quantum Echoes' experiment, published in Nature in October 2025, ran about 13,000 times faster than the best classical method on the same task and, crucially, produced an answer that a second quantum machine could reproduce on its own.",
+    "b": [
+     "Quantum Echoes",
+     "13,000 times",
+     "verifiable"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Advantage2 — useful, but contested"
+   },
+   {
+    "t": "b",
+    "x": "D-Wave's Advantage2 annealer, reported in Science in March 2025, simulated the behaviour of magnetic materials on more than 4,400 qubits in minutes; the claim is genuine science but remains contested because classical methods later matched parts of it.",
+    "b": [
+     "Advantage2",
+     "4,400",
+     "contested"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why a faculty room should care"
+   },
+   {
+    "t": "b",
+    "x": "Quantum computing is now a general-purpose tool that students in every discipline — physics, chemistry, biology, and especially artificial intelligence and computer vision — will be asked about within their working lives."
+   },
+   {
+    "t": "note",
+    "x": "The honest reading: three firsts, three caveats — real progress, not yet a finished machine."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Qubit",
+    "def": "The basic unit of quantum information, which unlike an ordinary bit can hold a blend of 0 and 1 at the same time."
+   },
+   {
+    "term": "Quantum advantage",
+    "def": "A task a quantum computer performs meaningfully faster or better than any known classical computer."
+   },
+   {
+    "term": "Error correction",
+    "def": "Spreading one unit of information across many physical qubits so that random errors can be detected and undone."
+   },
+   {
+    "term": "Below-threshold",
+    "def": "The milestone where adding more qubits to the protective code makes the computer more reliable instead of less."
+   },
+   {
+    "term": "Superconducting qubit",
+    "def": "A qubit built from a tiny electrical circuit cooled to near absolute zero so it loses no energy to resistance."
+   },
+   {
+    "term": "Quantum annealer",
+    "def": "A specialised quantum machine that finds low-energy solutions to optimisation-style problems rather than running general programs."
+   }
+  ]
+ },
+ "whynow2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Each of the three 2025 firsts rewards a closer look — what the machine is, the number that made the headline, and the honest caveat that keeps the claim credible."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Below-threshold",
+    "def": "The point at which scaling up the error-correcting code lowers rather than raises the leftover error."
+   },
+   {
+    "term": "Code distance",
+    "def": "A measure of how big the protective code is; distance-7 means the code can survive several simultaneous errors."
+   },
+   {
+    "term": "Out-of-time-order correlator",
+    "def": "A physics measurement that tracks how a small disturbance spreads through many qubits and then echoes back."
+   },
+   {
+    "term": "Quantum annealer",
+    "def": "A quantum machine that settles into the lowest-energy answer of a problem, suited to optimisation and materials simulation."
+   },
+   {
+    "term": "Spin glass",
+    "def": "A disordered magnetic material whose atoms point in conflicting directions, notoriously hard to simulate classically."
+   },
+   {
+    "term": "Tensor network",
+    "def": "A classical mathematical technique for approximating quantum systems, often used to challenge quantum-advantage claims."
+   }
+  ],
+  "cards": [
+   [
+    "Willow is Google's 105-qubit superconducting processor, reported in Nature in December 2024.",
+    "Its landmark result was the first 'below-threshold' error correction: as the protective code was scaled up to distance-7, the leftover error fell by roughly a factor of 2.14 at every step instead of climbing.",
+    "That crossing matters because it is the first experimental sign that adding more qubits can make a quantum computer more trustworthy, not less — the precondition for every larger machine to come."
+   ],
+   [
+    "Quantum Echoes is a 2025 experiment run on 65 of Willow's 105 qubits and published in Nature in October 2025.",
+    "It measured out-of-time-order correlators — a way of watching a disturbance spread and then echo back through the qubits — and finished the task about 13,000 times faster than the best classical simulation.",
+    "Its real significance is that the answer is verifiable: a second quantum machine can repeat the run and get the same result, unlike earlier advantage claims that no one could independently check."
+   ],
+   [
+    "Advantage2 is D-Wave's latest quantum annealer, carrying more than 4,400 qubits and reported in Science in March 2025.",
+    "It simulated the dynamics of a spin-glass — a disordered magnetic material — in minutes, a task estimated to take a classical supercomputer far longer.",
+    "It is the closest thing yet to advantage on a genuinely useful scientific problem, but the claim is contested because classical tensor-network methods later reproduced parts of the result."
+   ]
+  ]
+ },
+ "market1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The three scientific firsts arrived alongside a shift in how money and industry talk about quantum: the conversation moved from 'if this will matter' to 'when, and how much'."
+   },
+   {
+    "t": "head",
+    "x": "From 'if' to 'when'"
+   },
+   {
+    "t": "p",
+    "x": "The tiles above are the market's own answer; McKinsey's Quantum Technology Monitor 2026 puts the worldwide economic value of quantum at between 1.3 and 2.7 trillion dollars by 2035, while the Boston Consulting Group's independent estimate sees 450 to 850 billion dollars of value by 2040."
+   },
+   {
+    "t": "head",
+    "x": "Real revenue, real capital"
+   },
+   {
+    "t": "b",
+    "x": "Quantum-computing companies crossed one billion dollars of revenue in 2025 and are projected to reach about 4.4 billion by 2028, while start-up investment hit 12.6 billion dollars in 2025 — 6.3 times the previous year's figure.",
+    "b": [
+     "one billion dollars",
+     "4.4 billion",
+     "12.6 billion",
+     "6.3 times"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Where the value actually sits"
+   },
+   {
+    "t": "b",
+    "x": "The money is not in selling the processors themselves; it is in the algorithm, software, and artificial-intelligence layer that turns a machine into a useful outcome — a keyboard-and-brains problem, and precisely India's strength.",
+    "b": [
+     "algorithm, software",
+     "India's strength"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why vision belongs here"
+   },
+   {
+    "t": "b",
+    "x": "Computer vision, as the most data-heavy branch of artificial intelligence, sits squarely inside that value layer, which makes it a natural place for an Indian faculty room to invest attention now."
+   },
+   {
+    "t": "note",
+    "x": "Treat these figures as orders of magnitude, not a precise league table — but the direction is not in doubt."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Economic value",
+    "def": "The total money that a technology adds across industries by cutting costs or creating new products, wider than the sales of the technology itself."
+   },
+   {
+    "term": "Internal market",
+    "def": "The narrower figure for direct sales of quantum hardware, software, and services."
+   },
+   {
+    "term": "McKinsey Quantum Technology Monitor",
+    "def": "An annual industry report tracking quantum funding, revenue, and market forecasts."
+   },
+   {
+    "term": "Boston Consulting Group",
+    "def": "A global management-consulting firm whose independent quantum forecasts are widely cited alongside McKinsey's."
+   }
+  ]
+ },
+ "visionstakes": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Computer vision — teaching machines to interpret images — is the dominant modality of modern artificial intelligence, and its enormous cost is exactly the pressure point that quantum methods aim at."
+   },
+   {
+    "t": "head",
+    "x": "Vision is everywhere"
+   },
+   {
+    "t": "b",
+    "x": "A camera now sits in every phone, every hospital scanner, every satellite, and every factory inspection line, which makes vision the most data-rich and most widely deployed form of machine learning in the world."
+   },
+   {
+    "t": "head",
+    "x": "But the frontier is enormous"
+   },
+   {
+    "t": "b",
+    "x": "State-of-the-art vision models are staggeringly large — Google's ViT-22B holds 22 billion tunable parameters and was trained on roughly a thousand specialised chips, while Meta's DINOv3 was trained on about 1.7 billion images to reach a 7-billion-parameter model.",
+    "b": [
+     "22 billion",
+     "1.7 billion images",
+     "7-billion-parameter"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The appetite for labelled data keeps climbing — the number of training images for frontier vision models jumped from 142 million to 1.7 billion in just two years — yet accuracy on the standard ImageNet benchmark has plateaued near 91 percent.",
+    "b": [
+     "142 million to 1.7 billion",
+     "91 percent"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Cost measured in dollars and megawatt-hours"
+   },
+   {
+    "t": "b",
+    "x": "Training a frontier model of this class costs millions of dollars and consumes megawatt-hours of electricity; a single large training run has been measured at more than 1,200 megawatt-hours, roughly the yearly electricity use of a hundred homes.",
+    "b": [
+     "millions of dollars",
+     "megawatt-hours",
+     "1,200 megawatt-hours"
+    ]
+   }
+  ],
+  "defs": [
+   {
+    "term": "Computer vision",
+    "def": "The field of teaching machines to interpret and act on the content of images and video."
+   },
+   {
+    "term": "Parameter",
+    "def": "One of the internal numbers a model adjusts during training; more parameters usually mean more capacity and more cost."
+   },
+   {
+    "term": "Labelled data",
+    "def": "Training images that a human has already tagged with the correct answer, expensive and slow to produce at scale."
+   },
+   {
+    "term": "Vision Transformer (ViT)",
+    "def": "A modern vision model that chops an image into small patches and processes them the way language models process words."
+   },
+   {
+    "term": "ImageNet benchmark",
+    "def": "A large standard image dataset used to compare how accurately vision models recognise objects."
+   },
+   {
+    "term": "Megawatt-hour",
+    "def": "A unit of energy equal to running one million watts for one hour, used here to size the electricity a training run consumes."
+   }
+  ]
+ },
+ "talent": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Behind every market number is a shortage of people who understand this stack — and that shortage is the entire reason a faculty-development programme like this one exists."
+   },
+   {
+    "t": "head",
+    "x": "The size of the gap"
+   },
+   {
+    "t": "b",
+    "x": "Industry projections point to roughly 250,000 quantum-related roles by 2030 and about 840,000 by 2035, a demand curve rising far faster than universities are currently producing qualified graduates.",
+    "b": [
+     "250,000",
+     "2030",
+     "840,000",
+     "2035"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Roughly three jobs per hire"
+   },
+   {
+    "t": "b",
+    "x": "The imbalance is stark: there are about three open positions for every qualified candidate, and roughly half of the quantum roles advertised in 2025 went unfilled for lack of trained people.",
+    "b": [
+     "three open positions",
+     "half"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "Industry surveys count only about sixteen thousand dedicated quantum workers worldwide against thousands of fresh openings every year, a gap the United States has called a national-security vulnerability."
+   },
+   {
+    "t": "head",
+    "x": "The mandate — and the opportunity"
+   },
+   {
+    "t": "b",
+    "x": "That gap is the mandate: every course seeded and every student pointed toward quantum machine learning turns a national shortage into a national advantage, and it is the students sitting in today's classrooms who will fill those roles.",
+    "b": [
+     "the mandate",
+     "national advantage"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Teachable today, on a laptop"
+   },
+   {
+    "t": "b",
+    "x": "Quantum machine learning for vision is a first-principles subject that faculty can begin teaching immediately on an ordinary laptop using free simulators, with no access to a physical quantum computer required.",
+    "b": [
+     "first-principles",
+     "ordinary laptop",
+     "free simulators"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The talent side of the equation is the one lever every person in this room already controls."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Faculty-development programme (FDP)",
+    "def": "A short structured course that trains university teachers in a new subject so they can carry it back to their students."
+   },
+   {
+    "term": "Quantum machine learning (QML)",
+    "def": "The use of quantum circuits inside machine-learning pipelines to encode data or compute patterns."
+   },
+   {
+    "term": "Simulator",
+    "def": "Ordinary software that imitates a small quantum computer on a normal laptop, enough to teach and prototype quantum circuits."
+   }
+  ]
+ },
+ "imagegrid": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "To a computer a picture is not a scene at all — it is a dense table of numbers, and every task in vision begins by turning those numbers back into meaning."
+   },
+   {
+    "t": "head",
+    "x": "Greyscale image"
+   },
+   {
+    "t": "b",
+    "x": "A black-and-white image is a single grid of brightness values, where each cell — one pixel — is a number running from 0 for pure black up to 255 for pure white.",
+    "b": [
+     "single grid of brightness values",
+     "0 for pure black",
+     "255 for pure white"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Colour image"
+   },
+   {
+    "t": "b",
+    "x": "A colour image is simply three of those grids stacked together — one for red, one for green and one for blue — and mixing the three brightness levels reproduces every visible shade.",
+    "b": [
+     "three of those grids",
+     "red",
+     "green",
+     "blue"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "How many numbers"
+   },
+   {
+    "t": "b",
+    "x": "A small 28-by-28 handwritten digit is already 784 separate numbers, and an ordinary one-megapixel colour photograph is roughly three million numbers.",
+    "b": [
+     "784 separate numbers",
+     "three million numbers"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The real job"
+   },
+   {
+    "t": "b",
+    "x": "Computer vision is the craft of reading that spreadsheet of brightness values back into things a person recognises — an edge, a texture, a shape, an object, a whole scene."
+   },
+   {
+    "t": "note",
+    "x": "The machine has no eyes and no idea what a cat is; it only ever manipulates a table of numbers."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Pixel",
+    "def": "The smallest cell of an image, holding one brightness number for a single point."
+   },
+   {
+    "term": "Greyscale",
+    "def": "A black-and-white image described by a single grid of brightness values with no colour."
+   },
+   {
+    "term": "RGB",
+    "def": "The scheme that builds any colour from three separate red, green and blue brightness grids."
+   },
+   {
+    "term": "Megapixel",
+    "def": "One million pixels; a rough measure of how many points an image is made of."
+   },
+   {
+    "term": "Computer vision",
+    "def": "The field that turns the numbers in an image back into recognisable meaning such as objects and scenes."
+   }
+  ]
+ },
+ "rawpixels": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Handing those raw pixel numbers straight to a learning model works badly, for three concrete reasons — and fixing them is what the whole field is really about."
+   },
+   {
+    "t": "head",
+    "x": "Too many numbers"
+   },
+   {
+    "t": "b",
+    "x": "The raw list is high dimensional, running from a few hundred numbers for a tiny image up to millions for a real photograph, which is far more than a model can learn from cleanly.",
+    "b": [
+     "high dimensional"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "No sense of locality"
+   },
+   {
+    "t": "b",
+    "x": "Neighbouring pixels that plainly belong together in the picture become, in a flat list of numbers, just two entries that happen to sit near each other, so the model is given no built-in hint that they are neighbours.",
+    "b": [
+     "no built-in hint"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Fragile to shifts"
+   },
+   {
+    "t": "b",
+    "x": "Shifting the same cat two pixels to the right changes almost every number in the list, even though it is obviously the identical cat, so the raw pixels are not translation invariant.",
+    "b": [
+     "not translation invariant"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The thesis"
+   },
+   {
+    "t": "b",
+    "x": "Computer vision is fundamentally about learning good representations — features that are local, that build up in a hierarchy, and that stay steady when the picture shifts.",
+    "b": [
+     "learning good representations",
+     "local",
+     "hierarchy"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "This one idea — better representations — drives everything from hand-crafted filters to CNNs to the quantum encodings later in this session."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Representation",
+    "def": "The particular form in which an image is described to a model, which decides how easy the task becomes."
+   },
+   {
+    "term": "High-dimensional",
+    "def": "Made of a very large number of separate values, here from hundreds to millions of pixels."
+   },
+   {
+    "term": "Locality",
+    "def": "The idea that pixels close together in an image are the ones most meaningfully related."
+   },
+   {
+    "term": "Translation invariance",
+    "def": "The property that a description does not change much when the object simply shifts position in the frame."
+   },
+   {
+    "term": "Feature",
+    "def": "A meaningful measurement pulled out of raw pixels, such as an edge or a texture, that a model can reason with."
+   }
+  ]
+ },
+ "convolution": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Almost all of classical computer vision is built from one small, repeated operation — sliding a little window across the image and combining the numbers underneath it."
+   },
+   {
+    "t": "head",
+    "x": "The kernel"
+   },
+   {
+    "t": "b",
+    "x": "A kernel is a small grid of weights, often just three by three, that is slid step by step across the whole image.",
+    "b": [
+     "kernel",
+     "small grid of weights"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "A weighted sum"
+   },
+   {
+    "t": "b",
+    "x": "At every stop the pixels under the window are multiplied by the kernel's weights and added into a single output number, and doing this everywhere produces a new, filtered image."
+   },
+   {
+    "t": "head",
+    "x": "Different kernels, different jobs"
+   },
+   {
+    "t": "b",
+    "x": "One choice of weights — a Sobel kernel — lights up edges where brightness changes sharply, while another — a blur kernel — averages neighbours to smooth the picture.",
+    "b": [
+     "Sobel kernel",
+     "edges",
+     "blur kernel",
+     "averages"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The hand-crafted era"
+   },
+   {
+    "t": "b",
+    "x": "Before deep learning, experts hand-designed these filters with named recipes such as SIFT, HOG and Haar features — powerful, but brittle, because a human had to invent each one by hand.",
+    "b": [
+     "SIFT, HOG and Haar",
+     "brittle"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Remember this atom"
+   },
+   {
+    "t": "b",
+    "x": "This slide-a-window-and-combine step is the atom of all classical vision, and it is exactly the operation the quantum method later in this session replaces with a quantum circuit.",
+    "b": [
+     "the atom of all classical vision",
+     "the quantum method later in this session replaces"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Keep this picture in mind; the quantum turn swaps out this one atom and leaves everything else the same."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Convolution",
+    "def": "Sliding a small window over an image and combining the pixels under it into one output number at every position."
+   },
+   {
+    "term": "Kernel",
+    "def": "The small grid of weights that is slid across the image to compute a convolution."
+   },
+   {
+    "term": "Sobel",
+    "def": "A classic kernel whose weights are chosen to respond strongly at edges where brightness changes."
+   },
+   {
+    "term": "Blur",
+    "def": "A kernel that averages neighbouring pixels to smooth an image."
+   },
+   {
+    "term": "SIFT",
+    "def": "An older hand-designed method for finding distinctive image points that stay recognisable under scaling and rotation."
+   },
+   {
+    "term": "HOG",
+    "def": "A hand-designed descriptor that summarises an image region by the directions in which its brightness changes."
+   }
+  ]
+ },
+ "cnn": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "In 2012 a network called AlexNet roughly halved the error rate on the giant ImageNet contest and set off the entire deep-learning era, all from one shift in thinking."
+   },
+   {
+    "t": "head",
+    "x": "The key idea"
+   },
+   {
+    "t": "b",
+    "x": "Instead of a human hand-designing each kernel, the convolutional neural network learns the kernels straight from the data.",
+    "b": [
+     "learns the kernels straight from the data"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Convolutional layers"
+   },
+   {
+    "t": "b",
+    "x": "Many learnable kernels sweep over the image to produce feature maps, and stacking these layers builds a hierarchy — early layers find edges, middle layers find textures and parts, and deep layers respond to whole objects.",
+    "b": [
+     "feature maps",
+     "hierarchy"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "A non-linearity"
+   },
+   {
+    "t": "b",
+    "x": "A simple step called ReLU keeps the positive responses and zeroes out the rest, which enables the network to capture patterns that are not just straight-line combinations.",
+    "b": [
+     "ReLU"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Pooling"
+   },
+   {
+    "t": "b",
+    "x": "A pooling step takes the largest or the average value inside each small window, shrinking the map and making the network tolerant when an object moves a little — that is translation invariance.",
+    "b": [
+     "pooling",
+     "translation invariance"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Head and training"
+   },
+   {
+    "t": "b",
+    "x": "A fully-connected head with a softmax turns the final features into class probabilities, and training uses backpropagation with gradient descent to nudge every kernel until the errors shrink.",
+    "b": [
+     "fully-connected head",
+     "softmax",
+     "backpropagation"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "This is the exact architecture behind Srivastava's own 2022 vision paper, revisited later in this session."
+   }
+  ],
+  "defs": [
+   {
+    "term": "AlexNet",
+    "def": "The 2012 convolutional network that roughly halved the ImageNet error rate and launched the deep-learning era."
+   },
+   {
+    "term": "ImageNet",
+    "def": "A very large labelled image contest and dataset used as the benchmark for image classification."
+   },
+   {
+    "term": "CNN",
+    "def": "A convolutional neural network, which learns its own kernels from data rather than having them hand-designed."
+   },
+   {
+    "term": "Feature map",
+    "def": "The image-shaped output of applying one learned kernel across an image, highlighting where its pattern appears."
+   },
+   {
+    "term": "ReLU",
+    "def": "A simple rule that keeps positive numbers and turns negatives to zero, giving the network its non-linearity."
+   },
+   {
+    "term": "Pooling",
+    "def": "A step that summarises each small window by its largest or average value to shrink the map and absorb small shifts."
+   }
+  ]
+ },
+ "priors": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Three built-in design assumptions — called priors — are what make a convolutional network so effective, and each one returns in the quantum story later in this session."
+   },
+   {
+    "t": "note",
+    "x": "A quantum convolution, or QCNN, reproduces the weight-sharing and hierarchy priors natively, built right into its structure."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Prior",
+    "def": "A built-in assumption baked into a model's design that guides it toward the right kind of solution."
+   },
+   {
+    "term": "Kernel",
+    "def": "A small grid of weights slid across an image to detect a particular local pattern."
+   },
+   {
+    "term": "Weight sharing",
+    "def": "Reusing the same set of kernel weights everywhere in an image instead of learning a separate one per location."
+   },
+   {
+    "term": "QCNN",
+    "def": "A quantum convolutional neural network that mirrors the convolutional structure directly on qubits."
+   }
+  ],
+  "cards": [
+   [
+    "A pixel is most closely related to the handful of pixels right around it, not to ones on the far side of the image.",
+    "So each filter only ever looks at a small local patch at a time, rather than the entire picture at once.",
+    "This matches how real images work, where meaning is built up from nearby detail — an edge, a corner, a small texture."
+   ],
+   [
+    "The same edge-detector is useful in every corner of an image, so there is no need for a separate one at each spot.",
+    "One kernel is therefore reused, unchanged, as it slides across the whole picture.",
+    "Reusing a single set of weights everywhere means far fewer numbers to learn, which is an enormous saving in parameters."
+   ],
+   [
+    "Simple features combine into more complex ones as the layers stack up.",
+    "Edges join into textures and parts, and parts join into whole objects, level by level.",
+    "This layered build-up, from simple to complex, is the central reason deep networks come to see so well."
+   ]
+  ]
+ },
+ "vit": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The convolutional network is no longer the only game — since 2020 a different design, borrowed from language models, has taken over the frontier of vision."
+   },
+   {
+    "t": "head",
+    "x": "Patches, not pixels"
+   },
+   {
+    "t": "b",
+    "x": "A Vision Transformer, or ViT, first chops the image into a grid of small patches, each about sixteen by sixteen pixels, and treats each patch as a single unit.",
+    "b": [
+     "Vision Transformer",
+     "sixteen by sixteen pixels"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Attention"
+   },
+   {
+    "t": "b",
+    "x": "Instead of a small sliding window, it uses attention, a mechanism that allows every patch to look at every other patch across the whole image at once.",
+    "b": [
+     "attention",
+     "every patch to look at every other patch"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Foundation models"
+   },
+   {
+    "t": "b",
+    "x": "This design scales extremely well and is now the basis of today's vision foundation models — single large models pretrained once and then reused for many different tasks.",
+    "b": [
+     "vision foundation models"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The catch"
+   },
+   {
+    "t": "b",
+    "x": "A Vision Transformer grows stronger the more data and compute it is given, but that also makes it hungrier still for both than a convolutional network.",
+    "b": [
+     "hungrier still"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The frontier is now enormous attention-based models trained on oceans of images — which sets up the bill they run up on the next slide."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Vision Transformer (ViT)",
+    "def": "A 2020 image model that splits a picture into patches and uses attention instead of sliding convolutions."
+   },
+   {
+    "term": "Attention",
+    "def": "A mechanism in which each part of the input can weigh and draw on every other part directly."
+   },
+   {
+    "term": "Patch",
+    "def": "A small square block of pixels, often sixteen by sixteen, treated as one token by a Vision Transformer."
+   },
+   {
+    "term": "Foundation model",
+    "def": "A single large model pretrained once on huge data and then reused as a base for many tasks."
+   },
+   {
+    "term": "CNN",
+    "def": "A convolutional neural network, the earlier design that reads images through small sliding kernels."
+   }
+  ]
+ },
+ "cvcost": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Modern vision is astonishingly capable, but the frontier is bought at an enormous and rising cost in money, energy, labelled data and sheer model size — and that cost is precisely the pressure point quantum-enhanced methods aim at."
+   },
+   {
+    "t": "head",
+    "x": "Model size"
+   },
+   {
+    "t": "b",
+    "x": "The largest dense Vision Transformer, Google's ViT-22B from 2023, packs twenty-two billion tunable parameters and was trained across about one thousand specialised TPU-v4 chips on roughly four billion images.",
+    "b": [
+     "twenty-two billion",
+     "four billion images"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The labelled-data treadmill"
+   },
+   {
+    "t": "b",
+    "x": "The hunger for labelled images keeps climbing — Meta's DINOv2 curated 142 million images in 2023, and just two years later DINOv3 jumped to about 1.7 billion images for a seven-billion-parameter model.",
+    "b": [
+     "142 million images",
+     "1.7 billion images"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Diminishing returns"
+   },
+   {
+    "t": "b",
+    "x": "All of that buys less and less, because top accuracy on the standard ImageNet benchmark has plateaued at roughly ninety-one percent, so each extra point of accuracy costs far more than the last.",
+    "b": [
+     "ninety-one percent"
+    ]
+   }
+  ],
+  "defs": [
+   {
+    "term": "Vision Transformer (ViT)",
+    "def": "An attention-based image model; ViT-22B is the largest dense version, with twenty-two billion parameters."
+   },
+   {
+    "term": "Parameter",
+    "def": "One tunable number inside a model; frontier vision models hold billions of them."
+   },
+   {
+    "term": "TPU-v4",
+    "def": "A specialised Google processor built for training large neural networks, used a thousand at a time here."
+   },
+   {
+    "term": "ImageNet",
+    "def": "The standard large labelled benchmark whose top image-classification accuracy has plateaued near ninety-one percent."
+   },
+   {
+    "term": "Megawatt-hour",
+    "def": "A unit of energy equal to running a million watts for one hour, used here to size a training run's power draw."
+   },
+   {
+    "term": "GPT-3",
+    "def": "A large frontier language model whose single training run is the canonical figure for modern AI energy use."
+   }
+  ]
+ },
+ "qmtool": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The hard part of quantum computer vision is not the clever circuit at all — it is getting an image, which is really just a grid of numbers, onto a quantum computer in the first place."
+   },
+   {
+    "t": "p",
+    "x": "How those pixels are loaded decides whether anything useful can happen afterward; a poor loading scheme wastes the whole machine before a single useful gate has run."
+   },
+   {
+    "t": "p",
+    "x": "For that reason the choice of data encoding, far more than the choice of model, is where most of the real design effort in quantum machine learning for vision actually goes.",
+    "b": [
+     "data encoding"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Keep this framing for the whole section — encoding first, cleverness second."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Data encoding",
+    "def": "The step that turns ordinary numbers, such as an image's pixels, into the state of a set of qubits so a quantum computer can process them."
+   },
+   {
+    "term": "Quantum machine learning",
+    "def": "The use of quantum circuits as part of a learning system that finds patterns in data."
+   }
+  ]
+ },
+ "qubit": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "A qubit is the quantum version of a bit, but instead of being forced to pick either zero or one it can hold a genuine blend of both at the same time."
+   },
+   {
+    "t": "head",
+    "x": "Two amplitudes"
+   },
+   {
+    "t": "b",
+    "x": "Each qubit carries two numbers called amplitudes, one tied to the zero outcome and one to the one outcome, and the squared size of each amplitude is the chance of seeing that outcome, so those two chances always add up to exactly one.",
+    "b": [
+     "amplitudes",
+     "add up to exactly one"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Superposition"
+   },
+   {
+    "t": "b",
+    "x": "Superposition means the qubit is honestly both zero and one before it is looked at, not secretly a single fixed value that merely happens to be unknown.",
+    "b": [
+     "genuinely both"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The Bloch sphere"
+   },
+   {
+    "t": "b",
+    "x": "The Bloch sphere pictures a qubit as an arrow pointing in a continuous direction on a globe, which makes clear that a qubit stores far more information than a single yes-or-no bit.",
+    "b": [
+     "continuous direction"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Measurement"
+   },
+   {
+    "t": "b",
+    "x": "The instant a qubit is measured it collapses to a plain classical zero or one and the rich direction it was holding is gone, so the whole art of quantum vision is designing circuits whose measured results are exactly the numbers wanted.",
+    "b": [
+     "collapses"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Whatever a qubit holds, only a plain bit ever comes back out — the design must respect that."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Qubit",
+    "def": "The basic unit of a quantum computer, which unlike an ordinary bit can be a blend of zero and one at once."
+   },
+   {
+    "term": "Bit",
+    "def": "The basic unit of an ordinary computer, which is always either zero or one."
+   },
+   {
+    "term": "Amplitude",
+    "def": "One of the two numbers a qubit carries, whose squared size gives the probability of the matching outcome."
+   },
+   {
+    "term": "Superposition",
+    "def": "The property of being genuinely in both states at once until a measurement is made."
+   },
+   {
+    "term": "Bloch sphere",
+    "def": "A globe-shaped picture that shows a single qubit's state as an arrow pointing in some direction."
+   },
+   {
+    "term": "Measurement",
+    "def": "The act of reading a qubit, which forces it to give back an ordinary zero or one."
+   }
+  ]
+ },
+ "twon": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Put qubits together and the space they describe does not grow by simple addition — it doubles with every single qubit added, and that runaway growth is the resource at the heart of quantum computing."
+   },
+   {
+    "t": "head",
+    "x": "Exponential space"
+   },
+   {
+    "t": "b",
+    "x": "One qubit needs two numbers to describe, two qubits need four, ten qubits need about a thousand, and just fifty qubits already need roughly a million billion numbers to write down — more than any classical computer can store, which is precisely the room a quantum machine has to work in.",
+    "b": [
+     "fifty qubits",
+     "million billion numbers"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Entanglement"
+   },
+   {
+    "t": "b",
+    "x": "Entanglement is a correlation between qubits so tight that the whole group cannot be described by listing each qubit separately, a kind of connection with no everyday classical analogue.",
+    "b": [
+     "no everyday classical analogue"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "For vision this is the point that matters — entangling gates allow a quantum filter to blend the pixels of a patch together in ways a plain linear classical filter simply cannot reproduce.",
+    "b": [
+     "blend the pixels",
+     "linear classical filter"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The honest catch"
+   },
+   {
+    "t": "b",
+    "x": "Measuring the qubits collapses all of that richness back to plain numbers, so quantum vision circuits are built so that the averaged measurement results, called expectation values, are themselves the useful features handed on to the rest of the pipeline.",
+    "b": [
+     "expectation values",
+     "are themselves the features"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The exponential space is the promise; getting real features out through measurement is the discipline."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Qubit",
+    "def": "The basic unit of a quantum computer, able to be a blend of zero and one at once."
+   },
+   {
+    "term": "Amplitude",
+    "def": "One of the many numbers needed to describe a group of qubits; the count of them doubles with each qubit added."
+   },
+   {
+    "term": "Exponential",
+    "def": "Growth that doubles at each step, so it very quickly becomes astronomically large."
+   },
+   {
+    "term": "Entanglement",
+    "def": "A correlation so strong that a group of qubits cannot be described by treating each one on its own."
+   },
+   {
+    "term": "Linear filter",
+    "def": "A classical operation that only takes weighted sums of pixels, with no mixing beyond simple addition."
+   },
+   {
+    "term": "Expectation value",
+    "def": "The average result of measuring a qubit many times, used as a single output number."
+   }
+  ]
+ },
+ "encoding": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The real question in quantum vision is not what to do with a picture once it is inside the machine, but how to get its numbers in at all — and there are three standard ways, each with a very different qubit bill."
+   },
+   {
+    "t": "head",
+    "x": "Basis encoding"
+   },
+   {
+    "t": "b",
+    "x": "Basis encoding writes a classical string of bits straight onto qubits one for one, so a hundred bits need a hundred qubits — simple to picture, but wasteful, and rarely used for real images.",
+    "b": [
+     "one for one",
+     "wasteful"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Angle encoding"
+   },
+   {
+    "t": "b",
+    "x": "Angle encoding turns each number in the data into an angle by which a qubit is rotated, again needing one qubit per feature, but its circuits are shallow and forgiving of noise, which is why it is the star of today's hardware and exactly what quanvolution uses on each small image patch.",
+    "b": [
+     "one qubit per feature",
+     "shallow",
+     "what quanvolution uses"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Amplitude encoding"
+   },
+   {
+    "t": "b",
+    "x": "Amplitude encoding packs the numbers directly into the amplitudes of the quantum state, so a list of a thousand numbers needs only about ten qubits — an exponential saving — but preparing that state is expensive and needs a special quantum memory device that does not yet exist at any useful scale.",
+    "b": [
+     "about ten qubits",
+     "exponential saving",
+     "special quantum memory"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Angle encoding turns a small patch into a few rotation angles, which is what makes quanvolution run on a laptop today; amplitude encoding is the exponential dream, still waiting on hardware."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Basis encoding",
+    "def": "Loading data by writing each classical bit directly onto its own qubit."
+   },
+   {
+    "term": "Angle encoding",
+    "def": "Loading each number by using it as the angle through which a qubit is rotated."
+   },
+   {
+    "term": "Amplitude encoding",
+    "def": "Loading a whole list of numbers into the amplitudes of a single quantum state, using very few qubits but a costly preparation."
+   },
+   {
+    "term": "Rotation angle",
+    "def": "How far a qubit's state is turned; a value the circuit can set from an input number."
+   },
+   {
+    "term": "NISQ",
+    "def": "Today's noisy, small-scale quantum hardware, on which only shallow, error-tolerant circuits work well."
+   },
+   {
+    "term": "QRAM",
+    "def": "A hoped-for quantum memory that could load large data into amplitudes quickly, not yet built at scale."
+   }
+  ]
+ },
+ "featuremap": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "A quantum feature map is a small tunable circuit whose only job is to carry each data point up into a far larger space, in the hope that patterns tangled together in the raw pixels come apart and become easy to separate there."
+   },
+   {
+    "t": "head",
+    "x": "Lifting the data"
+   },
+   {
+    "t": "b",
+    "x": "Where a classical method might add a handful of hand-made combinations of the inputs, a quantum feature map projects each point into an enormously high-dimensional space that grows exponentially with the number of qubits.",
+    "b": [
+     "high-dimensional space"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The quantum bet"
+   },
+   {
+    "t": "b",
+    "x": "The wager of quantum machine learning is that a well-chosen, heavily entangled feature map reaches a corner of that space which is genuinely expensive for any classical computer to imitate.",
+    "b": [
+     "heavily entangled",
+     "expensive to imitate"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "If that holds, the measure of similarity the quantum map computes between two images becomes hard to fake classically, and that hardness — not any raw accuracy number — is the honest source of a possible edge.",
+    "b": [
+     "hard to fake"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "This is a hope supported by theory for special, structured data, not a proven advantage on ordinary photographs."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum feature map",
+    "def": "A small circuit that turns a data point into a quantum state, spreading it into a much larger space."
+   },
+   {
+    "term": "Feature space",
+    "def": "The larger space of derived quantities in which a learning method tries to separate the classes; here it is the enormous space a set of qubits can describe."
+   },
+   {
+    "term": "Entangled",
+    "def": "Having qubits correlated so tightly that the group cannot be described one qubit at a time."
+   },
+   {
+    "term": "Qubit",
+    "def": "The basic unit of a quantum computer, able to be a blend of zero and one at once."
+   }
+  ]
+ },
+ "quanv1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Quanvolution keeps the entire shape of a convolutional network and swaps out just one piece — the small sliding filter at its core — for a little quantum circuit; the idea is due to Henderson and colleagues in 2019."
+   },
+   {
+    "t": "head",
+    "x": "The six-step recipe"
+   },
+   {
+    "t": "b",
+    "x": "Step one is to slide a small window, here a two-by-two square of four pixels, across the image, moving it stop by stop exactly as ordinary convolution does.",
+    "b": [
+     "two-by-two square",
+     "exactly as ordinary convolution"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Step two is to angle-encode those four pixel values as four rotation angles, one on each of four qubits, so the patch is now loaded onto the quantum computer.",
+    "b": [
+     "angle-encode",
+     "four qubits"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Step three is to run a fixed random, or optionally trainable, quantum circuit whose entangling gates blend the four pixel values together in a high-dimensional space.",
+    "b": [
+     "random",
+     "entangling gates"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Step four is to measure each of the four qubits, reading out four averaged numbers, the expectation values.",
+    "b": [
+     "measure",
+     "expectation values"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Step five is to treat those four numbers as four new feature-map channels, stacked exactly the way a classical convolution stacks its outputs.",
+    "b": [
+     "four new channels"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Step six is to feed the resulting stack of feature maps into an ordinary classical CNN or dense network to make the final decision.",
+    "b": [
+     "classical CNN"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The honest claim"
+   },
+   {
+    "t": "b",
+    "x": "The quantum circuit gives each patch a non-linear, high-dimensional makeover that would be costly to compute by hand, acting as a richer front-end feature extractor — a quantum front-end bolted onto a classical back-end, which is the template for essentially all near-term quantum vision.",
+    "b": [
+     "feature extractor",
+     "quantum front-end",
+     "classical back-end"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "This four-qubit, two-by-two, angle-encoded form is the PennyLane tutorial; Henderson's original 2019 paper used a larger three-by-three window on nine qubits, and even it found its quantum features hard to tell apart from a plain random classical transform."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quanvolution",
+    "def": "Replacing the small sliding filter of a convolutional network with a little quantum circuit applied to each image patch."
+   },
+   {
+    "term": "Convolution",
+    "def": "The classical operation of sliding a small window over an image and combining the pixels under it at each stop."
+   },
+   {
+    "term": "Angle encoding",
+    "def": "Loading each pixel by using its value as the angle through which a qubit is rotated."
+   },
+   {
+    "term": "Qubit",
+    "def": "The basic unit of a quantum computer, able to be a blend of zero and one at once."
+   },
+   {
+    "term": "Entangling gate",
+    "def": "A circuit operation that correlates qubits so they mix each other's information."
+   },
+   {
+    "term": "Expectation value",
+    "def": "The average result of measuring a qubit many times, used as one output number."
+   }
+  ]
+ },
+ "quanv2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The notebook runs one concrete version of that recipe, and it is worth seeing exactly what the circuit does, because there is nothing hidden or magical inside it."
+   },
+   {
+    "t": "head",
+    "x": "Four qubits in"
+   },
+   {
+    "t": "b",
+    "x": "The circuit uses four qubits, and the four pixels of each two-by-two patch each set the angle of a single-axis rotation on one qubit, the rotation PennyLane calls RY.",
+    "b": [
+     "four qubits",
+     "RY"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "One random scramble"
+   },
+   {
+    "t": "b",
+    "x": "A single random entangling layer, which PennyLane names RandomLayers, then mixes the four qubits together using a fixed but arbitrary set of gates chosen once at the start and never changed.",
+    "b": [
+     "RandomLayers",
+     "fixed but arbitrary"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Four numbers out"
+   },
+   {
+    "t": "b",
+    "x": "Each qubit is then measured along one axis, its PauliZ expectation value, giving four output numbers, so every two-by-two patch of the image turns into a stack of four small feature maps.",
+    "b": [
+     "PauliZ",
+     "four feature maps"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Runs on a laptop"
+   },
+   {
+    "t": "b",
+    "x": "The whole circuit is shallow enough to run on PennyLane's built-in default.qubit simulator on an ordinary laptop processor, converting each eight-by-eight handwritten digit into its quantum feature maps with no quantum hardware needed at all.",
+    "b": [
+     "default.qubit simulator",
+     "no quantum hardware"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Shallow, simulated, and untrained — this is the honest, runnable-today face of quantum computer vision."
+   }
+  ],
+  "defs": [
+   {
+    "term": "PennyLane",
+    "def": "An open-source Python library for building and running quantum machine-learning circuits."
+   },
+   {
+    "term": "Qubit",
+    "def": "The basic unit of a quantum computer, able to be a blend of zero and one at once."
+   },
+   {
+    "term": "RY rotation",
+    "def": "A gate that turns a qubit about one axis by an angle set from an input number."
+   },
+   {
+    "term": "RandomLayers",
+    "def": "A PennyLane building block that applies a fixed but randomly chosen set of entangling gates."
+   },
+   {
+    "term": "PauliZ",
+    "def": "A standard measurement direction whose averaged result is read out as one output number per qubit."
+   },
+   {
+    "term": "Expectation value",
+    "def": "The average result of measuring a qubit many times, used as a single output number."
+   }
+  ]
+ },
+ "demo": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The most honest thing this demonstration teaches is a number that does not flatter quantum computing, and that candor is the whole lesson."
+   },
+   {
+    "t": "head",
+    "x": "The two numbers"
+   },
+   {
+    "t": "b",
+    "x": "On the handwritten-digit images, a simple classifier reading the raw pixels directly reaches an accuracy of 0.978, meaning it labels about ninety-eight of every hundred images correctly.",
+    "b": [
+     "raw pixels",
+     "0.978"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The very same classifier, fed instead the features produced by an untrained four-qubit quanvolution circuit, reaches 0.950, so the quantum front end lost a little accuracy rather than adding any.",
+    "b": [
+     "untrained",
+     "0.950"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "What that really means"
+   },
+   {
+    "t": "p",
+    "x": "The striking part is not that quantum won, because it did not; it is that a tiny four-qubit circuit that was never trained still preserved roughly ninety-five percent of the signal the classifier needed."
+   },
+   {
+    "t": "b",
+    "x": "The feature maps it produced are visibly structured and meaningful, with edges and shapes surviving the transformation, which is exactly why quanvolution is worth studying as a feature extractor rather than dismissed.",
+    "b": [
+     "feature extractor"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The speed cost"
+   },
+   {
+    "t": "b",
+    "x": "Pushing each image through the quantum layer took about thirty-nine milliseconds per image in simulation, a real cost that a fair evaluation must weigh against whatever accuracy it buys.",
+    "b": [
+     "39 ms per image",
+     "simulation"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The teaching frame"
+   },
+   {
+    "t": "b",
+    "x": "Quanvolution is a feature extractor, not an accuracy magic-boost, and any claim about it must always be measured against a strong, well-tuned classical baseline.",
+    "b": [
+     "not a magic-boost",
+     "classical baseline"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Reported today, the gains are modest and setting-dependent: a promising idea, honestly benchmarked."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quanvolution",
+    "def": "A small quantum circuit slid across little patches of an image, the quantum echo of a convolution filter."
+   },
+   {
+    "term": "Qubit",
+    "def": "The quantum unit of information, which unlike an ordinary bit can hold a blend of zero and one at once."
+   },
+   {
+    "term": "Feature extractor",
+    "def": "A stage that turns raw pixels into more informative numbers for a later classifier to read."
+   },
+   {
+    "term": "Feature map",
+    "def": "The grid of numbers a filter produces, highlighting where a particular pattern appears in the image."
+   },
+   {
+    "term": "Classifier",
+    "def": "The part of the system that takes the processed features and assigns the final label, such as which digit is shown."
+   },
+   {
+    "term": "Classical baseline",
+    "def": "A strong conventional model whose score any new method must beat to claim a genuine improvement."
+   }
+  ]
+ },
+ "qcnn": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The Quantum Convolutional Neural Network, introduced by Cong, Choi and Lukin in 2019, rebuilds the familiar convolutional network entirely out of quantum operations."
+   },
+   {
+    "t": "head",
+    "x": "Quantum convolution"
+   },
+   {
+    "t": "b",
+    "x": "A quantum convolution is a single two-qubit operation slid across every neighbouring pair of qubits, so the same tiny operation is reused everywhere, which is precisely the weight-sharing idea that makes classical convolution efficient.",
+    "b": [
+     "two-qubit operation",
+     "weight sharing"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Quantum pooling"
+   },
+   {
+    "t": "b",
+    "x": "A quantum pooling step measures some of the qubits and uses each outcome to steer a rotation on the qubits that remain, shrinking the picture layer by layer just as classical pooling lowers resolution.",
+    "b": [
+     "measures",
+     "rotation"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why it is special"
+   },
+   {
+    "t": "b",
+    "x": "A QCNN carries only about a logarithm's worth of tunable parameters for a given number of qubits, so it stays remarkably compact and is genuinely trainable.",
+    "b": [
+     "logarithm's worth",
+     "trainable"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Unlike deep generic quantum circuits, it largely resists the barren-plateau problem in which the training signal fades away to nothing, because its shallow, hierarchical shape keeps that signal alive.",
+    "b": [
+     "resists",
+     "barren-plateau problem"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Its true home"
+   },
+   {
+    "t": "b",
+    "x": "The QCNN's native use is classifying quantum states and the phases of matter directly, where the data is already quantum and no classical shortcut exists; for ordinary photographs it still needs an encoding step first.",
+    "b": [
+     "phases of matter",
+     "encoding step"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "It is the elegant, fully-quantum cousin of the network faculty already teach."
+   }
+  ],
+  "defs": [
+   {
+    "term": "QCNN",
+    "def": "A Quantum Convolutional Neural Network, a classifier built from quantum convolution and pooling layers instead of ordinary ones."
+   },
+   {
+    "term": "Qubit",
+    "def": "The quantum unit of information, able to hold a blend of zero and one rather than a single fixed value."
+   },
+   {
+    "term": "Weight sharing",
+    "def": "Reusing the same small operation across the whole image so far fewer settings need to be learned."
+   },
+   {
+    "term": "Quantum pooling",
+    "def": "A step that measures some qubits and uses the result to adjust the rest, coarsening the representation."
+   },
+   {
+    "term": "Parameter",
+    "def": "One adjustable setting inside the model that training tunes to fit the data."
+   },
+   {
+    "term": "Barren plateau",
+    "def": "A failure mode where the training signal shrinks to almost nothing, leaving a deep quantum model unable to learn."
+   }
+  ]
+ },
+ "hybrid": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Every practical near-term quantum vision system, without exception, is built as one simple sandwich worth memorising."
+   },
+   {
+    "t": "head",
+    "x": "The layers, in order"
+   },
+   {
+    "t": "b",
+    "x": "It starts with an ordinary classical image, then an encode step that loads those pixels into qubits.",
+    "b": [
+     "encode step"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Next comes the single quantum layer, either a quanvolution or a QCNN block, followed by a measure step that reads the qubits back out into ordinary numbers.",
+    "b": [
+     "quantum layer",
+     "measure step"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Those numbers then flow into a classical CNN head that makes the final decision and produces the label.",
+    "b": [
+     "CNN head"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Who does the work"
+   },
+   {
+    "t": "p",
+    "x": "The thin quantum slice in the middle buys a new feature space, while the classical slices on either side do the heavy lifting of loading the data and making the decision."
+   },
+   {
+    "t": "head",
+    "x": "Why it matters"
+   },
+   {
+    "t": "b",
+    "x": "This hybrid shape is the honest, runnable-today form of quantum computer vision, and it is exactly what the accompanying notebook implements.",
+    "b": [
+     "hybrid",
+     "runnable-today"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Remember the sandwich and the rest of the field falls into place."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Encoding",
+    "def": "The step that loads classical image pixels into the states of qubits so a quantum circuit can act on them."
+   },
+   {
+    "term": "Qubit",
+    "def": "The quantum unit of information, which can carry a blend of zero and one at once."
+   },
+   {
+    "term": "Quanvolution",
+    "def": "A small quantum circuit run across image patches, the quantum counterpart of a convolution filter."
+   },
+   {
+    "term": "QCNN",
+    "def": "A Quantum Convolutional Neural Network, a classifier made of quantum convolution and pooling layers."
+   },
+   {
+    "term": "CNN head",
+    "def": "A conventional convolutional-network stage at the end that reads the features and outputs the final label."
+   },
+   {
+    "term": "Hybrid",
+    "def": "A system that combines classical and quantum parts, letting each do the work it is best suited for."
+   }
+  ]
+ },
+ "ownwork": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "This part of the session is not abstract for the speaker, because Srivastava co-authored a 2022 paper that walks this very arc from classical vision to the quantum frontier."
+   },
+   {
+    "t": "head",
+    "x": "The classical pipeline"
+   },
+   {
+    "t": "b",
+    "x": "The paper, published in the IOP Journal of Physics Conference Series, built a real computer-vision pipeline: face detection, then eye-region segmentation on the Columbia Gaze dataset, feeding a five-layer convolutional network with batch-normalisation, ReLU activations and dropout.",
+    "b": [
+     "five-layer",
+     "Columbia Gaze"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Its job was eye-contact detection for an autism-therapy application, a textbook CNN put to socially useful work.",
+    "b": [
+     "eye-contact detection"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Reaching for quantum"
+   },
+   {
+    "t": "p",
+    "x": "The paper then stepped toward the quantum frontier, arguing first-hand that a large number of classical bits can be encoded into only a logarithmic number of qubits, which is the amplitude-encoding claim."
+   },
+   {
+    "t": "b",
+    "x": "It ran a Quantum Fourier Transform, described as the crucial step of Quantum Visual Tracking, on real IBM quantum hardware.",
+    "b": [
+     "Quantum Fourier Transform",
+     "IBM quantum hardware"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The measured wall"
+   },
+   {
+    "t": "b",
+    "x": "The result was candid: a three-qubit input state written as the number five returned the outcome 010 with probability 0.688, matching theory, while the error grew as the circuit was made deeper.",
+    "b": [
+     "probability 0.688",
+     "error grew with depth"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "A first-hand NISQ result, and Quantum Visual Tracking is the natural step past quanvolution, the direction this research points."
+   }
+  ],
+  "defs": [
+   {
+    "term": "CNN",
+    "def": "A convolutional neural network, the standard image model that learns patterns by sliding small filters across a picture."
+   },
+   {
+    "term": "Batch-normalisation",
+    "def": "A training trick that rescales the numbers flowing through the network so it learns faster and more stably."
+   },
+   {
+    "term": "ReLU",
+    "def": "A simple activation rule that keeps positive values and zeroes out negative ones, adding useful non-linearity."
+   },
+   {
+    "term": "Dropout",
+    "def": "A method that randomly ignores some connections during training to stop the model from memorising instead of learning."
+   },
+   {
+    "term": "Amplitude encoding",
+    "def": "Packing many classical numbers into a quantum state so that a handful of qubits can hold exponentially more values."
+   },
+   {
+    "term": "Quantum Fourier Transform",
+    "def": "A core quantum routine that rearranges a state into its frequency components, a building block of many quantum algorithms."
+   }
+  ]
+ },
+ "reality1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Faculty deserve candor, so the honest state of quantum computer vision in 2026 belongs on the table plainly."
+   },
+   {
+    "t": "head",
+    "x": "Classical still wins"
+   },
+   {
+    "t": "b",
+    "x": "On the standard image benchmarks like MNIST and CIFAR, well-tuned classical convolutional networks still win on accuracy for the effort spent, and quanvolution's reported gains stay modest and setting-dependent.",
+    "b": [
+     "classical",
+     "still win"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The original 2019 quanvolution paper honestly found its quantum random circuit statistically indistinguishable from an ordinary classical random transform, meaning no measurable quantum edge.",
+    "b": [
+     "indistinguishable"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "A 2026 proof"
+   },
+   {
+    "t": "b",
+    "x": "A 2026 result went further and proved that the common trainable-QCNN image benchmarks can be simulated efficiently on a classical computer, so there is no inherent quantum advantage to be had on those particular tasks.",
+    "b": [
+     "classically simulable",
+     "no inherent advantage"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The physical walls"
+   },
+   {
+    "t": "b",
+    "x": "The encoding cost can eat any speedup, because loading a full megapixel image runs into the same data-loading and QRAM bottleneck that blocks quantum machine learning in general.",
+    "b": [
+     "encoding cost",
+     "QRAM bottleneck"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "NISQ noise and shot noise together mean every measured value needs many repeated runs, and because today's qubits are few and noisy, real demonstrations run in simulation or on tiny image patches.",
+    "b": [
+     "NISQ noise",
+     "tiny image patches"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Saying this out loud is not weakness; faculty respect the candor, and it is what separates science from hype."
+   }
+  ],
+  "defs": [
+   {
+    "term": "MNIST",
+    "def": "A classic benchmark of small handwritten-digit images used to compare image classifiers."
+   },
+   {
+    "term": "CIFAR",
+    "def": "A benchmark of small colour photographs across ten or a hundred object categories."
+   },
+   {
+    "term": "Quanvolution",
+    "def": "A small quantum circuit run over image patches, the quantum echo of a convolution filter."
+   },
+   {
+    "term": "QCNN",
+    "def": "A Quantum Convolutional Neural Network, a classifier built from quantum convolution and pooling layers."
+   },
+   {
+    "term": "Classically simulable",
+    "def": "Able to be reproduced efficiently on an ordinary computer, which removes any claim of quantum advantage."
+   },
+   {
+    "term": "QRAM",
+    "def": "A hoped-for quantum memory that would load large classical data quickly; it does not yet exist at useful scale."
+   }
+  ]
+ },
+ "reality2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Quantum vision does have genuine ground to stand on, just not where the hype points."
+   },
+   {
+    "t": "lead",
+    "x": "The trick is to aim quantum computing at the problems it was built for, and to state the rest plainly."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum-native data",
+    "def": "Information that is already quantum, coming straight from sensors or physics and chemistry experiments, needing no conversion into a classical picture."
+   },
+   {
+    "term": "QCNN",
+    "def": "A Quantum Convolutional Neural Network, a classifier built from quantum convolution and pooling layers."
+   },
+   {
+    "term": "Phases of matter",
+    "def": "Distinct organised states of a quantum system, such as ordered versus disordered arrangements of its particles."
+   },
+   {
+    "term": "Quantum kernel",
+    "def": "A similarity score computed with a quantum circuit that can be hard for any classical computer to reproduce."
+   },
+   {
+    "term": "Barren plateau",
+    "def": "A failure mode where the training signal shrinks to nearly nothing, stalling deep quantum models."
+   },
+   {
+    "term": "ResNet",
+    "def": "A strong, widely-used classical convolutional network that sets a demanding bar on everyday images."
+   }
+  ],
+  "cards": [
+   [
+    "The clearest advantage appears when the data is already quantum, arriving straight from sensors, chemistry simulations and physics experiments.",
+    "A QCNN can classify the phases of matter in such data directly, with no lossy step of squeezing it into a classical picture first.",
+    "For structured or scientific imaging, a quantum kernel can be provably hard for any classical computer to imitate.",
+    "Here the quantum machine is playing on home ground rather than on borrowed turf."
+   ],
+   [
+    "A QCNN needs only about a logarithm's worth of parameters for its size, which is a real gift when training data is scarce.",
+    "That thrift matters most in specialised scientific domains that will never have millions of labelled images.",
+    "The same compact, hierarchical shape also softens the barren-plateau problem that stalls naive deep quantum vision circuits.",
+    "Fewer knobs to tune can mean a model that actually trains where a larger one simply would not."
+   ],
+   [
+    "Quantum-enhanced vision today will not beat a ResNet on a webcam feed, and pretending otherwise helps no one.",
+    "The honest framing is to teach it as the front-end feature extractor of the future, not a replacement for classical vision.",
+    "It runs hybrid, wrapped inside the classical computer-vision tools faculty already know and trust.",
+    "Promising and early-stage is the accurate label, backed by credible institutions but with no demonstrated advantage yet."
+   ]
+  ]
+ },
+ "turning": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Somewhere between 2025 and 2026 the conversation about quantum computing stopped being about whether it will ever work and turned into a question of when it reaches each industry."
+   },
+   {
+    "t": "head",
+    "x": "From 'if' to 'when'"
+   },
+   {
+    "t": "p",
+    "x": "The four numbers on this slide are a snapshot of that shift, taken together rather than one at a time."
+   },
+   {
+    "t": "b",
+    "x": "More than three hundred large enterprises are now actively engaged in quantum programmes, not just watching from a distance.",
+    "b": [
+     "three hundred large enterprises"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Start-up investment jumped 6.3 times from 2024 to 2025, one of the sharpest one-year climbs the field has seen.",
+    "b": [
+     "6.3 times"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Roughly ninety percent of that money went specifically to quantum computing rather than to sensing or communication.",
+    "b": [
+     "ninety percent"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Analysts project quantum-computing revenue to reach about 4.4 billion dollars by 2028, a real commercial market taking shape.",
+    "b": [
+     "4.4 billion dollars by 2028"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "What it means for vision"
+   },
+   {
+    "t": "b",
+    "x": "For computer vision the recurring pattern is simple: wherever an industry drowns in high-dimensional image data, a richer feature space or a hybrid quantum front-end becomes worth a pilot."
+   },
+   {
+    "t": "b",
+    "x": "Healthcare imaging, earth observation and factory inspection are today's vanguard, and mega-science runs the hardest versions of all."
+   },
+   {
+    "t": "note",
+    "x": "Every number here is money and attention moving; none of it yet is a proven accuracy win on real images."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum computing",
+    "def": "Machines that compute using quantum states, the specific field drawing most of the investment shown here."
+   },
+   {
+    "term": "Feature space",
+    "def": "The set of numerical descriptions a model uses to represent an image instead of raw pixels."
+   },
+   {
+    "term": "Hybrid quantum front-end",
+    "def": "A quantum circuit placed at the start of an otherwise classical vision system to extract features."
+   }
+  ]
+ },
+ "medical": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Medical imaging is the application where the incentives for quantum-enhanced vision line up best, because the pictures are high-stakes, the labels are scarce and expensive, and even a small improvement in reading them can save lives."
+   },
+   {
+    "t": "p",
+    "x": "The honest frame throughout: everything reported so far is early-stage and mostly at parity with classical methods, not beyond them."
+   }
+  ],
+  "defs": [
+   {
+    "term": "CNN",
+    "def": "A convolutional neural network, the standard image-reading network used across radiology and pathology."
+   },
+   {
+    "term": "Graph neural network (GNN)",
+    "def": "A network that learns over data shaped as connected nodes and links rather than a flat grid."
+   },
+   {
+    "term": "Hybrid quantum-classical model",
+    "def": "A model in which a quantum circuit handles one stage and ordinary classical software handles the rest."
+   },
+   {
+    "term": "AUC",
+    "def": "Area under the curve, a score from zero to one for how cleanly a classifier separates two classes."
+   },
+   {
+    "term": "PathMNIST / MedMNIST",
+    "def": "Small, standardised benchmark sets of downscaled medical images used to compare methods fairly."
+   },
+   {
+    "term": "Digital pathology",
+    "def": "Reading tissue-slide images on a computer instead of down a microscope."
+   }
+  ],
+  "cards": [
+   [
+    "Convolutional networks already read X-ray, CT and MRI scans and whole-slide tissue images every day in hospitals around the world.",
+    "These are exactly the high-stakes pictures where a slightly richer feature or a little more data efficiency would matter most.",
+    "That is why medical imaging is the single most-studied target for quantum-enhanced vision."
+   ],
+   [
+    "IBM built a hybrid quantum-classical graph network to classify tumours in digital-pathology slides and reported it working at par with the classical version (IEEE QCE 2024).",
+    "A hybrid quantum convolutional network on the PathMNIST colon-tissue benchmark reached 93.40 percent accuracy and a 99.59 percent AUC (2025).",
+    "MedMNIST images have even been classified on a real 127-qubit IBM machine, a milestone of scale rather than of accuracy."
+   ],
+   [
+    "Medical datasets are small and costly to label, because every image needs an expert clinician to annotate it.",
+    "That data-scarce regime is where a quantum feature extractor with very few parameters is easiest to defend.",
+    "The candid caveat: every result so far sits at or near parity with classical, not clearly ahead of it."
+   ]
+  ]
+ },
+ "remote": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Every day, satellites photograph the whole planet and produce far more images than any team of people could ever label, which makes earth observation a natural place to test machine vision that learns without much supervision."
+   },
+   {
+    "t": "head",
+    "x": "A torrent of unlabelled images"
+   },
+   {
+    "t": "p",
+    "x": "The scale is hard to overstate: the NASA-ISRO NISAR radar satellite alone streams on the order of eighty terabytes a day, and almost none of that imagery is ever hand-labelled."
+   },
+   {
+    "t": "b",
+    "x": "Sorting a satellite tile into forest, city, water or farmland, called land-use or scene classification, has become one of the most common testbeds for quantum machine learning, usually on the public EuroSAT dataset.",
+    "b": [
+     "EuroSAT"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "What has been tried"
+   },
+   {
+    "t": "b",
+    "x": "The European Space Agency's Phi-lab runs a dedicated programme, QC4EO, exploring quantum-enhanced vision for earth observation, including the first quantum vision transformers for satellite images.",
+    "b": [
+     "QC4EO"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A hybrid quantum convolutional network on EuroSAT was reported to edge past its classical counterpart, and a 2026 hybrid satellite classifier moved from about 83 to 87 percent accuracy on IBM processors, a consistent two-to-three-point gain over a ResNet50 baseline.",
+    "b": [
+     "83 to 87 percent"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The honest status"
+   },
+   {
+    "t": "b",
+    "x": "These are small, hybrid results run in or near simulation; across the field, satellite results today sit largely at parity with classical methods rather than clearly ahead."
+   },
+   {
+    "t": "note",
+    "x": "The fit is genuine, huge unlabelled image streams, and the whole idea can be studied right now on a laptop in simulation."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Earth observation",
+    "def": "Imaging the Earth from satellites and aircraft to study land, ocean and atmosphere."
+   },
+   {
+    "term": "EuroSAT",
+    "def": "A public benchmark of satellite tiles labelled by land-use type, widely used to compare image classifiers."
+   },
+   {
+    "term": "ESA Phi-lab",
+    "def": "The European Space Agency's laboratory for experimental artificial-intelligence and quantum methods in space data."
+   },
+   {
+    "term": "Quantum convolutional network (QCNN)",
+    "def": "A quantum circuit built to mirror the layered structure of a convolutional network."
+   },
+   {
+    "term": "Vision transformer",
+    "def": "An image model that splits a picture into patches, allowing every patch to attend to every other."
+   },
+   {
+    "term": "ResNet50",
+    "def": "A widely used fifty-layer classical convolutional network, a standard strong baseline to beat."
+   }
+  ]
+ },
+ "industry2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Beyond clinics and satellites, two more vision problems are drawing quantum pilots, spotting defects on a factory line and helping machines perceive the road, and a small set of companies is doing the building."
+   },
+   {
+    "t": "p",
+    "x": "As with everything in this section, these are pilots and proofs of concept, not deployed advantages."
+   }
+  ],
+  "defs": [
+   {
+    "term": "QSVM",
+    "def": "A quantum support-vector machine, a classifier that measures similarity between samples using a quantum circuit."
+   },
+   {
+    "term": "QBoost",
+    "def": "A quantum-assisted boosting method that combines many weak classifiers into a stronger one."
+   },
+   {
+    "term": "Object detection",
+    "def": "Finding and boxing every object of interest in an image."
+   },
+   {
+    "term": "Segmentation",
+    "def": "Labelling each pixel of an image by which object it belongs to."
+   },
+   {
+    "term": "CUDA-Q",
+    "def": "NVIDIA's open platform for building hybrid quantum-classical programs, accelerated on ordinary GPUs."
+   },
+   {
+    "term": "HQNN",
+    "def": "A hybrid quantum neural network, mixing quantum circuit layers with ordinary neural-network layers."
+   }
+  ],
+  "cards": [
+   [
+    "Visual inspection for cracks and voids on a production line is a bounded, high-value vision task, which makes it an attractive first target.",
+    "Multiverse Computing and the Ikerlan institute tested a hybrid pipeline on 2,727 X-ray images of cast car parts, using quantum support-vector machines and quantum boosting on near-term hardware.",
+    "The outcome was competitive with classical inspection, offered as a proof of concept rather than a deployed advantage."
+   ],
+   [
+    "Detecting and outlining objects for self-driving cars and robots is heavy on computation, so it is a stated target for quantum-enhanced feature extraction.",
+    "In the largest quantum image-classification experiment to date, Honda's Scenes driving dataset was run across 72 qubits on Quantinuum's H-2 and IBM's Heron processors, reaching over 90 percent test accuracy (2025).",
+    "Even that flagship run classifies downscaled images and demonstrates scale, not an advantage over a strong classical detector."
+   ],
+   [
+    "IBM's Qiskit and NVIDIA's CUDA-Q give researchers the hybrid quantum-classical toolkits these pilots run on, with CUDA-Q accelerated on ordinary graphics processors.",
+    "Quantum-software firms such as Terra Quantum and Multiverse Computing supply the algorithms; Terra Quantum reported a hybrid network hitting 99.21 percent on MNIST digits with eight times fewer parameters, in simulation.",
+    "The honest read: credible, well-funded exploration by real players, all still at pilot stage with no proven advantage."
+   ]
+  ]
+ },
+ "qimage": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Quanvolution loads one small patch at a time, but a separate research line asks a bolder question: can a whole image be written directly into a quantum state, so that the picture itself lives on the machine?"
+   },
+   {
+    "t": "head",
+    "x": "Two encoding schemes"
+   },
+   {
+    "t": "p",
+    "x": "Two schemes dominate this idea, and both store where each pixel sits and how bright it is, only in different places on the qubits."
+   },
+   {
+    "t": "b",
+    "x": "FRQI, the Flexible Representation of Quantum Images, packs a square image into a compact register: a two-to-the-n by two-to-the-n image needs only about two-n-plus-one qubits, with each pixel's brightness hidden in the angle of a single extra colour qubit.",
+    "b": [
+     "FRQI",
+     "two-n-plus-one qubits"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "NEQR, the Novel Enhanced Quantum Representation, instead stores each pixel's brightness as an exact binary number in its own small register, costing two-n-plus-q qubits but giving faster preparation, better compression and, crucially, an exact readback of the pixels.",
+    "b": [
+     "NEQR",
+     "two-n-plus-q qubits"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "What it buys"
+   },
+   {
+    "t": "b",
+    "x": "Once a picture is a quantum state, operations like edge detection can in principle be applied to the whole image at once, in superposition."
+   },
+   {
+    "t": "head",
+    "x": "The same wall"
+   },
+   {
+    "t": "b",
+    "x": "Both schemes run straight into the familiar problem: loading real data is slow and today's noisy qubits are few, so every actual demonstration uses tiny images."
+   },
+   {
+    "t": "note",
+    "x": "A beautiful idea on paper; on hardware it is still a handful of pixels, waiting for better machines."
+   }
+  ],
+  "defs": [
+   {
+    "term": "FRQI",
+    "def": "Flexible Representation of Quantum Images, storing a square image in about two-n-plus-one qubits with brightness held in a colour qubit's angle."
+   },
+   {
+    "term": "NEQR",
+    "def": "Novel Enhanced Quantum Representation, storing each pixel's brightness as an exact binary value, allowing precise readout."
+   },
+   {
+    "term": "Qubit",
+    "def": "The basic unit of a quantum computer, able to hold a blend of zero and one at once."
+   },
+   {
+    "term": "Register",
+    "def": "A small group of qubits used together to hold one number or coordinate."
+   },
+   {
+    "term": "Superposition",
+    "def": "A quantum state that is genuinely several possibilities at once until it is measured."
+   },
+   {
+    "term": "NISQ",
+    "def": "Noisy Intermediate-Scale Quantum, today's era of small, error-prone quantum machines."
+   }
+  ]
+ },
+ "megaintro": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The biggest scientific instruments ever built are, when everything else is stripped away, enormous cameras."
+   },
+   {
+    "t": "p",
+    "x": "The Large Hadron Collider photographs particle collisions; the DUNE experiment builds three-dimensional images of ghostly neutrino tracks inside a tank of liquid argon; the Square Kilometre Array images the entire radio sky; and LIGO reads a four-kilometre ruler for ripples in space itself."
+   },
+   {
+    "t": "p",
+    "x": "All of it is extreme-dimensional image data, and almost none of it is labelled, which is precisely the home ground of convolutional networks, clustering and unsupervised representation."
+   },
+   {
+    "t": "note",
+    "x": "It is also the hardest possible proving ground for quantum-enhanced vision."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Large Hadron Collider",
+    "def": "CERN's giant particle accelerator, which smashes protons together and photographs the debris."
+   },
+   {
+    "term": "DUNE",
+    "def": "A neutrino experiment that records three-dimensional images of neutrino interactions in liquid argon."
+   },
+   {
+    "term": "Square Kilometre Array (SKA)",
+    "def": "A vast radio telescope that images the sky by combining thousands of antennas."
+   },
+   {
+    "term": "LIGO",
+    "def": "An observatory that detects gravitational waves by measuring tiny stretches in four-kilometre laser arms."
+   },
+   {
+    "term": "Unsupervised representation",
+    "def": "Learning useful structure from data that carries no human-provided labels."
+   }
+  ]
+ },
+ "megasci": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "At the frontier of physics, three flagship experiments are already image-classification problems at enormous scale, and each is a place where quantum-enhanced ideas are being tried on the readout."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Spectrogram",
+    "def": "A picture of how a signal's frequencies change over time, treated here as an image to classify."
+   },
+   {
+    "term": "Glitch",
+    "def": "A burst of instrument noise in a gravitational-wave detector that can mimic a real signal."
+   },
+   {
+    "term": "Gravity Spy",
+    "def": "A citizen-science project where volunteers and a network together sort LIGO glitch images into classes."
+   },
+   {
+    "term": "Latent space",
+    "def": "A compressed numerical summary of data produced by a network, smaller than the raw image."
+   },
+   {
+    "term": "Anomaly detection",
+    "def": "Flagging data that does not fit the normal pattern, without being told in advance what to look for."
+   },
+   {
+    "term": "Quantum kernel",
+    "def": "A similarity score between two data points computed with a quantum circuit."
+   }
+  ],
+  "cards": [
+   [
+    "Stray noise in a gravitational-wave detector is turned into a picture called a spectrogram, and a convolutional network sorts these 'glitches' into twenty-three distinct classes.",
+    "The Gravity Spy citizen-science project has enlisted more than thirty thousand volunteers who together made over seven million classifications, and the latest network reaches about 94 percent accuracy.",
+    "Quantum anomaly-detection ideas are now being explored on this same detector readout."
+   ],
+   [
+    "Every proton collision at the Large Hadron Collider is an image of particle tracks, reconstructed by convolutional and graph networks.",
+    "CERN's Quantum Technology Initiative found a genuine bright spot: a quantum clustering method run on real hardware significantly outperformed its classical equivalent at spotting anomalies in the compressed latent space of collision events (Communications Physics, 2024).",
+    "This unsupervised result is the clearest case anywhere of quantum beating classical on a real vision-style task."
+   ],
+   [
+    "In the DUNE experiment each neutrino interaction is a sparse three-dimensional image of tracks inside liquid argon, reconstructed by convolutional and graph networks.",
+    "Quantum kernels and quantum convolutional networks have been tested to tell a straight 'track' apart from a spraying 'shower', reaching about 80 percent accuracy.",
+    "That test ran on a real 127-qubit IBM machine and landed at parity with the classical method, not beyond it."
+   ]
+  ]
+ },
+ "sensing": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Quantum does not only process images, it can also build a new class of cameras, instruments that see things no ordinary sensor can reach."
+   },
+   {
+    "t": "head",
+    "x": "New kinds of cameras"
+   },
+   {
+    "t": "b",
+    "x": "Sub-shot-noise and quantum-illumination microscopes beat the fundamental light-noise limit, imaging delicate or barely-lit samples that would wash out on a normal detector.",
+    "b": [
+     "sub-shot-noise",
+     "quantum-illumination"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Ghost imaging reconstructs an object from correlated light that never directly struck it, and nitrogen-vacancy diamond sensors map tiny magnetic fields to picture activity inside living cells and microchips.",
+    "b": [
+     "Ghost imaging",
+     "nitrogen-vacancy diamond"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Squeezed light, laser light with its noise carefully rearranged, is already injected into LIGO to sharpen its readout of gravitational waves.",
+    "b": [
+     "Squeezed light"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Sensors feed the models"
+   },
+   {
+    "t": "b",
+    "x": "Each of these instruments emits ultra-precise, mostly unlabelled image streams, which then become machine-learning problems in their own right."
+   },
+   {
+    "t": "note",
+    "x": "So quantum touches vision from both ends at once, as brand-new cameras and as new feature extractors for the pictures they produce."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum sensing",
+    "def": "Measuring physical quantities with quantum states to reach precision beyond ordinary instruments."
+   },
+   {
+    "term": "Shot noise",
+    "def": "The fundamental graininess of light caused by its arriving as individual photons."
+   },
+   {
+    "term": "Quantum illumination",
+    "def": "Using entangled light to detect faint objects buried in background noise."
+   },
+   {
+    "term": "Ghost imaging",
+    "def": "Forming an image from correlations in light rather than light that directly hit the object."
+   },
+   {
+    "term": "Nitrogen-vacancy diamond",
+    "def": "A diamond flaw that acts as an atom-sized magnetic-field sensor for imaging at tiny scales."
+   },
+   {
+    "term": "Squeezed light",
+    "def": "Laser light engineered to have less noise in the property being measured."
+   }
+  ]
+ },
+ "megasyn": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The pattern across every mega-science program is the same: extreme, mostly-unlabelled imagery, which is machine vision's home turf."
+   },
+   {
+    "t": "p",
+    "x": "Quantum helps from both ends, as a feature extractor or kernel that embeds the images in a vast space, and as a new class of sensors that generate pictures no classical instrument could."
+   },
+   {
+    "t": "p",
+    "x": "The feature-extraction side is mostly at parity today, with one genuine unsupervised win reported by CERN on real hardware; the sensing side is already delivering."
+   },
+   {
+    "t": "note",
+    "x": "Honest bottom line: most quantum-vision results are at parity, not yet superior, so the value today is teaching the pattern and being ready when the hardware catches up."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Feature extractor",
+    "def": "A stage that turns raw images into compact numerical descriptions for a later classifier."
+   },
+   {
+    "term": "Kernel embedding",
+    "def": "Mapping data into a large space where a similarity score makes patterns easier to separate."
+   },
+   {
+    "term": "Unsupervised",
+    "def": "Finding structure in data without any human-provided labels to learn from."
+   }
+  ]
+ },
+ "nqm1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "India's answer to the global quantum race is a single, funded, eight-year national programme — the National Quantum Mission."
+   },
+   {
+    "t": "head",
+    "x": "The commitment"
+   },
+   {
+    "t": "b",
+    "x": "The Union Cabinet approved the mission on the nineteenth of April 2023 with a budget of six thousand and three point six five crore rupees, roughly seven hundred and thirty million dollars, to run from 2023 through 2031.",
+    "b": [
+     "19 April 2023",
+     "6,003.65 crore",
+     "730 million dollars"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Staged qubit targets"
+   },
+   {
+    "t": "b",
+    "x": "The mission sets deliberate, rising hardware goals: twenty to fifty working qubits within the first three years, fifty to one hundred by year five, and between fifty and one thousand qubits by year eight.",
+    "b": [
+     "twenty to fifty",
+     "fifty to one hundred",
+     "fifty and one thousand"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "That hardware is being pursued on two parallel platforms at once — superconducting circuits chilled to near absolute zero, and photonic systems that compute with particles of light.",
+    "b": [
+     "superconducting",
+     "photonic"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "A national footprint"
+   },
+   {
+    "t": "b",
+    "x": "The work is spread across one hundred and fifty-two researchers in forty-three institutions across seventeen states, so no corner of the country — and no college in this room — sits outside the mission's reach.",
+    "b": [
+     "152 researchers",
+     "43 institutions",
+     "17 states"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The scale of the ambition is a signal to every campus: quantum is now national policy, not a niche."
+   }
+  ],
+  "defs": [
+   {
+    "term": "National Quantum Mission (NQM)",
+    "def": "India's central, government-funded programme to build quantum computers, sensors and communication over 2023 to 2031."
+   },
+   {
+    "term": "Qubit",
+    "def": "The basic unit of a quantum computer, which unlike an ordinary bit can hold a blend of zero and one at the same time."
+   },
+   {
+    "term": "Superconducting qubit",
+    "def": "A qubit made from a tiny electrical circuit that must be chilled to near absolute zero to work."
+   },
+   {
+    "term": "Photonic platform",
+    "def": "A way of computing quantumly using individual particles of light instead of chilled circuits."
+   },
+   {
+    "term": "Crore",
+    "def": "An Indian unit of counting equal to ten million."
+   }
+  ]
+ },
+ "nqm2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The mission does not run from one lab — it is organised as four thematic hubs, each led by a top institution and each owning one pillar of the quantum stack."
+   },
+   {
+    "t": "p",
+    "x": "Every hub was set up as an independent not-for-profit Section-8 company and has been operational since October 2024, connected out to partner colleges in a hub-and-spoke design."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Hub-and-spoke",
+    "def": "An organising model where a central lead institution coordinates many smaller partner colleges around it."
+   },
+   {
+    "term": "Section-8 company",
+    "def": "An Indian legal form for a not-for-profit organisation set up to pursue a public-benefit goal."
+   },
+   {
+    "term": "Quantum key distribution (QKD)",
+    "def": "A method that uses the laws of physics to share secret codes so that any eavesdropping is detectable."
+   },
+   {
+    "term": "Magnetometer",
+    "def": "An instrument that measures magnetic fields, here made extremely sensitive using quantum effects."
+   },
+   {
+    "term": "Atomic clock",
+    "def": "A clock that keeps time by the natural, ultra-steady vibrations of atoms, the most precise timekeeper known."
+   },
+   {
+    "term": "Cryogenic device",
+    "def": "Hardware built to run at extremely cold temperatures, as many qubits require."
+   }
+  ],
+  "cards": [
+   [
+    "Led by the Indian Institute of Science in Bengaluru, this hub owns the headline goal of building India's own quantum processors.",
+    "It is the hub responsible for the staged climb from twenty qubits up to one thousand qubits over the mission's eight years.",
+    "Its work is the indigenous hardware that quantum-vision experiments will eventually run on."
+   ],
+   [
+    "Jointly led by IIT Madras and the government's Centre for Development of Telematics, this hub builds secure quantum communication.",
+    "Its targets include quantum key distribution across two thousand kilometres of fibre and satellite-based secure links.",
+    "The aim is communication that the laws of physics, not just clever mathematics, keep private."
+   ],
+   [
+    "Led by IIT Bombay, this hub develops ultra-precise measuring instruments — magnetometers, atomic clocks and quantum imaging devices.",
+    "It is the hub most directly tied to vision, because quantum sensing produces new kinds of images no classical camera can capture.",
+    "Sharper, more sensitive instruments mean richer image data for machine-learning systems to work on."
+   ],
+   [
+    "Led by IIT Delhi, this hub creates the physical building blocks — the special materials and cryogenic devices that qubits are made from.",
+    "Without reliable qubit materials and the deep-cold hardware that houses them, none of the other three hubs can deliver.",
+    "It is the quiet foundation the whole mission stands on."
+   ]
+  ]
+ },
+ "eco": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Beyond the government mission, an Indian commercial and academic ecosystem is now shipping real quantum machines, not just plans."
+   },
+   {
+    "t": "p",
+    "x": "Homegrown startups, a landmark industry partnership, and university labs are together putting Indian-built and India-hosted quantum hardware into actual service."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Full-stack quantum computer",
+    "def": "A machine that a company builds end to end, from the physical qubits up to the software that controls them."
+   },
+   {
+    "term": "IBM Quantum System Two",
+    "def": "IBM's modular quantum-computing platform, the flagship hardware installed at Amaravati."
+   },
+   {
+    "term": "Heron processor",
+    "def": "An IBM quantum chip; the Amaravati machine runs a one-hundred-fifty-six-qubit version, the largest in India."
+   },
+   {
+    "term": "Ion-trap",
+    "def": "A quantum computer that uses individual electrically charged atoms, held still by fields, as its qubits."
+   },
+   {
+    "term": "Post-quantum cryptography (PQC)",
+    "def": "New codes designed to stay secure even against a future quantum computer that could break today's encryption."
+   }
+  ],
+  "cards": [
+   [
+    "QpiAI, a Bengaluru company, unveiled Indus, a twenty-five-qubit full-stack quantum computer, in April 2025.",
+    "It followed with Kaveri, a sixty-four-qubit machine, in November 2025, with commercial availability targeted for late 2026.",
+    "Backed by sixty-five point six million dollars raised, QpiAI's public roadmap aims for one thousand qubits by 2030."
+   ],
+   [
+    "Launched on the seventh of February 2026 in Andhra Pradesh, this venture brings IBM, TCS and the state government together.",
+    "Its centrepiece is an IBM Quantum System Two running a one-hundred-fifty-six-qubit Heron processor — the largest quantum computer on Indian soil.",
+    "L&T is building the infrastructure, with commissioning expected around September 2026."
+   ],
+   [
+    "IISER Pune is on track to deliver a twenty-qubit ion-trap machine by the end of 2026, a flagship mission milestone.",
+    "India also published a national post-quantum-cryptography roadmap in February 2026 to protect Aadhaar-scale identity and UPI-scale payments.",
+    "A widening startup base — QNu Labs, Dimira, Quanastra, Prenishq and more — is building real components, from cryogenic cables to secure-communication gear."
+   ]
+  ]
+ },
+ "funding": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The most honest slide in this section is the funding comparison — and it is a strength, not an apology."
+   },
+   {
+    "t": "head",
+    "x": "The raw numbers"
+   },
+   {
+    "t": "b",
+    "x": "India's roughly seven hundred and thirty million dollars over eight years sits against China's reputed fifteen billion, the United States at two and a half billion dollars and more, the United Kingdom's two and a half billion pounds over ten years, and Germany's two to three billion euros.",
+    "b": [
+     "seven hundred and thirty million",
+     "fifteen billion"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Funded to compete, not to outspend"
+   },
+   {
+    "t": "p",
+    "x": "The comparison makes plain that India is funded to compete selectively in chosen niches, not to outspend any of the large players."
+   },
+   {
+    "t": "head",
+    "x": "Where India's edge really is"
+   },
+   {
+    "t": "b",
+    "x": "India's genuine advantage is not buying the most hardware — it is algorithms, software and a vast, young talent pool, which is the layer of the industry that actually captures the economic value.",
+    "b": [
+     "algorithms, software",
+     "talent pool",
+     "captures the economic value"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "That value-capturing layer is exactly what quantum machine learning and quantum-enhanced computer vision are — brains-and-keyboard work rather than billion-dollar fabrication plants.",
+    "b": [
+     "quantum machine learning",
+     "quantum-enhanced computer vision"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Faculty tend to respect this candour: the mission is deliberately targeted, and the opening it leaves is precisely the one this room can fill."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum machine learning",
+    "def": "The field that uses quantum circuits to help learn patterns from data, the subject at the heart of this session."
+   },
+   {
+    "term": "Quantum-enhanced computer vision",
+    "def": "Using a small quantum circuit as part of an image pipeline to extract features, an early-stage, hybrid idea today."
+   },
+   {
+    "term": "Value-capturing layer",
+    "def": "The software, algorithm and application part of an industry that earns the profit, as opposed to just making the machines."
+   }
+  ]
+ },
+ "viksit": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The mission's ultimate purpose has a name: Viksit Bharat 2047 — a fully developed India by the hundredth year of independence."
+   },
+   {
+    "t": "head",
+    "x": "Proven at scale"
+   },
+   {
+    "t": "b",
+    "x": "India has already taken frontier technology to planet scale — Aadhaar for digital identity, UPI for instant payments, and Digital India — proving the country can run a hard technology for more than a billion people.",
+    "b": [
+     "Aadhaar",
+     "UPI",
+     "planet scale"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "A coordinated stack"
+   },
+   {
+    "t": "b",
+    "x": "Quantum sits inside a deliberately coordinated push — the National Quantum Mission alongside the IndiaAI mission, Semicon India for chips, and the one-lakh-crore-rupee research fund run by the ANRF.",
+    "b": [
+     "National Quantum Mission",
+     "IndiaAI",
+     "Semicon India"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "The stated aim is to move India from being the world's back office to being one of its innovation engines, with sovereign hardware and secure systems rather than rented foreign quantum cloud."
+   },
+   {
+    "t": "note",
+    "x": "The point for this room: Viksit Bharat 2047 will be built by the students sitting in these faculty members' classrooms right now."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Viksit Bharat 2047",
+    "def": "India's national goal of becoming a fully developed country by 2047, the centenary of independence."
+   },
+   {
+    "term": "NISAR",
+    "def": "A joint NASA-ISRO radar satellite, launched in July 2025, that images the entire Earth and produces about eighty terabytes of data every day."
+   },
+   {
+    "term": "SVAMITVA",
+    "def": "An Indian government scheme that uses drones to map rural land and property across the country."
+   },
+   {
+    "term": "Earth observation",
+    "def": "The practice of imaging and monitoring the planet from satellites and aircraft."
+   },
+   {
+    "term": "ANRF",
+    "def": "The Anusandhan National Research Foundation, India's body funding research, backed by a one-lakh-crore-rupee fund."
+   },
+   {
+    "term": "Hybrid quantum-classical vision",
+    "def": "An image system that uses a quantum circuit for one step and ordinary classical computing for the rest."
+   }
+  ],
+  "cards": [
+   [
+    "India's real edge in quantum vision is fuel, not yet finished quantum-vision systems — it holds one of the largest imaging-data footprints on Earth.",
+    "Earth observation alone is enormous: the NASA-ISRO NISAR satellite launched on the thirtieth of July 2025 and streams about eighty terabytes of imagery every single day.",
+    "The SVAMITVA programme has drone-mapped roughly two hundred and thirty-eight thousand villages, while healthcare is data-rich but expert-scarce — about fifteen thousand radiologists for one point four billion people.",
+    "That scarcity is why the market for AI in medical diagnostics is projected to grow from about thirteen million dollars in 2024 to nearly forty-five million by 2030 — a natural home for hybrid quantum-classical vision, if the talent exists."
+   ]
+  ]
+ },
+ "future1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Three forces decide how far quantum computer vision can actually go, and each is moving in the right direction while staying honestly early."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Fault-tolerance",
+    "def": "The point at which a quantum computer can catch and fix its own errors faster than new errors appear, so long calculations stop collapsing into noise."
+   },
+   {
+    "term": "Logical qubit",
+    "def": "A single reliable qubit built out of many physical qubits working together to correct each other's mistakes."
+   },
+   {
+    "term": "Amplitude encoding",
+    "def": "A way of loading an image so that a small number of qubits can hold a huge number of pixel values at once."
+   },
+   {
+    "term": "Quanvolution",
+    "def": "A small quantum circuit that scans across an image patch by patch, playing the role a classical filter plays in a convolutional network."
+   },
+   {
+    "term": "Quantum attention",
+    "def": "An early research attempt to rebuild the 'what should the model focus on' mechanism of modern vision models using quantum circuits."
+   },
+   {
+    "term": "Neural decoder",
+    "def": "An ordinary AI network trained to read a quantum computer's error signals and guess what went wrong so it can be undone."
+   }
+  ],
+  "cards": [
+   [
+    "Hardware is scaling fast: IBM's Starling machine is targeted for 2029 with around 200 error-corrected logical qubits, and Google aims for its first genuinely useful error-corrected machine around the same year.",
+    "PsiQuantum is chasing a photonic design built toward a million qubits, a very different physical route to the same goal of scale.",
+    "As the number of qubits grows and the error rate falls, loading a whole image through amplitude encoding and running deeper vision circuits shifts from impossible toward feasible.",
+    "The wall discussed earlier in this session is a wall of today's hardware, not a law of nature, and it is being pushed back year by year."
+   ],
+   [
+    "The two fields are already helping each other rather than competing: ordinary AI is now used to keep quantum hardware working.",
+    "DeepMind's AlphaQubit is a neural decoder that reads a quantum chip's error signals and corrects mistakes more accurately than earlier hand-built methods, tested on systems up to a few hundred qubits.",
+    "Running the other direction, trainable quanvolution and early quantum-attention circuits try to fold quantum steps into the vision models themselves.",
+    "Both directions are active, published research, and both are honestly still experimental rather than in production."
+   ],
+   [
+    "The natural step past quanvolution is quantum visual tracking: following an object whose possible positions are carried together in superposition instead of checked one at a time.",
+    "This is the exact direction Srivastava's own quantum-vision research points, building on the classical tracking pipeline and the on-hardware experiments from his 2022 work.",
+    "It is presented as a research horizon, honestly labelled as such: promising in principle, with no demonstrated advantage on everyday images yet.",
+    "It marks where the classical vision covered today could one day hand off to a quantum front end, once the hardware from the first card arrives."
+   ]
+  ]
+ },
+ "talent2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The single largest bottleneck for this whole field worldwide is not machines or money but people who genuinely understand the stack, and that is exactly where a faculty audience has the most leverage."
+   },
+   {
+    "t": "p",
+    "x": "Industry projections point to roughly 250,000 quantum-related roles by 2030 and about 840,000 by 2035, set against a qualified supply that today fills only a small fraction of open positions."
+   },
+   {
+    "t": "p",
+    "x": "Every course seeded and every strong student pointed toward quantum machine learning turns India's deep pool of software and mathematics talent into a compounding comparative advantage, the part of the value chain the country is best placed to capture."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quanvolution",
+    "def": "A small quantum circuit that slides across an image patch by patch, standing in for a classical filter in a convolutional network."
+   },
+   {
+    "term": "Convolution",
+    "def": "The core operation of image neural networks, where a small filter slides over a picture to detect edges, textures and shapes."
+   },
+   {
+    "term": "Feature extractor",
+    "def": "The front part of a vision model that turns raw pixels into a compact set of useful descriptions before any decision is made."
+   },
+   {
+    "term": "Quantum machine learning",
+    "def": "The study of using quantum circuits inside machine-learning pipelines to represent or transform data."
+   },
+   {
+    "term": "NQM",
+    "def": "India's National Quantum Mission, the government programme funding quantum research hubs and talent across the country."
+   }
+  ],
+  "cards": [
+   [
+    "The move from convolution to quanvolution is teachable from first principles with no quantum hardware at all, so it fits an ordinary classroom.",
+    "A single quanvolution notebook can be dropped into any existing deep-learning or computer-vision elective, and it runs on any laptop using only the CPU.",
+    "The honest framing matters: quantum vision should be taught as a possible front-end feature extractor, not as a magic boost to accuracy.",
+    "Strong students who catch fire can then be routed toward National Quantum Mission hubs and toward open quantum-vision research questions."
+   ]
+  ]
+ },
+ "thanks": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The through-line of this session was a single honest arc: today's classical computer vision is remarkable and mature, while quantum computer vision is an early, promising, hybrid idea whose advantage is still unproven on natural images."
+   },
+   {
+    "t": "p",
+    "x": "Collaboration is warmly invited on quantum visual tracking and on bringing the next cohort of students into this work, and the notebook shared today runs on any laptop for anyone who wishes to begin."
+   }
+  ]
+ }
+}

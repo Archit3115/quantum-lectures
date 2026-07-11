@@ -2,7 +2,7 @@
 """Build the verbose, animated Session-1 deck (v2) on a COPY of the IBM Qiskit template.
 Data-driven: skeleton.json (layout/diagrams/numbers) + content.json (verbose read-aloud prose).
 Adds per-paragraph / per-element entrance animations and Qiskit decorative assets to fill whitespace."""
-import json, os
+import json, os, sys
 from pptx import Presentation
 from pptx.util import Inches as IN, Pt, Emu
 from pptx.dml.color import RGBColor
@@ -30,9 +30,51 @@ CY=RGBColor(0x33,0xB1,0xFF); INDIGO=RGBColor(0x1A,0x0A,0x3E)
 FONT="IBM Plex Sans"; MONO="IBM Plex Mono"
 ACC={"blue":BLUE,"purple":PURPLE,"teal":TEAL,"deep":DEEP,"magenta":MAGENTA,"ink":INK,"red":RED}
 
-SKEL=json.load(open(os.path.join(BUILD,"skeleton.json")))
-CONTENT=json.load(open(os.path.join(BUILD,"content.json")))
+# ---- per-session deck config (session1 = default; session2 = computer vision) ----
+DECKS={
+ "session1":{
+  "skel":"skeleton.json","content":"content.json","out":"session1_quantum_clustering_qiskit.pptx",
+  "title":{"l1":"Quantum Unsupervised Learning","l2":"(Clustering)",
+           "role":"Senior Manager, Data Engineering @ PUMA · Founder, AiQyaM · Expert Session 1",
+           "fdp":"FDP · E&ICT Academy, NIT Warangal × NIT Raipur    |    11 July 2026 · 09:30–11:30",
+           "img":("illustration-refs","hardware-blue.jpg")},
+  "divfoot":"QML-2026 · Session 1 · Quantum Unsupervised Learning",
+  "thanks_session":"Quantum Unsupervised Learning (Clustering) · QML-2026 · 11 Jul 2026",
+  "agenda":[("01","Introduction","blue"),("02","Classical Unsupervised Learning","teal"),
+            ("03","Quantum Unsupervised Learning","purple"),("04","Industry & Current Research","magenta"),
+            ("05","The Indian Landscape","deep"),("06","The Future","ink")],
+  "table_note":"*logarithmic scaling assumes efficient QRAM — see the reality check.",
+  "logos":{"turning":["ibm","google","dwave"],"finance":["jpmorgan","ibm","qcware"],
+   "pharma":["algorithmiq"],"climate":["quantinuum","totalenergies"],
+   "whynow2":["google","dwave"],"ligo1":["caltech"],"ligo2":["caltech"],"cern":["cern"],
+   "iter":["iter"],"skadune":["skao","fermilab"],"future1":["ibm","google","quantinuum","psiquantum"],
+   "nqm1":["iisc"],"eco":["qpiai","qnu","ibm"],"benchmark":["ibm"]},
+ },
+ "session2":{
+  "skel":"skeleton2.json","content":"content2.json","out":"session2_quantum_vision_qiskit.pptx",
+  "title":{"l1":"Quantum-Enhanced","l2":"Computer Vision",
+           "role":"Senior Manager, Data Engineering @ PUMA · Founder, AiQyaM · Expert Session 2",
+           "fdp":"FDP · E&ICT Academy, NIT Warangal × NIT Raipur    |    11 July 2026 · 14:30–16:30",
+           "img":("illustration-refs","hardware-purple.jpg")},
+  "divfoot":"QML-2026 · Session 2 · Quantum-Enhanced Computer Vision",
+  "thanks_session":"Classical & Quantum-Enhanced Computer Vision · QML-2026 · 11 Jul 2026",
+  "agenda":[("01","Introduction","blue"),("02","Classical Computer Vision","teal"),
+            ("03","Quantum-Enhanced Vision","purple"),("04","Industry & Applications","magenta"),
+            ("05","The Indian Landscape","deep"),("06","The Future","ink")],
+  "table_note":"",
+  "logos":{"whynow2":["google","dwave"],"turning":["ibm","google","nvidia"],
+   "medical":["ibm"],"remote":["esa","ibm"],"industry2":["multiverse","terraquantum","nvidia"],
+   "megasci":["caltech","cern","fermilab"],"sensing":["caltech"],
+   "nqm1":["iisc"],"eco":["qpiai","ibm","tcs"],"future1":["ibm","google","psiquantum","deepmind"]},
+ },
+}
+SESSION=sys.argv[1] if len(sys.argv)>1 else "session1"
+D=DECKS[SESSION]
+SKEL=json.load(open(os.path.join(BUILD,D["skel"])))
+CONTENT=json.load(open(os.path.join(BUILD,D["content"])))
 def C(sid): return CONTENT.get(sid,{"body":[],"cards":[]})
+OUT=os.path.join(ROOT,"NIT Warangal",D["out"])
+LOGOS=D["logos"]
 
 # ---- strict margin grid (every slide obeys these) ----
 MX=IN(0.55); RX=IN(12.78); FW=RX-MX          # left margin, right edge, full content width
@@ -232,11 +274,6 @@ def defbox(slide,x,y,w,h,defs,anim=None,accent=DEEP,cols=1):
             para(tf2,f"{d['term']} — {d['def']}",9,GRAY4,first=(i==0),after=3.5,line=1.06,bolds=[d['term']])
     if anim is not None: anim.append((sh,"fade",None))
 
-LOGOS={"turning":["ibm","google","dwave"],"finance":["jpmorgan","ibm","qcware"],
- "pharma":["algorithmiq"],"climate":["quantinuum","totalenergies"],
- "whynow2":["google","dwave"],"ligo1":["caltech"],"ligo2":["caltech"],"cern":["cern"],
- "iter":["iter"],"skadune":["skao","fermilab"],"future1":["ibm","google","quantinuum","psiquantum"],
- "nqm1":["iisc"],"eco":["qpiai","qnu","ibm"],"benchmark":["ibm"]}
 def logo_row(slide,names,y,anim=None,h=IN(0.36),right_x=None):
     paths=[os.path.join(TA,"logos",n+".png") for n in names]
     paths=[p for p in paths if os.path.exists(p)]
@@ -281,7 +318,7 @@ def r_divider(slide,sp):
     rect(slide,IN(0.94),IN(5.15),IN(2.0),IN(0.06),WHITE)
     tb3,tf3=txt(slide,IN(0.94),IN(5.45),IN(10.5),IN(1.2)); para(tf3,sp.get("summary",""),18,WHITE,first=True,line=1.2)
     tb4,tf4=txt(slide,IN(0.94),IN(6.95),IN(11),IN(0.3))
-    para(tf4,"QML-2026 · Session 1 · Quantum Unsupervised Learning",10.5,WHITE,first=True,after=0)
+    para(tf4,D["divfoot"],10.5,WHITE,first=True,after=0)
 
 def r_statement(slide,sp,anim):
     dark = sp.get("accent") in ("ink","deep")
@@ -339,7 +376,7 @@ def r_textimg(slide,sp,anim):
     if f:
         ih=IN(2.3) if defs else min(IN(3.95),CB-top)
         pic(slide,g(f),imx,top,RCW,ih,valign="top"); dy=top+ih+IN(0.16)
-    if defs: defbox(slide,imx,dy,RCW,CB-dy,defs,anim,cols=1)
+    if defs: defbox(slide,imx,dy,RCW,CB-dy,defs,anim,cols=(2 if len(defs)>3 else 1))
     elif not f: decor_graph(slide,RX-IN(3.5),top+IN(0.4),IN(3.5),alpha=100,blue=True)
     body_box(slide,bodyx,top,bodyw,CB-top,body,anim,base=(10.5 if defs else (11 if f else 11.8)))
 
@@ -372,8 +409,9 @@ def r_table(slide,sp,anim):
     cont=C(sp["id"]); defs=cont.get("defs",[])
     tx0=MX+IN(5.7); tw0=RX-tx0
     build_table(slide,tx0,top+IN(0.05),tw0,IN(3.25),sp["table"],header_fill=PURPLE,fs=9.5)
-    tb,tf=txt(slide,tx0,top+IN(3.4),tw0,IN(0.4))
-    para(tf,"*logarithmic scaling assumes efficient QRAM — see the reality check.",9,GRAY,italic=True,first=True,after=0)
+    if D.get("table_note"):
+        tb,tf=txt(slide,tx0,top+IN(3.4),tw0,IN(0.4))
+        para(tf,D["table_note"],9,GRAY,italic=True,first=True,after=0)
     if defs: defbox(slide,tx0,top+IN(3.85),tw0,CB-top-IN(3.85),defs,anim,cols=2)
     body_box(slide,MX,top,IN(5.5),CB-top,cont["body"],anim,base=(10.5 if defs else 11))
 
@@ -406,21 +444,21 @@ def r_notebook(slide,sp,anim):
 def r_title(slide,sp,anim):
     for ph in slide.placeholders:
         if ph.placeholder_format.idx==11:
-            try: ph.insert_picture(a("illustration-refs","hardware-blue.jpg"))
+            try: ph.insert_picture(a(*D["title"]["img"]))
             except Exception: pass
     scr=rect(slide,0,0,IN(7.6),IN(7.5),INK)
     sf=scr.fill._xPr.find(qn('a:solidFill')); clr=sf.find(qn('a:srgbClr'))
     clr.append(clr.makeelement(qn('a:alpha'),{'val':'42000'}))
     tb,tf=txt(slide,IN(0.7),IN(1.05),IN(6.7),IN(3.7))
     para(tf,"QUANTUM MACHINE LEARNING · QML-2026",13,CY,bold=True,first=True,after=10)
-    para(tf,"Quantum Unsupervised Learning",40,WHITE,bold=True,after=0,line=1.0)
-    para(tf,"(Clustering)",40,CY,bold=True,after=10,line=1.0)
+    para(tf,D["title"]["l1"],40,WHITE,bold=True,after=0,line=1.0)
+    para(tf,D["title"]["l2"],40,CY,bold=True,after=10,line=1.0)
     for b in C("title")["body"][:1]:
         para(tf,b["x"],14.5,LGRAY,after=0,line=1.18,bolds=b.get("b"))
     tb2,tf2=txt(slide,IN(0.72),IN(5.75),IN(11),IN(1.5))
     para(tf2,"Archit Srivastava",18,WHITE,bold=True,first=True,after=2)
-    para(tf2,"Senior Manager, Data Engineering @ PUMA · Founder, AiQyaM · Expert Session 1",12,LGRAY,after=2)
-    para(tf2,"FDP · E&ICT Academy, NIT Warangal × NIT Raipur    |    11 July 2026 · 09:30–11:30",11.5,LGRAY,after=0)
+    para(tf2,D["title"]["role"],12,LGRAY,after=2)
+    para(tf2,D["title"]["fdp"],11.5,LGRAY,after=0)
     try:
         p=slide.shapes.add_picture(ta("qiskit_wordmark.png"),IN(10.7),IN(6.7),height=IN(0.5)); pic_alpha(p,85)
     except Exception: pass
@@ -428,9 +466,7 @@ def r_title(slide,sp,anim):
 def r_agenda(slide,sp,anim):
     set_bg(slide,"FFFFFF"); top=header(slide,sp.get("kicker"),sp["title"])
     decor_sphere(slide,IN(10.8),IN(0.2),IN(1.3),alpha=30)
-    secs=[("01","Introduction",BLUE),("02","Classical Unsupervised Learning",TEAL),
-          ("03","Quantum Unsupervised Learning",PURPLE),("04","Industry & Current Research",MAGENTA),
-          ("05","The Indian Landscape",DEEP),("06","The Future",INK)]
+    secs=[(n,t,ACC.get(c,BLUE)) for (n,t,c) in D["agenda"]]
     desc=[b["x"] for b in C("agenda")["body"] if b["t"]=="b"]
     cw=IN(5.98); ch=IN(1.5); gx=IN(0.3); gy=IN(0.2)
     for i,(n,t,c) in enumerate(secs):
@@ -474,7 +510,7 @@ def r_aboutresearch(slide,sp,anim):
 def r_roadmap(slide,sp,anim):
     set_bg(slide,"FFFFFF"); top=header(slide,sp.get("kicker"),sp["title"])
     flowH(slide,MX,top+IN(0.12),FW,IN(1.1),
-          ["The idea\n(unsupervised)","Classical tools\n(k-means, spectral)","The quantum turn\n(swap test, kernels)","The honest picture\n(demo + caveats)","Impact\n(industry, India)"],
+          sp.get("flow",["The idea","Classical tools","The quantum turn","The honest picture","Impact"]),
           BLUE,anim,fs=12)
     body_box(slide,MX,top+IN(1.5),FW,CB-top-IN(1.5),C("roadmap")["body"],anim,base=12.5)
 
@@ -489,7 +525,7 @@ def r_thanks(slide,sp,anim):
     para(tf2,"Archit Srivastava",20,WHITE,bold=True,first=True,after=6)
     para(tf2,"Senior Manager, Data Engineering @ PUMA  ·  Founder, AiQyaM",12.5,LGRAY,after=10)
     for lab,val in [("Email","architsrivastava3115@gmail.com"),("Scholar","NbPUdWMAAAAJ  (scholar.google.com)"),
-                    ("Session","Quantum Unsupervised Learning (Clustering) · QML-2026 · 11 Jul 2026"),
+                    ("Session",D["thanks_session"]),
                     ("Notebooks","runs on any laptop, no quantum hardware")]:
         para(tf2,f"{lab}   {val}",13,WHITE,after=4,bolds=[lab])
     try:

@@ -1,7 +1,9 @@
 from pptx import Presentation
 from pptx.util import Emu, Pt
-import math
-OUT="/Users/sentry/Work/Lectures/NIT Warangal/session1_quantum_clustering_qiskit.pptx"
+import math, sys
+_DEF={"session1":"session1_quantum_clustering_qiskit.pptx","session2":"session2_quantum_vision_qiskit.pptx"}
+_arg=sys.argv[1] if len(sys.argv)>1 else "session1"
+OUT="/Users/sentry/Work/Lectures/NIT Warangal/"+_DEF.get(_arg,_arg)
 p=Presentation(OUT); SW,SH=p.slide_width,p.slide_height
 n=len(p.slides._sldIdLst)
 print("SLIDES:",n)
@@ -49,3 +51,19 @@ print("leftover template text:",lorem)
 print("OOB (decorative bleeds expected):",len(oob))
 print("TEXT OVERFLOW candidates:",len(overflow))
 for o in overflow: print("   slide",o[0],"est",o[1],"vs box",o[2],"|",o[3])
+
+# ---- strict THIRD-PERSON voice audit (content rule #3) ----
+import re
+FORBID=r"\b(you|your|you're|yours|we|we're|our|ours|us|my|me|i'm|let's|lets)\b"
+voice=[]
+for i,s in enumerate(p.slides,1):
+    for sh in s.shapes:
+        try: t=sh.text_frame.text or ""
+        except: continue
+        t=re.sub(r"thank\s+you","",t,flags=re.IGNORECASE)   # standard closing, not 1st/2nd person
+        for m in set(w.lower() for w in re.findall(FORBID,t,flags=re.IGNORECASE)):
+            voice.append((i,m))
+        if re.search(r"(?<![\w/])I(?![\w/])",t):   # standalone capital I (skip I/O, IBM etc.)
+            voice.append((i,"I"))
+print("VOICE violations (1st/2nd person):",len(voice))
+for v in sorted(set(voice))[:40]: print("   slide",v[0],"->",v[1])

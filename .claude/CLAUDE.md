@@ -17,8 +17,8 @@ QML-2026 FDP lecture decks for **Archit Srivastava** (Senior Manager Data Engine
 ## Build/verify
 `cd "NIT Warangal/build"` then `python3 make_skeleton.py && python3 build_v2.py && python3 verify.py`. Content prose/definitions come from the Workflow tool (9 section-agents grounded in `Research Reference Docs/`), extracted into `content.json`. Diagrams: `gen_diagrams.py`. Logos: `fetch_logos.py`. Notebook: `notebook_demo.py`. Fonts (IBM Plex) already installed to `~/Library/Fonts`. **PennyLane 0.38 requires `autoray==0.6.12`.**
 
-## Session 2 (computer vision) — not built yet
-Reuse the same pipeline + style rules. Research is in `Research Reference Docs/session2_*.md` and `speaker_own_work.md`.
+## Session 2 (computer vision) — BUILT
+`session2_quantum_vision_qiskit.pptx` — **56 slides**, same pipeline + style rules. Build: `cd "NIT Warangal/build"` then `python3 make_skeleton2.py && python3 gen_diagrams2.py && python3 build_v2.py session2 && python3 verify.py session2`. Content in `content2.json` (from the `content_workflow_s2.js` Workflow, 8 section-agents grounded in `session2_research.md` + `session2_deep_research_2026.md` + `speaker_own_work.md`). Notebook: `build_vision_notebook.py` → executed `notebooks/qml_vision_demo.ipynb` (+HTML); cell shots `notebook_demo2.py` → `nbv_cell{1..4}.png`. Real quanvolution demo: raw-pixel classifier 0.978 vs untrained 4-qubit quanvolution 0.950 on sklearn digits. `build_v2.py` takes a session arg (`session1` default / `session2`); `verify.py` too.
 
 ## Outputs
-Editable `.pptx` on the Qiskit template is the deliverable. Do not overwrite `session1_quantum_clustering_qiskit.pptx` without rebuilding from the scripts.
+Editable `.pptx` on the Qiskit template is the deliverable. Do not overwrite `session1_quantum_clustering_qiskit.pptx` or `session2_quantum_vision_qiskit.pptx` without rebuilding from the scripts.
