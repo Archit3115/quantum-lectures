@@ -3269,5 +3269,116 @@
     "x": "Collaboration is warmly invited on quantum visual tracking and on bringing the next cohort of students into this work, and the notebook shared today runs on any laptop for anyone who wishes to begin."
    }
   ]
+ },
+ "qram": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "QRAM is the missing hardware behind almost every 'exponential' quantum speedup — so a fair answer names the architecture, not just the acronym."
+   },
+   {
+    "t": "head",
+    "x": "What it does"
+   },
+   {
+    "t": "b",
+    "x": "Quantum Random Access Memory takes a superposition of many addresses at once and returns the stored values, each entangled with its address, in one lookup of about log-of-N steps.",
+    "b": [
+     "one lookup"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The exponential speedups of amplitude encoding and quantum kernels all quietly assume a QRAM to load data this fast.",
+    "b": [
+     "quietly assume a QRAM"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The bucket-brigade architecture"
+   },
+   {
+    "t": "b",
+    "x": "Giovannetti, Lloyd and Maccone (2008) arrange the memory as a binary tree of small switches called routers, with the data in the leaves.",
+    "b": [
+     "binary tree",
+     "routers"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A register of log-N address qubits steers one probe, or bus, qubit down the tree to the addressed cell and back.",
+    "b": [
+     "bus, qubit"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Each router has an idle wait state, so the address opens one path and only about log-N routers switch on per query while the rest stay quiet.",
+    "b": [
+     "only about log-N routers switch on"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "How it holds the quantum memory"
+   },
+   {
+    "t": "b",
+    "x": "Because almost every router stays idle, very little is entangled with the address, so little can decohere and the fragile superposition survives the readout.",
+    "b": [
+     "little can decohere"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "That makes bucket-brigade far more error-tolerant than the older fan-out design; its leaves hold classical data, only the address is quantum.",
+    "b": [
+     "far more error-tolerant"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why it is not here yet"
+   },
+   {
+    "t": "b",
+    "x": "Keeping roughly N routers coherent at once is very hard at scale; the first real demo (Zhejiang, Nature Physics 2026) reached only 4 and 8 cells at 60 to 80 percent fidelity.",
+    "b": [
+     "4 and 8 cells"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "No QRAM at scale means those loading speedups stay theoretical — why the quanvolution demo used cheap angle encoding instead."
+   }
+  ],
+  "defs": [
+   {
+    "term": "QRAM",
+    "def": "Quantum Random Access Memory: a device that returns stored data in quantum superposition, so many memory addresses can be read at once."
+   },
+   {
+    "term": "Address register",
+    "def": "The roughly log-of-N qubits that hold, in superposition, which memory cells a query wants to look up."
+   },
+   {
+    "term": "Bucket-brigade",
+    "def": "A QRAM design that arranges memory as a binary tree of routers and keeps all but about log-of-N of them idle to limit errors."
+   },
+   {
+    "term": "Router",
+    "def": "A small quantum switch at a tree node that sends the probe qubit left or right, or waits idle."
+   },
+   {
+    "term": "Bus qubit",
+    "def": "The single probe qubit routed down the tree to fetch the addressed data and carry it back."
+   },
+   {
+    "term": "Amplitude encoding",
+    "def": "Packing N numbers into the amplitudes of about log-of-N qubits, which is fast only if a QRAM loads them."
+   }
+  ]
  }
 }

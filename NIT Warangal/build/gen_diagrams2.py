@@ -381,6 +381,37 @@ def qimage():
             ha="center",fontsize=10.8,fontweight="bold")
     save(fig,"qimage.png")
 
+def qram_arch():
+    """Bucket-brigade QRAM: a binary tree of routers loads data in superposition."""
+    fig,ax=plt.subplots(figsize=(8.8,4.9)); ax.set_xlim(0,11); ax.set_ylim(0,6); ax.axis("off")
+    root=(6.7,4.6); L1=[(4.6,3.2),(8.8,3.2)]; cells=[(3.4,1.5),(5.6,1.5),(7.8,1.5),(10.0,1.5)]
+    active={root,L1[1],cells[2]}                     # a0=right, a1=left -> memory cell m2
+    def edge(a,b,act): ax.plot([a[0],b[0]],[a[1],b[1]],color=(BLUE if act else LGRAY),lw=(3.2 if act else 1.4),zorder=1)
+    edge(root,L1[0],False); edge(root,L1[1],True)
+    edge(L1[0],cells[0],False); edge(L1[0],cells[1],False); edge(L1[1],cells[2],True); edge(L1[1],cells[3],False)
+    def router(p,act):
+        ax.add_patch(Circle(p,0.4,fc=(BLUE if act else "#c6c6c6"),ec=INK,lw=1.2,zorder=3))
+        ax.text(p[0],p[1],"R",ha="center",va="center",color="white",fontsize=12,fontweight="bold",zorder=4)
+    router(root,True); router(L1[0],False); router(L1[1],True)
+    for i,p in enumerate(cells):
+        act=p in active
+        ax.add_patch(FancyBboxPatch((p[0]-0.42,p[1]-0.36),0.84,0.72,boxstyle="round,pad=0.02,rounding_size=0.05",
+            fc=(TEAL if act else PANEL),ec=INK,lw=1.2,zorder=3))
+        ax.text(p[0],p[1],f"m{i}",ha="center",va="center",color=("white" if act else INK),fontsize=10.5,fontweight="bold",zorder=4)
+    ax.add_patch(FancyBboxPatch((0.2,2.7),2.1,1.7,boxstyle="round,pad=0.02,rounding_size=0.05",fc="#edf1fa",ec=LGRAY,lw=1))
+    ax.text(1.25,4.05,"address register",ha="center",fontsize=10,fontweight="bold",color=DEEPBLUE)
+    ax.text(1.25,3.55,"a0  routes level 0",ha="center",fontsize=9,color=INK)
+    ax.text(1.25,3.2,"a1  routes level 1",ha="center",fontsize=9,color=INK)
+    ax.text(1.25,2.85,"(in superposition)",ha="center",fontsize=8.5,color=GRAY,style="italic")
+    arrow(ax,root[0],5.35,root[0],root[1]+0.42,MAGENTA,lw=2)
+    ax.text(root[0]+0.55,5.2,"bus qubit",ha="left",va="center",fontsize=9,color=MAGENTA,fontweight="bold")
+    ax.text(9.9,4.5,"only O(log N)\nrouters active\nper query",ha="left",fontsize=9,color=BLUE,fontweight="bold")
+    ax.text(5.6,5.75,"Bucket-brigade QRAM — a binary tree of routers loads data in superposition",
+            ha="center",fontsize=11,fontweight="bold",color=INK)
+    ax.text(5.5,0.45,"idle routers stay 'quiet' — smaller error surface, so the address superposition survives the readout",
+            ha="center",fontsize=9.5,color=GRAY,style="italic")
+    save(fig,"qram_arch.png")
+
 if __name__=="__main__":
     # classical CV
     image_grid(); representation(); convolution(); cnn_anatomy(); vit_patches(); cv_cost()

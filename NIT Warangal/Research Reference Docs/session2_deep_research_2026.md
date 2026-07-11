@@ -78,3 +78,19 @@ Academic SOTA verified via arXiv/alphaXiv + web (mid-2026). India/market/talent 
 - Largest to date: **Honda Scenes, 72 qubits, >90%** (Apr 2025). MedMNIST on **127-qubit IBM** (Feb 2025). Satellite **83%→87%** on IBM (Feb 2026). The 2024-26 shift is **hardware scale** (72-127 qubits, real error mitigation), **not** accuracy — competitive accuracy on hard full-resolution CV is not yet demonstrated.
 
 **Global caveat for the whole deck: no published quantum-CV result demonstrates advantage over classical CV.** Every improvement is small, hybrid, on reduced-scale data. Frame quantum CV as early-stage exploration with credible institutional backing + India-relevant data abundance — never as solved or winning.
+
+---
+
+## PART 3 — QRAM (added for the QRAM slide, answering a faculty question)
+
+**What it is / for:** Quantum Random Access Memory maps a *superposition of addresses* to a *superposition of the stored data entangled with each address*, in one query: Σⱼαⱼ|j⟩ → Σⱼαⱼ|j⟩|Dⱼ⟩. Only **O(log N)** switches fire per query vs N in classical RAM. It is the fast **data-loading primitive** the exponential speedups assume (amplitude encoding, HHL, quantum kernels, quantum image loading). Aaronson's "read the fine print" caveat: those speedups hold only if data loads into superposition quickly, i.e. QRAM is assumed. *(Giovannetti, Lloyd, Maccone, PRL 100, 160501 / PRA 78, 052310, 2008, arXiv:0708.1879 & 0807.4994; Aaronson, Nat. Phys. 11, 291, 2015; HHL PRL 103, 150502, 2009.)*
+
+**Architecture — bucket-brigade:** binary tree with ~N router nodes + N leaf cells + a log-N **address register** + a **bus/probe qubit** routed down and back. Each node is a **qutrit router** with an idle "wait" (•) state; address bits sent one at a time carve a single path, so **only ~O(log N) routers are active per query**, the rest stay idle. Contrast the older **fan-out** design that activates all O(N).
+
+**How it "holds" the memory / coherence:** almost all routers idle → far fewer components entangled with the address → far less decoherence → the address superposition survives readout. Error tolerance: fan-out needs per-gate error ~O(2⁻ⁿ); bucket-brigade only ~O(1/n). *Arunachalam et al. (NJP 17, 123010, 2015, arXiv:1502.03450):* for poly-query algorithms (HHL/QML) full QEC may not be needed; for super-poly (search) it is. **Clarification:** leaves store **classical** data queried coherently — the address is quantum, the payload is not (≠ a memory that stores qubits). *(Jaques & Rattew, Quantum 9, 1922, 2025, arXiv:2305.10310.)*
+
+**Why not at scale (2026):** must build + hold ~N routers coherent at once. Jaques–Rattew survey: scalable *passive* QRAM "unlikely with existing proposals"; *active* QRAM's control overhead erases most asymptotic advantage.
+
+**Hardware 2026 (VERIFIED, corrects earlier "4/8-bit"):** **Shen et al. (Zhejiang Univ.), "Experimental realization of the bucket-brigade QRAM," arXiv:2506.16682 (Jun 2025) → Nature Physics 2026.** Superconducting; **2-layer (4 cells)** query fidelity **0.800 ± 0.026**, **3-layer (8 cells) 0.604 ± 0.005**; router gate decomposition cuts depth >30%. Also a routers-only demo (arXiv:2505.13958, 2025, QRouter fidelity up to 95.7%). No at-scale photonic QRAM found.
+
+**Bottom line:** no QRAM at useful scale in 2026 (only 4–8-cell demos, ~60–80% fidelity) → amplitude-encoding exponential speedups stay theoretical → exactly why quanvolution uses cheap **angle encoding** (no superposed addressing).

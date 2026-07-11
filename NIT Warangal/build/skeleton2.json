@@ -640,6 +640,24 @@
   ]
  },
  {
+  "id": "qram",
+  "kind": "textimg",
+  "sec": 3,
+  "kicker": "Section 3 · Quantum Vision",
+  "title": "QRAM — the quantum memory behind the speedups",
+  "img": {
+   "f": "qram_arch.png",
+   "side": "right"
+  },
+  "brief": "Verbose FIRST-PRINCIPLES answer to a faculty question ('what is QRAM, its architecture, how does it hold quantum memory?'). Explain plainly: (1) WHAT it is — Quantum Random Access Memory, a device that, given a SUPERPOSITION of memory addresses, returns the corresponding data values entangled with those addresses in a SINGLE query (about log-of-N time), so a quantum computer can read many locations at once; it stores CLASSICAL data but answers queries coherently (distinguish it from a quantum memory that stores qubits). (2) WHY it matters — it is the data-loading primitive assumed by the exponential speedups (amplitude encoding, quantum kernels, quantum image loading); without it the loading cost cancels the speedup. (3) ARCHITECTURE — the bucket-brigade design (Giovannetti, Lloyd, Maccone 2008): an address register of log-N qubits, a binary tree of routers, and a bus/probe qubit routed down the tree to the addressed cell and back; the key point is that only about log-N routers are ACTIVE per query while the rest stay idle/quiet, versus the older fan-out design that activates all N. (4) HOW IT HOLDS THE QUANTUM MEMORY — keeping most routers idle shrinks the error surface, so the address superposition stays coherent long enough to read out (bucket-brigade is far more error-resilient than fan-out). (5) WHY NOT YET — needs many coherent routers kept near-error-free at once; only tiny proof-of-principle demos exist as of 2026. Ground every number in session2_deep_research_2026.md's QRAM section; strict third person; light on equations. This slide exists to answer the question on the record.",
+  "must": [
+   "QRAM answers a superposition of addresses in one query (~O(log N) time)",
+   "bucket-brigade (Giovannetti–Lloyd–Maccone 2008): binary tree of routers, only ~O(log N) active per query",
+   "idle routers stay quiet → far more error-resilient → the superposition survives readout",
+   "not at scale in 2026 → amplitude-encoding speedups stay theoretical (why demos use cheap angle encoding)"
+  ]
+ },
+ {
   "id": "reality2",
   "kind": "cards",
   "sec": 3,
