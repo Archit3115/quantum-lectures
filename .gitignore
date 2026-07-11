@@ -1,0 +1,19 @@
+# OS / editor
+.DS_Store
+**/.DS_Store
+
+# Python build artifacts
+__pycache__/
+**/__pycache__/
+*.pyc
+
+# graphify / okf build artifacts
+**/graphify-out/
+**/okf/
+
+# macOS QuickLook previews
+*.qlpreview/
+
+# Large source template (~97 MB) — the .pptx template is kept instead.
+# To track it, use Git LFS:  git lfs track "*.key"
+Templates - IBM Qiskit Advocate/Qiskit presentation template.key

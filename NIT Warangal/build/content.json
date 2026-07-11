@@ -1,0 +1,3665 @@
+{
+ "qmtool": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Quantum clustering is not about doing ordinary arithmetic faster."
+   },
+   {
+    "t": "p",
+    "x": "Instead it borrows the real physical behaviour of nature — particles that hold several states at once, waves that add up or cancel, and particles that stay linked as one system — to judge how alike two pieces of data are."
+   },
+   {
+    "t": "p",
+    "x": "Those judgements live in a geometry that ordinary step-by-step computers cannot lay out efficiently, so the physics itself does the work the silicon cannot."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Superposition",
+    "def": "A quantum system's ability to hold several possibilities at the same time, instead of being forced to pick just one."
+   },
+   {
+    "term": "Interference",
+    "def": "The way quantum possibilities add together or cancel out, like ripples on a pond reinforcing or flattening each other."
+   },
+   {
+    "term": "Entanglement",
+    "def": "A link between quantum particles so tight that they behave as one connected system no matter how far apart they are handled."
+   },
+   {
+    "term": "Von Neumann hardware",
+    "def": "The standard design of ordinary computers, which fetch and process one instruction after another in sequence."
+   }
+  ],
+  "cards": []
+ },
+ "qubit": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "An ordinary computer bit is a simple switch: it is either a 0 or a 1, with nothing in between."
+   },
+   {
+    "t": "p",
+    "x": "A qubit — the quantum version of a bit — is allowed to sit in a blend of 0 and 1 at the same time, a condition physicists call superposition."
+   },
+   {
+    "t": "head",
+    "x": "What the blend actually means"
+   },
+   {
+    "t": "b",
+    "x": "The blend is described by two quantities, one tied to the 0 and one to the 1, and squaring each of them gives the chance of seeing that outcome when the qubit is finally measured.",
+    "b": [
+     "chance of seeing that outcome"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Those two chances always add up to exactly one, because the qubit must land on some answer whenever it is read.",
+    "b": [
+     "add up to exactly one"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The blend is genuine, not just a gap in knowledge: right up until the moment of measurement the qubit really is holding both possibilities together.",
+    "b": [
+     "genuine, not just a gap in knowledge"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The Bloch-sphere picture"
+   },
+   {
+    "t": "p",
+    "x": "A handy way to picture a single qubit is as an arrow pointing somewhere on the surface of a globe."
+   },
+   {
+    "t": "b",
+    "x": "The north pole stands for a pure 0 and the south pole for a pure 1, while every other direction on the globe is a specific mixture of the two, so a qubit carries a continuous direction rather than a single yes-or-no.",
+    "b": [
+     "continuous direction"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The instant a qubit is measured, that rich direction collapses down to just one plain bit, either 0 or 1."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Qubit",
+    "def": "The quantum version of a bit: instead of being just 0 or 1, it can hold a blend of both at once until it is measured."
+   },
+   {
+    "term": "Superposition",
+    "def": "The condition of a qubit holding 0 and 1 together at the same time, before any measurement forces a single answer."
+   },
+   {
+    "term": "Amplitude",
+    "def": "One of the two quantities describing a qubit's blend; squaring it gives the chance of seeing that particular outcome."
+   },
+   {
+    "term": "Bloch sphere",
+    "def": "A globe used to picture a single qubit, where every direction on its surface stands for a different blend of 0 and 1."
+   }
+  ],
+  "cards": []
+ },
+ "twon": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The real power of quantum computing shows up when many qubits are joined together."
+   },
+   {
+    "t": "p",
+    "x": "Adding qubits does not merely add capacity, it multiplies it: each extra qubit doubles the number of separate quantities the machine is juggling at once."
+   },
+   {
+    "t": "b",
+    "x": "Just fifty qubits already hold roughly a thousand trillion of these quantities, all evolving together as one linked system — a scale no ordinary memory could ever store.",
+    "b": [
+     "a thousand trillion"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The resource"
+   },
+   {
+    "t": "b",
+    "x": "This enormous space, doubling with every qubit added, is the raw resource that makes quantum machines attractive for problems with huge numbers of dimensions.",
+    "b": [
+     "raw resource"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The honest catch"
+   },
+   {
+    "t": "b",
+    "x": "Reading the machine destroys almost all of that richness: a single measurement returns only as many plain bits as there are qubits, so the vast hidden interior can never be read out directly.",
+    "b": [
+     "only as many plain bits as there are qubits"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "Because of this, a quantum algorithm cannot simply dump out its answer; it must be built so that the one useful result is the outcome most likely to appear when the qubits are finally measured."
+   },
+   {
+    "t": "b",
+    "x": "The tool for that is interference — arranging the waves inside the machine so that wrong answers cancel each other out and the right answer reinforces itself.",
+    "b": [
+     "interference"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Being upfront about this limit is exactly what separates honest quantum computing from hype."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Amplitude",
+    "def": "One of the many internal quantities a quantum machine tracks; there are twice as many of them for every extra qubit."
+   },
+   {
+    "term": "Measurement (collapse)",
+    "def": "The act of reading a quantum machine, which forces its rich hidden state down to a plain string of ordinary bits."
+   },
+   {
+    "term": "Interference",
+    "def": "The deliberate arranging of quantum waves so that wrong answers cancel and the desired answer stands out clearly."
+   }
+  ],
+  "cards": []
+ },
+ "encoding": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Before any quantum method can help, the plain numbers in a dataset have to be loaded into a quantum machine, and there are two main ways to do it."
+   },
+   {
+    "t": "note",
+    "x": "Other loading schemes exist, but these two carry the essential story."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Amplitude encoding",
+    "def": "A way of loading data that packs many numbers into a quantum state's internal quantities, using very few qubits."
+   },
+   {
+    "term": "Angle encoding",
+    "def": "A way of loading data that turns each feature into the rotation of a qubit, like setting a dial by the data's value."
+   },
+   {
+    "term": "Qubit",
+    "def": "The quantum version of a bit, able to hold a blend of 0 and 1 rather than just one or the other."
+   },
+   {
+    "term": "NISQ hardware",
+    "def": "Today's early quantum computers, which are noisy and can only run short circuits before errors pile up."
+   }
+  ],
+  "cards": [
+   [
+    "Amplitude encoding pours the numbers of a data point directly into the internal quantities of a quantum state, packing many values into very few qubits.",
+    "A data point with a thousand features needs only about ten qubits, because each added qubit doubles how much can be stored — an exponential compression.",
+    "This makes it the natural choice whenever the goal is to squeeze very high-dimensional data down to a handful of qubits.",
+    "The price is that preparing such a tightly packed state is delicate and hard to do reliably on today's noisy machines."
+   ],
+   [
+    "Angle encoding takes each feature and uses it to set how far a qubit is rotated, much like turning a dial by an amount the data decides.",
+    "It uses more qubits per data point than amplitude encoding, but the circuits it needs are short and simple.",
+    "That shallowness makes it well suited to today's near-term hardware, which loses accuracy as circuits grow longer.",
+    "It is the route taken by the live notebook demonstration in this session."
+   ]
+  ]
+ },
+ "featuremap": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "A quantum feature map is the step that gives quantum clustering its real edge."
+   },
+   {
+    "t": "p",
+    "x": "It takes each data point and, through a small tunable circuit, spreads it out into an enormously large mathematical space — far larger than the original short list of features."
+   },
+   {
+    "t": "b",
+    "x": "In that expanded space, groups that were hopelessly tangled together in the raw data can fall into cleanly separate regions, the way a crumpled sheet becomes easy to divide once it is unfolded.",
+    "b": [
+     "cleanly separate regions"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why the shape of the circuit matters"
+   },
+   {
+    "t": "b",
+    "x": "The circuits that work best deliberately tie the qubits together — an effect called entanglement — and richer, well-entangled maps have been shown to produce steadier, more reliable clusters.",
+    "b": [
+     "entanglement"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The central bet"
+   },
+   {
+    "t": "p",
+    "x": "The whole advantage rests on a single wager: that the map reaches into a space so complex that an ordinary computer could not fake the same similarities without an impractical amount of work."
+   },
+   {
+    "t": "b",
+    "x": "When that bet holds, the quantum machine is measuring likenesses that no classical shortcut can cheaply reproduce.",
+    "b": [
+     "no classical shortcut can cheaply reproduce"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "If an ordinary computer can imitate the map cheaply, the quantum advantage simply disappears — so the choice of map is everything."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum feature map",
+    "def": "A small tunable circuit that spreads each data point into a vastly larger space where hidden groupings become easier to separate."
+   },
+   {
+    "term": "Hilbert space",
+    "def": "The mathematical space a quantum system lives in, which grows astronomically large as more qubits are added."
+   },
+   {
+    "term": "Entanglement",
+    "def": "A deep linking of qubits so their behaviours are tied together, which gives a feature map much of its richness."
+   },
+   {
+    "term": "SU(2) / ZZ feature map",
+    "def": "Two well-known recipes for wiring up a feature map's circuit, favoured because they tend to give steadier clusters."
+   }
+  ],
+  "cards": []
+ },
+ "benchmark": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "These two numbers are early evidence that a quantum notion of similarity can hold its own on real, well-known datasets."
+   },
+   {
+    "t": "head",
+    "x": "What the numbers say"
+   },
+   {
+    "t": "b",
+    "x": "On the Iris dataset — a classic table of flower measurements long used to test clustering methods — swapping the ordinary distance for a quantum-kernel similarity sorted the flowers correctly about 88.6% of the time.",
+    "b": [
+     "88.6% of the time"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "On a breast-cancer dataset, the same quantum-similarity approach reached about 91.0% agreement with the true groupings.",
+    "b": [
+     "91.0%"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why it matters"
+   },
+   {
+    "t": "p",
+    "x": "The striking part is that these scores came from short, simple circuits — the kind today's imperfect hardware can actually run — not from some far-future ideal machine."
+   },
+   {
+    "t": "b",
+    "x": "That suggests a quantum feature map offers a genuinely richer way of judging similarity than a plain straight-line distance.",
+    "b": [
+     "richer way of judging similarity"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "These figures are competitive with classical methods, not a landslide — the honest reading is promising, not a knockout."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum kernel",
+    "def": "A measure of how similar two data points are, computed by comparing their quantum states rather than their straight-line distance."
+   },
+   {
+    "term": "SU(2) feature map",
+    "def": "A particular recipe for encoding data into a quantum state, named after the mathematical symmetry it is built on."
+   },
+   {
+    "term": "Iris dataset",
+    "def": "A small, famous table of flower measurements widely used as a testing ground for clustering methods."
+   },
+   {
+    "term": "Clustering accuracy",
+    "def": "The fraction of data points a method places into the correct natural group."
+   }
+  ],
+  "cards": []
+ },
+ "overlap": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "At its heart, quantum clustering rests on one simple fact about what a quantum computer naturally produces."
+   },
+   {
+    "t": "p",
+    "x": "When two data points are loaded into quantum states, the machine readily hands back a single number that measures how much the two states overlap — how closely aligned they are."
+   },
+   {
+    "t": "head",
+    "x": "Overlap is similarity"
+   },
+   {
+    "t": "b",
+    "x": "That overlap number is exactly a measure of similarity: it runs high when two points are alike and drops toward zero when they point in completely different directions.",
+    "b": [
+     "runs high when two points are alike"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "This is what makes it so useful, because every clustering method, classical or quantum alike, is ultimately built on some notion of how similar two things are."
+   },
+   {
+    "t": "head",
+    "x": "From similarity to distance"
+   },
+   {
+    "t": "b",
+    "x": "Ordinary distance is only one short step away: once the overlap is known, a simple relationship turns that similarity straight into the familiar straight-line distance between the two points.",
+    "b": [
+     "one short step away"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "So the entire task shrinks down to one thing — building a small quantum circuit that turns this overlap into a number that can actually be measured."
+   },
+   {
+    "t": "b",
+    "x": "That small circuit is the swap test, the workhorse examined on the slides that follow.",
+    "b": [
+     "swap test"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "This overlap-equals-similarity idea is the single hinge on which the rest of the quantum clustering story turns."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Inner product (overlap)",
+    "def": "A single number measuring how aligned two quantum states are — large when they are alike, near zero when they are unrelated."
+   },
+   {
+    "term": "Similarity",
+    "def": "Any measure of how alike two data points are, which every clustering method needs in some form."
+   },
+   {
+    "term": "Quantum state",
+    "def": "The full description of a quantum system, into which a data point is loaded so the machine can work with it."
+   },
+   {
+    "term": "Swap test",
+    "def": "A small quantum circuit that turns the overlap between two states into a probability that can be measured."
+   }
+  ],
+  "cards": []
+ },
+ "whynow1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "2025 is the year quantum computing stopped being a promise on a whiteboard and became a measured, peer-reviewed fact."
+   },
+   {
+    "t": "head",
+    "x": "What actually changed"
+   },
+   {
+    "t": "p",
+    "x": "For years, the claim that a quantum machine could beat an ordinary computer was mostly theory. In a single year, three separate results — each checked by independent referees and published in the world's top journals — showed it happening for real."
+   },
+   {
+    "t": "b",
+    "x": "Google's Willow chip (105 qubits, published in Nature in December 2024) was the first to cross a crucial line: as engineers made its error-correcting code larger, the error rate dropped by roughly a factor of two at each step instead of climbing.",
+    "b": [
+     "Willow chip",
+     "error rate dropped"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Google's \"Quantum Echoes\" result (Nature, October 2025) ran a calculation about 13,000 times faster than the best classical approach, and — a first — the answer can be independently re-checked on a second machine.",
+    "b": [
+     "Quantum Echoes",
+     "13,000 times faster",
+     "independently re-checked"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "D-Wave's Advantage2 machine (Science, March 2025) simulated the behaviour of magnetic materials in minutes, a genuinely useful scientific problem, though later classical rebuttals leave this claim contested.",
+    "b": [
+     "Advantage2",
+     "contested"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why a faculty room should care"
+   },
+   {
+    "t": "p",
+    "x": "These are not consumer gadgets; they are early proof that a genuinely new kind of computing tool works. That reframes quantum from a physics curiosity into something teachable and testable."
+   },
+   {
+    "t": "b",
+    "x": "The timeline turns quantum computing into a subject students across engineering, finance, biology and data science will be asked about — and faculty are the first people they will ask.",
+    "b": [
+     "faculty are the first people they will ask"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Honest framing: these are milestones on narrow benchmark problems, not everyday general-purpose speedups yet."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Qubit",
+    "def": "The quantum version of a bit: instead of being only 0 or 1, it can hold a blend of both at once until it is measured."
+   },
+   {
+    "term": "Quantum advantage",
+    "def": "A demonstration that a quantum machine solves some specific problem faster or better than the best available ordinary computer."
+   },
+   {
+    "term": "Error correction",
+    "def": "A way of bundling many imperfect qubits into one protected qubit so that random errors cancel out instead of piling up; \"below threshold\" means bigger bundles actually make errors smaller."
+   },
+   {
+    "term": "Peer-reviewed",
+    "def": "Checked and approved by independent expert referees before publication, which is why these results count as verified fact rather than a company press release."
+   }
+  ],
+  "cards": []
+ },
+ "whynow2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Three results, three different machines, one year — here is what each one actually did, and why it counts."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Qubit",
+    "def": "The quantum version of a bit that can hold a blend of 0 and 1 at once; the raw building block of a quantum machine."
+   },
+   {
+    "term": "Error-correction distance",
+    "def": "A measure of how large and protective an error-correcting code is; \"distance-7\" is a bigger, sturdier bundle of qubits than distance-3."
+   },
+   {
+    "term": "Quantum annealer",
+    "def": "A specialised quantum machine that solves a problem by physically settling into its lowest-energy state, like a ball rolling to the bottom of a valley, rather than running general programs."
+   },
+   {
+    "term": "Out-of-time-order correlator",
+    "def": "A physics technique that sends a signal forward and then backward through a quantum system to measure how quickly information gets scrambled — the trick behind the Quantum Echoes result."
+   }
+  ],
+  "cards": [
+   [
+    "Willow is a 105-qubit superconducting chip from Google, unveiled in Nature in December 2024.",
+    "Its headline is not raw speed but reliability: it was the first machine to run error correction below threshold, meaning the more physical qubits were bundled into one protected qubit, the lower the error became.",
+    "At the largest code size tested, called distance-7, each step up in size suppressed the error by a factor of about 2.14 — the first time in history errors shrank instead of growing as the machine got bigger.",
+    "This matters because scaling up without drowning in errors is the single biggest obstacle between today's machines and genuinely useful ones."
+   ],
+   [
+    "Quantum Echoes, from Google and published in Nature in October 2025, is the first quantum advantage that is verifiable — the result can be independently confirmed rather than merely asserted.",
+    "It ran on 65 of Willow's qubits and used a method called out-of-time-order correlators, a way of pushing a signal forward and back through the system to measure how information scrambles.",
+    "The quantum machine reached its answer about 13,000 times faster than the best classical method for the same task.",
+    "Because the output can be cross-checked on a second machine, it points toward practical uses such as reading out the structure of molecules."
+   ],
+   [
+    "Advantage2 is a D-Wave quantum annealer with more than 4,400 qubits, reported in Science in March 2025.",
+    "An annealer is not a general-purpose computer; it is a specialised machine that relaxes into the lowest-energy answer to a problem, like a ball rolling to the bottom of a valley.",
+    "It simulated the dynamics of spin-glass magnetic materials in minutes — a real scientific target rather than a toy benchmark.",
+    "Honesty demands a caveat: parts of the result were later reproduced on ordinary GPUs, so this particular claim remains contested."
+   ]
+  ]
+ },
+ "market1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The conversation has shifted from betting on whether quantum works to positioning for when it pays off — and the money shows it."
+   },
+   {
+    "t": "head",
+    "x": "What the tiles are saying"
+   },
+   {
+    "t": "p",
+    "x": "These figures come from major consultancies — McKinsey's 2026 Quantum Technology Monitor and BCG — and are best read as orders of magnitude, the scale and direction of the trend, not exact forecasts."
+   },
+   {
+    "t": "b",
+    "x": "McKinsey estimates quantum computing could unlock between 1.3 and 2.7 trillion dollars of economic value worldwide by 2035, concentrated in chemicals, life sciences, finance and mobility.",
+    "b": [
+     "1.3 and 2.7 trillion dollars of economic value"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Investors poured 12.6 billion dollars into quantum start-ups in 2025 — 6.3 times the previous year — a jump that marks the field crossing from research into commerce.",
+    "b": [
+     "12.6 billion dollars",
+     "6.3 times the previous year"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Quantum-computing companies earned more than 1 billion dollars in real revenue in 2025, projected to reach about 4.4 billion by 2028 — money changing hands for actual services, not grants.",
+    "b": [
+     "more than 1 billion dollars in real revenue",
+     "4.4 billion by 2028"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "BCG's independent estimate points to 450 to 850 billion dollars of economic value by 2040 — a different method reaching the same conclusion, that the curve bends sharply upward.",
+    "b": [
+     "450 to 850 billion dollars"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Where the value sits — and why it matters here"
+   },
+   {
+    "t": "p",
+    "x": "The value is not mainly in selling the physical processors; it is in the software, the algorithms and the AI that turn a quantum machine into a usable answer."
+   },
+   {
+    "t": "b",
+    "x": "That value-capturing layer is a keyboard-and-brains problem rather than a chip-fabrication problem, which is precisely where India's deep pool of software and mathematical talent has its edge.",
+    "b": [
+     "keyboard-and-brains problem",
+     "India's deep pool of software and mathematical talent"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "These are projections, not certainties; the honest use is the scale and direction they point to, not the exact number."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Economic value",
+    "def": "The total extra worth quantum is expected to add across whole industries — savings, new products, better decisions — not the money the quantum companies themselves earn."
+   },
+   {
+    "term": "Revenue",
+    "def": "The actual money a quantum company takes in from selling its products and services; a much smaller, more concrete number than economy-wide value."
+   },
+   {
+    "term": "Order of magnitude",
+    "def": "A rough size given to the nearest factor of ten; it says whether something is in the billions or the trillions, without claiming the exact figure."
+   }
+  ],
+  "cards": []
+ },
+ "market2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The whole reason a faculty-development programme on quantum exists comes down to one shortage: people who understand this technology."
+   },
+   {
+    "t": "head",
+    "x": "The numbers, in plain terms"
+   },
+   {
+    "t": "b",
+    "x": "Industry projects roughly 250,000 new quantum jobs by 2030 and around 840,000 by 2035 — a workforce that does not yet exist.",
+    "b": [
+     "250,000 new quantum jobs by 2030",
+     "840,000 by 2035"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The supply is tiny: in 2025 there were about three job openings for every qualified candidate, and roughly half of that year's quantum roles simply went unfilled.",
+    "b": [
+     "three job openings for every qualified candidate",
+     "half of that year's quantum roles simply went unfilled"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "A shortage this steep is not a mere hiring inconvenience; the United States has publicly called it a national-security vulnerability."
+   },
+   {
+    "t": "head",
+    "x": "Why this lands in a faculty room"
+   },
+   {
+    "t": "p",
+    "x": "Jobs are created by industry, but qualified people are created in classrooms — which places faculty at the exact chokepoint of the entire field."
+   },
+   {
+    "t": "b",
+    "x": "Every course that introduces quantum machine learning, and every student pointed toward it, directly widens the supply that industry is desperate for.",
+    "b": [
+     "directly widens the supply"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "For teachers, that gap is a clear mandate; for their students, it is an unusually open door into a high-demand field.",
+    "b": [
+     "a clear mandate",
+     "an unusually open door"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "These are industry projections; the exact counts will move, but the pattern — demand far outrunning supply — is consistent across every source."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum machine learning (QML)",
+    "def": "Using quantum computers to help find patterns in data, the subject this programme prepares faculty to teach."
+   },
+   {
+    "term": "Faculty-development programme (FDP)",
+    "def": "A short intensive course that trains university teachers themselves, so they can go back and teach a new subject to their students."
+   },
+   {
+    "term": "Talent gap",
+    "def": "The distance between how many trained people a field needs and how many actually exist; here, hundreds of thousands of quantum jobs with almost no one qualified to fill them."
+   }
+  ],
+  "cards": []
+ },
+ "deluge": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Most of the world's data arrives with no answer key attached — and that single fact is why unsupervised learning matters."
+   },
+   {
+    "t": "head",
+    "x": "The label problem"
+   },
+   {
+    "t": "p",
+    "x": "A label is a human-supplied tag that says what a piece of data is — 'this scan shows a tumour', 'this transaction is fraud'. The trouble is that most data never gets one."
+   },
+   {
+    "t": "b",
+    "x": "Roughly 80 percent of real-world data is unlabelled, because labelling is expensive, needs scarce experts, or is simply impossible at the scale data now arrives.",
+    "b": [
+     "80 percent of real-world data is unlabelled"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "When there is no answer key, a method cannot be told what to look for — it has to discover the structure on its own. That is exactly what clustering does: it makes the first sense of a brand-new pile of data."
+   },
+   {
+    "t": "head",
+    "x": "The scale is staggering"
+   },
+   {
+    "t": "b",
+    "x": "The Square Kilometre Array radio telescope will pour out data at the rate of petabytes every second — a raw flow larger than the entire current internet.",
+    "b": [
+     "petabytes every second"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The upgraded Large Hadron Collider will archive exabytes of collision data every year, far more than any team could ever label by hand.",
+    "b": [
+     "exabytes of collision data every year"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A single RNA-sequencing run measures more than 20,000 genes at once, with no preset grouping of which genes belong together.",
+    "b": [
+     "more than 20,000 genes at once"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "In every one of these cases the task is geometric: find which points sit near each other in a vast, high-dimensional space, and those neighbourhoods reveal the hidden groups."
+   },
+   {
+    "t": "note",
+    "x": "Unlabelled does not mean meaningless — the structure is genuinely there; it simply has to be uncovered rather than looked up."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Label",
+    "def": "A human-added tag stating what a data point is (cat, tumour, fraud); supervised methods need them, but most real data has none."
+   },
+   {
+    "term": "Clustering",
+    "def": "Sorting data into natural groups of similar items without being told in advance what the groups are."
+   },
+   {
+    "term": "Petabyte / Exabyte",
+    "def": "Enormous units of data — a petabyte is about a million gigabytes, and an exabyte is a thousand times larger still."
+   },
+   {
+    "term": "RNA-sequencing",
+    "def": "A lab technique that reads the activity of tens of thousands of genes in a sample at once, producing a huge unlabelled table of numbers."
+   }
+  ],
+  "cards": []
+ },
+ "unsup": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Unsupervised learning is, in one sentence, finding structure in data that has no labels."
+   },
+   {
+    "t": "head",
+    "x": "The coins-in-the-dark picture"
+   },
+   {
+    "t": "p",
+    "x": "Picture tipping a bag of mixed coins onto a table in a dark room. The denominations cannot be read, but the size and weight of each coin can still be felt by hand."
+   },
+   {
+    "t": "b",
+    "x": "Sorting those coins into piles by feel alone — grouping the ones that seem alike, with no idea what any pile is 'worth' — is exactly what clustering does.",
+    "b": [
+     "by feel alone",
+     "is exactly what clustering does"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "The machine is never told the right answer. It is handed a pile of points and asked only which ones belong together, using nothing but a measure of how similar any two points are."
+   },
+   {
+    "t": "head",
+    "x": "Where it sits on the machine-learning map"
+   },
+   {
+    "t": "b",
+    "x": "Supervised learning is the opposite situation: the data comes with labels, and the goal is to copy the mapping — for example, learning from 10,000 labelled tumours how to classify the next one.",
+    "b": [
+     "comes with labels"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Unsupervised learning gets the data with no labels, and the goal is to discover structure — asking, of those same 10,000 tumours, whether there are natural subtypes nobody named in advance.",
+    "b": [
+     "discover structure"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Reinforcement learning is a third mode entirely: an agent learns by trial and error, taking actions and adjusting from rewards and penalties, the way a player gradually improves at a game.",
+    "b": [
+     "by trial and error"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "This talk lives squarely in the middle branch — grouping unlabelled data — which is where the coins-in-the-dark problem, and quantum clustering, both belong."
+   },
+   {
+    "t": "note",
+    "x": "The three modes are not rivals; most real systems mix them, but the unlabelled case is the one where quantum offers the clearest new leverage."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Unsupervised learning",
+    "def": "Finding patterns and groups in data that carries no answer key, discovering structure rather than being taught it."
+   },
+   {
+    "term": "Supervised learning",
+    "def": "Learning from labelled examples, so the machine can copy the pattern and label new data it has never seen."
+   },
+   {
+    "term": "Reinforcement learning",
+    "def": "Learning by trial and error, where an agent takes actions and improves from rewards and penalties, like getting better at a game."
+   },
+   {
+    "term": "Clustering",
+    "def": "The unsupervised task of sorting data into natural groups of similar items, using only a measure of how alike two points are."
+   }
+  ],
+  "cards": []
+ },
+ "ingredients": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Strip away the names, and every clustering method — classical or quantum — comes down to just three choices."
+   },
+   {
+    "t": "head",
+    "x": "The spine of the whole session"
+   },
+   {
+    "t": "p",
+    "x": "Holding these three ingredients in mind makes the quantum part simple to place: quantum methods leave the first and third choices mostly untouched and change the second one — how similarity is measured, and how fast it can be computed."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Representation",
+    "def": "Turning each object into a list of numbers so it becomes a point in space that a computer can compare."
+   },
+   {
+    "term": "Euclidean distance",
+    "def": "The ordinary straight-line distance between two points, the most common way of measuring how far apart they are."
+   },
+   {
+    "term": "Kernel",
+    "def": "A flexible similarity rule that can judge points as alike even when a simple straight-line distance would call them far apart."
+   },
+   {
+    "term": "Centroid",
+    "def": "The average point of a cluster — its centre of gravity — that many methods use to represent the whole group."
+   }
+  ],
+  "cards": [
+   [
+    "Representation means turning each object into a list of numbers, so it becomes a point in space that a computer can handle.",
+    "A customer might become a point made of age, spending and visit frequency; an image becomes the long list of its pixel brightnesses.",
+    "The choice of which features to include quietly decides what 'close together' will even mean later on.",
+    "Good representation is half the battle: the right features make natural groups obvious, while the wrong ones hide them completely."
+   ],
+   [
+    "Similarity is the rule for deciding how alike two points are — the numerical answer to the question 'how close?'.",
+    "Everyday choices include straight-line Euclidean distance, the angle between two points known as cosine similarity, or a more flexible kernel.",
+    "This single number drives everything: change the notion of similarity and the very same data can fall into completely different groups.",
+    "This is the ingredient quantum computing mostly changes, offering a new, physically-computed way to measure how alike two points are."
+   ],
+   [
+    "The objective is the definition of a good grouping — the target the method actually tries to hit.",
+    "A common objective is to make the points inside each cluster as tightly packed as possible while pushing different clusters far apart.",
+    "It is what the algorithm optimises; k-means, for instance, tries to minimise how far points sit from the centre of their own cluster.",
+    "Different objectives suit different data shapes, which is exactly why no single clustering method wins everywhere."
+   ]
+  ]
+ },
+ "nqm1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "India runs a single national programme dedicated entirely to quantum technology, funded and scheduled by the central government."
+   },
+   {
+    "t": "head",
+    "x": "What it is"
+   },
+   {
+    "t": "b",
+    "x": "The mission was approved on 19 April 2023 with a budget of ₹6,003.65 crore, roughly 0.73 billion US dollars, and runs for eight years, from 2023-24 to 2030-31.",
+    "b": [
+     "19 April 2023",
+     "₹6,003.65 crore",
+     "eight years"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "This is a fixed, time-bound national bet with clear deadlines, not an open-ended promise to fund quantum forever."
+   },
+   {
+    "t": "head",
+    "x": "The staged hardware targets"
+   },
+   {
+    "t": "p",
+    "x": "The plan does not try to build one giant machine overnight; it grows the hardware in deliberate steps so each stage can be tested before the next."
+   },
+   {
+    "t": "b",
+    "x": "A working machine of 20 to 50 quantum bits is targeted by year three, 50 to 100 by year five, and anywhere from 50 up to 1,000 by year eight.",
+    "b": [
+     "20 to 50",
+     "50 to 100",
+     "50 up to 1,000"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Two different physical recipes are pursued in parallel, superconducting circuits chilled to near absolute zero and photonic devices that compute with particles of light, so the country is not betting on a single technology.",
+    "b": [
+     "superconducting circuits",
+     "photonic devices"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "A national footprint"
+   },
+   {
+    "t": "b",
+    "x": "The effort spans 152 researchers across 43 institutions in 17 states and two union territories, organised into 14 technical groups, reach that touches essentially every region represented in the room.",
+    "b": [
+     "152 researchers",
+     "43 institutions",
+     "17 states"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "These qubit counts are physical qubits, the raw, error-prone building blocks, not the far scarcer error-corrected qubits needed for a fully reliable machine."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Qubit",
+    "def": "The quantum version of a bit: instead of being only 0 or 1, it can hold a blend of both at once until it is measured."
+   },
+   {
+    "term": "Superconducting circuit",
+    "def": "A tiny electrical loop cooled to near absolute zero so current flows with zero resistance, one of the leading ways to build a qubit."
+   },
+   {
+    "term": "Photonic device",
+    "def": "Hardware that carries and processes quantum information using individual particles of light instead of electrical circuits."
+   },
+   {
+    "term": "Physical qubit",
+    "def": "A single real, imperfect qubit; many of them must be pooled together to make one dependable error-corrected qubit."
+   }
+  ],
+  "cards": []
+ },
+ "nqm2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The mission is not run from one lab; the work is divided among four national hubs, each led by a top institute and each responsible for one theme."
+   },
+   {
+    "t": "p",
+    "x": "The design is called hub-and-spoke: a lead institute anchors each theme and coordinates partner institutes around it, so effort is shared instead of duplicated."
+   },
+   {
+    "t": "note",
+    "x": "All four hubs were set up as Section-8 not-for-profit companies and have been operational since October 2024."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Hub-and-spoke",
+    "def": "An organisation where one central lead (the hub) coordinates many connected partners (the spokes), like an airline routing flights through a main airport."
+   },
+   {
+    "term": "Section-8 company",
+    "def": "An Indian legal form for a not-for-profit organisation, meaning any surplus is reinvested in the mission rather than paid out as profit."
+   },
+   {
+    "term": "Quantum key distribution (QKD)",
+    "def": "A way to share secret codes so that the laws of physics reveal any eavesdropper the instant someone tries to listen in."
+   },
+   {
+    "term": "Atomic clock",
+    "def": "A clock that keeps time by counting the ultra-steady vibrations of atoms, so accurate it would not lose a second over billions of years."
+   }
+  ],
+  "cards": [
+   [
+    "This hub, anchored at IISc Bengaluru, is charged with building India's own quantum processors rather than importing them.",
+    "It owns the staged hardware goals, growing from a few dozen qubits toward the eventual 1,000-qubit target over the eight years.",
+    "Both the superconducting and the photonic machine designs fall under its responsibility."
+   ],
+   [
+    "Led jointly by IIT Madras and C-DOT in New Delhi, this hub builds communication links that are secure by the laws of physics.",
+    "Its focus is quantum key distribution, which lets two parties detect any eavesdropper on the line automatically.",
+    "The roadmap stretches from city-to-city links on existing fibre to satellite links spanning about 2,000 kilometres."
+   ],
+   [
+    "Based at IIT Bombay, this hub develops instruments that measure the physical world with extreme precision.",
+    "Its products include magnetometers, atomic clocks, and gravity sensors far more sensitive than conventional devices.",
+    "Such sensors matter for navigation, mineral and resource surveys, and medical imaging."
+   ],
+   [
+    "Anchored at IIT Delhi, this hub creates the raw materials and cold-running components that qubits are actually made from.",
+    "It works on superconductors, exotic topological materials, and semiconductor structures for device fabrication.",
+    "Without this materials layer the other three hubs would have nothing to build with."
+   ]
+  ]
+ },
+ "eco": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Beyond the government mission, Indian companies and labs have already shipped working quantum hardware and networks, not just plans and slideware."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Full-stack quantum computer",
+    "def": "A machine where a single company builds the whole tower, from the physical qubits at the bottom to the control software at the top."
+   },
+   {
+    "term": "Ion trap",
+    "def": "A way to build a quantum computer by holding individual charged atoms still with electric fields and manipulating them with laser light."
+   },
+   {
+    "term": "Post-quantum cryptography (PQC)",
+    "def": "New codes designed to stay secure even against a future quantum computer, so today's data cannot be unlocked once such machines arrive."
+   }
+  ],
+  "cards": [
+   [
+    "QpiAI, a Bengaluru full-stack startup, shipped Indus, a 25-qubit machine, on World Quantum Day in April 2025.",
+    "It followed with Kaveri, a 64-qubit machine, in November 2025, with commercial access planned for late 2026.",
+    "The company has raised about 65.6 million US dollars and employs around 100 people.",
+    "Its stated roadmap reaches 1,000 qubits by 2030."
+   ],
+   [
+    "Launched on 7 February 2026 as a partnership of IBM, TCS, and the Andhra Pradesh government.",
+    "Its centrepiece is an IBM Quantum System Two built around a 156-qubit Heron processor, the largest quantum computer sited in India so far.",
+    "Commissioning is expected around September 2026, with L&T handling the physical infrastructure and more than 50 partners involved."
+   ],
+   [
+    "IISER Pune is building a 20-qubit ion-trap machine due by the end of 2026, having already trapped 25 calcium ions.",
+    "In April 2026 an indigenous system from QNu Labs demonstrated secure quantum communication over roughly 1,000 kilometres.",
+    "The mission's funded startup layer grew from 8 to 17 companies, including QNu Labs, Dimira, Quanastra, and Prenishq.",
+    "A national post-quantum-cryptography roadmap was published in February 2026 to protect Aadhaar-scale identity and UPI-scale payments before the threat matures."
+   ]
+  ]
+ },
+ "funding": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "India's quantum budget is small next to the biggest spenders, and the honest way to read that is as a deliberate strategy, not a failure."
+   },
+   {
+    "t": "head",
+    "x": "The numbers, side by side"
+   },
+   {
+    "t": "b",
+    "x": "India's roughly 0.73 billion US dollars over eight years sits against China's reputed 15 billion, the United States' 2.5 billion-plus, the United Kingdom's 2.5 billion pounds over ten years, and Germany's two-to-three billion euros.",
+    "b": [
+     "0.73 billion",
+     "15 billion",
+     "2.5 billion-plus",
+     "2.5 billion pounds",
+     "two-to-three billion euros"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "On money alone India is not in the top tier, and pretending otherwise would convince no one who works in the field."
+   },
+   {
+    "t": "head",
+    "x": "Why that is not the whole story"
+   },
+   {
+    "t": "p",
+    "x": "A budget this size cannot fund every frontier at once, so it is aimed at a few chosen niches instead of trying to outbuild anyone."
+   },
+   {
+    "t": "b",
+    "x": "India's real advantage is not spending but a very large pool of skilled software and algorithm talent, which is the layer where most of the eventual economic value is captured.",
+    "b": [
+     "skilled software and algorithm talent"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Building a quantum processor is expensive hardware work, but inventing the algorithms and applications that run on any processor is mostly a matter of trained minds and keyboards, which plays directly to that strength."
+   },
+   {
+    "t": "b",
+    "x": "The topics of this session, clustering, quantum kernels, and quantum-enhanced vision, sit squarely in that value-capturing algorithm-and-application layer.",
+    "b": [
+     "clustering",
+     "quantum kernels",
+     "quantum-enhanced vision"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The cross-country figures are approximate estimates gathered from public reporting and are best read as orders of magnitude, not an exact league table."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Clustering",
+    "def": "Sorting a pile of data into natural groups based on similarity, without anyone labelling the groups in advance."
+   },
+   {
+    "term": "Quantum kernel",
+    "def": "A way of measuring how similar two data points are by running them through a quantum circuit, giving a richer notion of similarity than ordinary distance."
+   },
+   {
+    "term": "Algorithm-and-application layer",
+    "def": "The software and methods that run on top of the hardware, where clever ideas, rather than expensive machines, create most of the value."
+   }
+  ],
+  "cards": []
+ },
+ "viksit": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Viksit Bharat 2047 is the national goal of a fully developed India by 2047, the hundredth year of independence, and quantum technology is named as one of its pillars."
+   },
+   {
+    "t": "head",
+    "x": "The proof India can do this"
+   },
+   {
+    "t": "b",
+    "x": "India has already taken frontier technology to more than a billion people through Aadhaar for identity, UPI for real-time payments, and the wider Digital India programme.",
+    "b": [
+     "Aadhaar",
+     "UPI",
+     "Digital India"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "That track record shows the country can run brand-new technology at population scale, which is exactly what a national quantum ecosystem will demand."
+   },
+   {
+    "t": "head",
+    "x": "The leap being asked for"
+   },
+   {
+    "t": "p",
+    "x": "The next step is to move from being the world's back office to the world's innovation engine, which needs deep original research, not only frugal efficiency."
+   },
+   {
+    "t": "b",
+    "x": "Quantum sits inside a coordinated set of national missions, the National Quantum Mission alongside IndiaAI, the National Supercomputing Mission, Semicon India, and a research fund of one lakh crore rupees.",
+    "b": [
+     "National Quantum Mission",
+     "IndiaAI",
+     "National Supercomputing Mission",
+     "Semicon India",
+     "one lakh crore rupees"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Here sovereignty means owning secure communications and home-built hardware, rather than renting quantum computing from foreign cloud providers."
+   },
+   {
+    "t": "p",
+    "x": "The stated ambition treats technology as a strategic national asset for growth, security, governance, and global influence."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Viksit Bharat 2047",
+    "def": "India's stated goal of becoming a fully developed nation by 2047, the hundredth anniversary of its independence."
+   },
+   {
+    "term": "Digital public infrastructure",
+    "def": "Nationwide digital systems, like Aadhaar and UPI, that everyone can use as shared public utilities, the way roads or electricity are shared."
+   },
+   {
+    "term": "Technological sovereignty",
+    "def": "A country's ability to own and control its critical technology at home, instead of depending on foreign providers for it."
+   },
+   {
+    "term": "Lakh crore",
+    "def": "An Indian unit for a very large number: one lakh crore equals one trillion, so a one-lakh-crore fund is a trillion rupees."
+   }
+  ],
+  "cards": [
+   [
+    "To reach the 2047 goal, India's research-and-development spending must climb toward two to three percent of GDP, well above today's level.",
+    "The country needs to reverse its brain drain and create enough high-tech jobs to keep skilled people at home.",
+    "Every faculty member is a direct lever on the talent side of that equation.",
+    "The cohort now sitting in the room's classrooms is who will actually build Viksit Bharat 2047."
+   ]
+  ]
+ },
+ "title": {
+  "body": [
+   {
+    "t": "note",
+    "x": "A first-principles tour of clustering for a faculty audience drawn from many different fields: it begins with tools already taught in class, adds one quantum idea at a time, and ends with two demonstrations that run on any ordinary laptop."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum computing",
+    "def": "A way of computing that uses the strange rules governing nature's smallest particles to perform certain calculations that ordinary computers find impractical."
+   },
+   {
+    "term": "Unsupervised learning",
+    "def": "A branch of machine learning that hunts for patterns in data that comes with no labels and no answer key."
+   },
+   {
+    "term": "Clustering",
+    "def": "Sorting a pile of data into groups whose members resemble one another, without being told in advance what the groups should be."
+   }
+  ],
+  "cards": []
+ },
+ "agenda": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "This session builds from an everyday idea to a working quantum demonstration in five moves, and each move starts from something already familiar rather than something exotic.",
+    "b": [
+     "five moves"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The five-part arc"
+   },
+   {
+    "t": "b",
+    "x": "The first section asks why quantum machine learning deserves attention right now, leaning on peer-reviewed results and market figures from 2025 rather than on hype.",
+    "b": [
+     "why",
+     "right now"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The second section revisits the classical clustering tools already on every machine-learning syllabus, k-means and spectral clustering, and shows precisely where they break down.",
+    "b": [
+     "k-means",
+     "spectral clustering"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The third section introduces just enough quantum mechanics to explain one single new trick: judging how alike two data points are through physics instead of ordinary arithmetic.",
+    "b": [
+     "one single new trick"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "That same section stays deliberately honest, running two live notebooks and naming every place the quantum advantage is genuine and every place it is merely competitive.",
+    "b": [
+     "honest"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The fourth section surveys where quantum clustering already runs today, from commercial pilots in finance and pharma to the largest physics experiments ever built."
+   },
+   {
+    "t": "b",
+    "x": "The fifth and sixth sections turn to India's national quantum programme and to the part a room full of teachers plays in closing the worldwide talent shortage.",
+    "b": [
+     "India"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Nothing along this path requires access to a quantum computer in order to follow it, because every quantum idea is anchored to a classical one first."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Unsupervised learning",
+    "def": "A branch of machine learning that finds structure in data that carries no labels telling it the right answer."
+   },
+   {
+    "term": "Clustering",
+    "def": "Grouping data so that things inside a group are alike and things in different groups are not, without being given the groups beforehand."
+   },
+   {
+    "term": "k-means",
+    "def": "A classic, fast method that splits data into a fixed number of groups by repeatedly nudging each group's centre toward the points nearest to it."
+   },
+   {
+    "term": "Quantum machine learning (QML)",
+    "def": "The use of quantum computers to help with machine-learning tasks such as finding patterns or grouping data."
+   }
+  ],
+  "cards": []
+ },
+ "aboutbio": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Archit Srivastava sits at the meeting point of industry data work and quantum computing, and has spent roughly four years turning quantum research into things that actually run rather than things that merely get discussed."
+   },
+   {
+    "t": "p",
+    "x": "His current role is Senior Manager of Data Engineering at PUMA in Bengaluru, where the everyday work is building the large-scale data systems a global company depends on.",
+    "b": [
+     "PUMA"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Industry background"
+   },
+   {
+    "t": "b",
+    "x": "Before PUMA he worked as a data-engineering consultant at o9 Solutions and as a data engineer at Hewlett Packard Enterprise, and at both companies he ran quantum proof-of-concept projects alongside the mainstream work.",
+    "b": [
+     "o9 Solutions",
+     "Hewlett Packard Enterprise"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "His first foothold in the field came as one of the earliest interns at BosonQ Psi, a start-up applying quantum methods to engineering and physics simulation.",
+    "b": [
+     "BosonQ Psi"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Building India's quantum community"
+   },
+   {
+    "t": "b",
+    "x": "In 2020 he founded AiQyaM, described as India's first quantum-hardware community, and he went on to found CIRQuIT Quantum Research at RV College of Engineering.",
+    "b": [
+     "AiQyaM",
+     "2020",
+     "CIRQuIT"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "He has served as Senior Research Associate and head of the quantum-hardware vertical at Quantum Computing India, and has contributed proof-of-concept frameworks to the GKQCTP and IQDC quantum-technology-park efforts with Innogress Ventures."
+   },
+   {
+    "t": "b",
+    "x": "His formal training is a degree in Electronics and Instrumentation Engineering from RV College of Engineering, an unusual route into quantum computing that keeps the emphasis firmly on real devices."
+   },
+   {
+    "t": "note",
+    "x": "The consistent thread through the whole record is hands-on hardware and community-building, not theory in isolation."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Data engineering",
+    "def": "The craft of building the pipelines and systems that move, clean, and store large amounts of data so it is ready to be analysed."
+   },
+   {
+    "term": "Proof of concept",
+    "def": "A small trial project built to test whether an idea can actually work before anyone commits to it at full scale."
+   },
+   {
+    "term": "Quantum hardware",
+    "def": "The physical machines that store and manipulate qubits, as opposed to the software or the theory that runs on them."
+   }
+  ],
+  "cards": []
+ },
+ "aboutresearch": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The reason this session is built from the ground up rather than assembled from borrowed slides is that its methods come from work Archit Srivastava has himself built and run."
+   },
+   {
+    "t": "head",
+    "x": "What he works on"
+   },
+   {
+    "t": "b",
+    "x": "His current research sits where quantum computing meets artificial intelligence, covering black-hole physics and gravitational waves studied with quantum and AI methods, together with photonic quantum computing and its hardware.",
+    "b": [
+     "black-hole physics",
+     "gravitational waves",
+     "photonic quantum computing"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Earlier work runs through quantum cryptography, quantum finance, and the competing physical recipes for actually building qubits.",
+    "b": [
+     "quantum finance"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why the talk is first-hand"
+   },
+   {
+    "t": "b",
+    "x": "He has authored five or more papers and book chapters, indexed on Google Scholar, including one with a direct gravitational-wave tie-in titled Quantum Computing and LIGO.",
+    "b": [
+     "five or more papers",
+     "Quantum Computing and LIGO"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "His 2021 paper Quantum Finance — An Overview mapped an investment-portfolio problem onto a quantum optimiser and, tellingly for this audience, solved the very same problem in both Qiskit and PennyLane, the two teaching frameworks this room must choose between.",
+    "b": [
+     "Qiskit and PennyLane"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "He has given twenty-five or more invited talks across ten or more universities, engaging more than two hundred faculty, and spoke at Conf42 Quantum Computing in both 2023 and 2024.",
+    "b": [
+     "twenty-five or more invited talks",
+     "two hundred faculty"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Because the demonstrations shown later are drawn from circuits he has run on real quantum hardware, the limitations named in this session are reported first-hand, not repeated from someone else."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Gravitational waves",
+    "def": "Ripples in the fabric of space itself, set off by violent events such as colliding black holes, and so faint that detecting them is among the hardest measurements ever made."
+   },
+   {
+    "term": "Photonic quantum computing",
+    "def": "An approach to quantum computing that uses individual particles of light as its qubits."
+   },
+   {
+    "term": "Qiskit",
+    "def": "IBM's free software toolkit for writing and running quantum programs."
+   },
+   {
+    "term": "PennyLane",
+    "def": "A free software toolkit, made by Xanadu, for building quantum programs and blending them with machine learning; it powers this session's live demonstrations."
+   }
+  ],
+  "cards": []
+ },
+ "roadmap": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The session follows one simple teaching rule: never introduce a quantum idea cold, and always attach it to a classical idea already taught in the classroom.",
+    "b": [
+     "one simple teaching rule"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The design principle"
+   },
+   {
+    "t": "p",
+    "x": "Each new quantum concept appears only after its everyday classical counterpart is already on the board, so nothing in the talk asks for a leap of faith."
+   },
+   {
+    "t": "b",
+    "x": "The path runs left to right through five stops: the idea of unsupervised learning, the classical tools, the single quantum turn, an honest look at what it does and does not deliver, and finally the real-world impact.",
+    "b": [
+     "five stops"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The spine of the whole talk"
+   },
+   {
+    "t": "p",
+    "x": "Every clustering method, classical or quantum alike, comes down to exactly three choices: how each data point is written as numbers, how the similarity between two points is measured, and what rule decides the final groups."
+   },
+   {
+    "t": "b",
+    "x": "The one sentence that carries the entire session is that quantum computing mostly changes the middle choice, the way the similarity between two points is measured, and how quickly that measurement can be made.",
+    "b": [
+     "the middle choice",
+     "similarity"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Because only that single ingredient changes, the rest of the familiar pipeline stays in place, which is exactly why a classical clustering method can accept a quantum-computed similarity without being rebuilt."
+   },
+   {
+    "t": "note",
+    "x": "Both demonstrations run as live PennyLane notebooks on an ordinary laptop processor, so no quantum hardware is needed to follow along.",
+    "b": [
+     "no quantum hardware"
+    ]
+   }
+  ],
+  "defs": [
+   {
+    "term": "Representation",
+    "def": "The way a piece of data is written down as numbers so that a computer can work with it."
+   },
+   {
+    "term": "Similarity",
+    "def": "A single number saying how alike two data points are; the whole of clustering rests on measuring it well."
+   },
+   {
+    "term": "Swap test",
+    "def": "A small quantum procedure that measures how alike two quantum-encoded data points are, returning a number near one when they match and near one-half when they are unrelated."
+   },
+   {
+    "term": "Quantum kernel",
+    "def": "A similarity score between two data points that is worked out by a quantum circuit instead of by ordinary arithmetic."
+   }
+  ],
+  "cards": []
+ },
+ "turning": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "For years quantum computing lived mostly in the laboratory as a promise. In 2025 and 2026 it stepped into paid, real-world pilot projects, and these four numbers mark the shift from asking whether it will matter to planning for when."
+   },
+   {
+    "t": "p",
+    "x": "The change in tone is the real story. Businesses stopped debating if quantum machines would ever be useful and started modelling exactly when the technology will reshape their own industry."
+   },
+   {
+    "t": "b",
+    "x": "More than 300 large companies are now actively running quantum projects, according to McKinsey's 2026 tracking, a clear sign this has moved well past a handful of research labs.",
+    "b": [
+     "300 large companies"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Investment into quantum start-ups jumped 6.3 times from 2024 to 2025, one of the sharpest funding surges any young technology has seen.",
+    "b": [
+     "6.3 times"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Roughly 90% of that money went specifically into quantum computing, rather than the neighbouring fields of quantum sensing or quantum communication.",
+    "b": [
+     "90%"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Revenue from quantum-computing companies, already above one billion dollars in 2025, is projected to reach about 4.4 billion dollars by 2028.",
+    "b": [
+     "4.4 billion dollars by 2028"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The common thread across every sector"
+   },
+   {
+    "t": "p",
+    "x": "The industries adopting quantum first all share one shape of problem: enormous piles of data with no labels attached, where the costly step is measuring how similar one item is to another."
+   },
+   {
+    "t": "b",
+    "x": "Finance, pharmaceuticals and climate technology are the commercial vanguard, while the giant physics experiments run the hardest versions of the very same clustering task.",
+    "b": [
+     "Finance, pharmaceuticals and climate technology"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Most of these remain early pilots and competitive results, not yet routine wins over the very best classical methods."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum computing",
+    "def": "A way of computing that uses the strange rules of the very small, where a particle can be in several states at once, to attack problems ordinary computers find impossibly large."
+   },
+   {
+    "term": "Clustering",
+    "def": "Sorting a pile of data into natural groups by similarity, without anyone labelling the groups in advance."
+   },
+   {
+    "term": "Unlabelled data",
+    "def": "Raw information that has not been tagged with the right answer, so a computer must uncover the structure on its own."
+   },
+   {
+    "term": "Similarity",
+    "def": "A single number saying how alike two data points are; computing it for every pair is the expensive step quantum methods aim to speed up."
+   }
+  ],
+  "cards": []
+ },
+ "finance": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Banks live and die by fast, accurate answers drawn from huge streams of numbers, so finance became the first industry to move quantum methods into real pilots."
+   },
+   {
+    "t": "p",
+    "x": "Across pricing, fraud and hedging the underlying job is the same: find hidden structure and measure similarity inside data far too large and tangled for easy classical handling."
+   },
+   {
+    "t": "note",
+    "x": "These are demonstrations and early pilots; the quantum step usually assists a classical system rather than replacing it outright."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Monte Carlo simulation",
+    "def": "Estimating an answer by running a process with random inputs many thousands of times and averaging the results."
+   },
+   {
+    "term": "F1 score",
+    "def": "A single grade from 0 to 1 that balances catching the real cases against avoiding false alarms; higher is better."
+   },
+   {
+    "term": "Covariance matrix",
+    "def": "A grid showing, for every pair of things, whether they tend to move up and down together or in opposite directions."
+   },
+   {
+    "term": "Qiskit",
+    "def": "A widely used free software toolkit from IBM for writing and running programs on quantum computers."
+   }
+  ],
+  "cards": [
+   [
+    "Banks price complex products such as options by simulating thousands of possible futures at random, a method called Monte Carlo, and more precision means far more simulations.",
+    "With the classical method, getting ten times more accurate costs roughly a hundred times more computing, so the error shrinks painfully slowly.",
+    "JPMorgan Chase and IBM Quantum used a quantum technique that reaches the same precision with far fewer runs, close to the square root of the classical count.",
+    "The payoff is concrete: a bank can price the same risk much faster than rivals, or spend the same time and walk away with a far more confident number."
+   ],
+   [
+    "Fraudsters constantly change tactics, creating twisted, non-obvious patterns that classical detectors struggle to separate from honest spending.",
+    "IBM's Safer Payments team, using the Qiskit toolkit, encoded each transaction into a quantum state so that honest and fraudulent behaviour land in clearly separate regions.",
+    "One quantum classifier reached an F1 score as high as 0.88, a balanced measure of catching fraud without wrongly flagging good customers.",
+    "The models stayed accurate even when five different kinds of hardware noise were added on purpose, showing they are robust enough for near-term use.",
+    "In practice the quantum step selects the most revealing features and hands them to a fast classical system for the final decision."
+   ],
+   [
+    "Hedging means holding offsetting positions so a portfolio can survive sudden market swings, and doing it well is a hard balancing problem.",
+    "JPMorgan Chase and the software firm QC Ware studied quantum deep hedging, which adjusts that protection dynamically as markets move.",
+    "Deciding how to spread money across many assets is itself an unsupervised task: uncovering hidden structure in how the assets move together.",
+    "That structure is captured in a covariance matrix, a large grid of how every pair of assets rises and falls in step, exactly the similarity problem quantum methods target."
+   ]
+  ]
+ },
+ "pharma": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Living things are quantum at their core, and biology produces gigantic piles of data with no answer key, which makes medicine a natural home for quantum clustering."
+   },
+   {
+    "t": "head",
+    "x": "Reading the genome without labels"
+   },
+   {
+    "t": "p",
+    "x": "Genomics may be the hardest clustering problem of all, since it means deciding which of tens of thousands of genes truly matter with nobody supplying the correct groupings."
+   },
+   {
+    "t": "b",
+    "x": "Dynamic Quantum Clustering sorted raw gene-activity readings across more than 20,057 genes into groups that matched the known progression from low-grade to aggressive brain tumours, doing so without being shown a single diagnosis, and agreeing with real clinical outcomes about 90.9% of the time.",
+    "b": [
+     "90.9%"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Narrowing those 20,057 genes down to the 90 that drove the separation lifted diagnostic accuracy to 97.3%, still using no labels at all.",
+    "b": [
+     "97.3%"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Simulating the molecules themselves"
+   },
+   {
+    "t": "p",
+    "x": "Because chemistry is itself governed by quantum rules, a quantum computer can model a drug molecule more faithfully than the rough approximations classical machines are forced to use."
+   },
+   {
+    "t": "b",
+    "x": "Algorithmiq and Quantum Circuits ran enzyme-behaviour simulations on a small 8-qubit machine built from dual-rail qubits, which flag their own mistakes, since a lost particle of light shows up as a marked result that can simply be discarded.",
+    "b": [
+     "8-qubit"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "This correct-first-then-scale approach aims at de novo drug design: building a promising molecule from scratch rather than only screening ones that already exist.",
+    "b": [
+     "de novo drug design"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "These are early, specialised results on small hardware, not yet everyday drug-discovery pipelines."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Qubit",
+    "def": "The quantum version of a bit: instead of being only 0 or 1, it can hold a blend of both at once until it is measured."
+   },
+   {
+    "term": "RNA sequencing (RNA-seq)",
+    "def": "A lab method that reads how active each gene is in a sample, producing tens of thousands of numbers per patient."
+   },
+   {
+    "term": "Dynamic Quantum Clustering",
+    "def": "A quantum method that groups data by its natural geometry, needing no labels and no advance guess at how many groups to expect."
+   },
+   {
+    "term": "De novo drug design",
+    "def": "Designing a brand-new medicine molecule from scratch to fit a target, rather than testing molecules that already exist."
+   }
+  ],
+  "cards": []
+ },
+ "climate": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Cutting carbon and running cleaner power grids both come down to understanding molecules and messy sensor data, two places where quantum methods are starting to help."
+   },
+   {
+    "t": "p",
+    "x": "Chemistry is quantum at its core and grid data is vast and unlabelled, so both the molecular modelling and the data sorting play to quantum strengths."
+   },
+   {
+    "t": "note",
+    "x": "Most of these are promising early results and simulations, not yet drop-in replacements for classical tools."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Metal-organic framework (MOF)",
+    "def": "A sponge-like material with a repeating, adjustable cage structure whose tiny pores can trap specific gas molecules."
+   },
+   {
+    "term": "Catalyst",
+    "def": "A substance that speeds up a chemical reaction while itself staying unchanged and reusable."
+   },
+   {
+    "term": "k-means clustering",
+    "def": "A classic method that sorts data into a set number of groups by repeatedly assigning each point to its nearest group centre."
+   },
+   {
+    "term": "Balanced accuracy",
+    "def": "An accuracy score that counts rare cases and common cases fairly, so a lopsided dataset cannot flatter the result."
+   }
+  ],
+  "cards": [
+   [
+    "One way to fight climate change is to trap carbon dioxide before it escapes a smokestack, which needs cheap materials that can grab the gas.",
+    "Metal-organic frameworks, nicknamed molecular LEGO, are sponge-like structures with tunable pores that soak up carbon dioxide using very little energy.",
+    "Classical computers struggle to model exactly how the gas sticks inside those pores, because many particles interact all at once.",
+    "Quantinuum, working with TotalEnergies, broke the giant calculation into smaller quantum fragments to model the binding accurately.",
+    "A companion tool called PrISMa blends machine learning with quantum-informed simulation to predict a material's cost and performance almost instantly."
+   ],
+   [
+    "A catalyst speeds up a chemical reaction without being used up, and modern industry leans on them almost everywhere.",
+    "The catalysts that make ammonia for fertiliser account for roughly 2% of all human carbon-dioxide emissions, so even small gains are enormous.",
+    "Quantum computers can simulate the exact moment a nitrogen molecule splits apart on a platinum surface, the key step in that reaction.",
+    "The aim is to redesign such processes toward nearly 100% efficiency, shrinking the carbon footprint of global chemistry."
+   ],
+   [
+    "Electricity grids pour out floods of unlabelled sensor data that must be sorted to keep power flowing and equipment healthy.",
+    "Researchers ran a quantum version of k-means clustering, loading the data through angle and amplitude encoding, on real German electricity-grid records.",
+    "That quantum clustering improved balanced accuracy for grid labelling and predictive maintenance by 67.8% over the standard classical method.",
+    "Separately, ultra-sensitive cold-atom gravity sensors track underground carbon-dioxide plumes at storage sites, catching leaks with almost no drift."
+   ]
+  ]
+ },
+ "kmeans1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "k-means is the workhorse of clustering: it sorts a pile of data points into a fixed number of groups by repeatedly asking one simple question — which group centre is each point closest to?",
+    "b": [
+     "which group centre is each point closest to"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The loop, in plain terms"
+   },
+   {
+    "t": "b",
+    "x": "The method begins by dropping a chosen number of group centres into the data, spaced apart on purpose so they do not start on top of one another.",
+    "b": [
+     "spaced apart on purpose"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Every data point is then handed to whichever centre sits nearest to it, which carves the data into that many groups.",
+    "b": [
+     "handed to whichever centre sits nearest"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Each centre then slides to the average position of all the points that just joined it, so it settles into the true middle of its group.",
+    "b": [
+     "the average position"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "These two steps — reassign, then re-centre — repeat until no point changes its group and the arrangement stops moving.",
+    "b": [
+     "reassign, then re-centre"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "What it is quietly minimising"
+   },
+   {
+    "t": "p",
+    "x": "Underneath, the method is chasing a single score: the total spread of the groups, measured as how far each point sits from its own centre, added up across every group; a tighter, more compact set of groups scores lower, and lower is better.",
+    "b": [
+     "total spread of the groups"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The costly part is the reassign step, because it must measure the distance from every point to every centre on every pass, so the work grows with the number of points multiplied by the number of groups.",
+    "b": [
+     "number of points multiplied by the number of groups"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "This distance-counting step is the exact line a quantum method later sets out to shorten."
+   }
+  ],
+  "defs": [
+   {
+    "term": "k-means",
+    "def": "A method that sorts data into a set number of groups by repeatedly moving each group's centre and reassigning every point to the nearest one."
+   },
+   {
+    "term": "Centroid",
+    "def": "The centre of a group — simply the average position of all the points currently assigned to it."
+   },
+   {
+    "term": "k-means++",
+    "def": "A smarter way to place the starting centres far apart so the method is less likely to settle on a poor answer."
+   },
+   {
+    "term": "Objective (inertia)",
+    "def": "The single number the method tries to make as small as possible: the combined tightness of all the groups."
+   }
+  ],
+  "cards": []
+ },
+ "kmeans2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The same simplicity that makes k-means so popular also pins down the exact situations where it quietly returns the wrong answer.",
+    "b": [
+     "quietly returns the wrong answer"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why it is everywhere"
+   },
+   {
+    "t": "b",
+    "x": "It is easy to explain, quick to run, and comfortably handles millions of points, which is why it sits in almost every data-analysis toolkit.",
+    "b": [
+     "millions of points"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The fine print"
+   },
+   {
+    "t": "b",
+    "x": "The number of groups must be chosen before the method runs, even when the natural number of groups in the data is genuinely unknown.",
+    "b": [
+     "chosen before the method runs"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "It quietly assumes every group is a round, roughly equal-sized blob that a straight boundary can cleanly separate from its neighbours.",
+    "b": [
+     "round, roughly equal-sized blob"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The final answer can shift depending on where the starting centres happen to land, and a few stray outliers can drag a centre away from the real crowd.",
+    "b": [
+     "stray outliers"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The blind spot"
+   },
+   {
+    "t": "p",
+    "x": "Because each point is always handed to the nearest centre, every boundary k-means draws is effectively a straight line; when the true groups are curved — two interleaved crescents, or one ring inside another — that straight-line thinking cuts through them and mixes them together.",
+    "b": [
+     "every boundary k-means draws is effectively a straight line"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The picture on this slide shows the failure directly: the real shapes are curved, but k-means carves them into flat wedges that ignore the actual structure.",
+    "b": [
+     "flat wedges"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "This curved-data failure is the specific weakness the later quantum method is designed to repair."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Non-convex shape",
+    "def": "A group whose natural outline is curved or bent — like a crescent or a ring — rather than a simple round blob."
+   },
+   {
+    "term": "Outlier",
+    "def": "A stray data point sitting far from everything else that can distort an average and pull a centre off course."
+   },
+   {
+    "term": "Linearly separable",
+    "def": "Two groups that can be cleanly divided by a single straight line or flat plane."
+   }
+  ],
+  "cards": []
+ },
+ "landscape": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "k-means is only the opening move; a family of other classical methods each fixes one of its weaknesses, and the last of them opens the door to quantum.",
+    "b": [
+     "opens the door to quantum"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The richest of these, spectral clustering, is the one that carries straight into the quantum part of the session."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Agglomerative (hierarchical) clustering",
+    "def": "A bottom-up method that starts with every point alone and keeps merging the two closest groups into a tree."
+   },
+   {
+    "term": "DBSCAN",
+    "def": "A method that finds clusters as dense crowds of points and labels anything in the sparse gaps as noise."
+   },
+   {
+    "term": "Gaussian Mixture Model (GMM)",
+    "def": "A method that describes data as a blend of overlapping bell-shaped clouds and lets a point partly belong to several at once."
+   },
+   {
+    "term": "Spectral clustering",
+    "def": "A method that reshapes data using the maths of a similarity network so that curved groups become easy to separate."
+   }
+  ],
+  "cards": [
+   [
+    "This method builds a family tree of the data by starting with every point on its own and repeatedly merging the two closest groups.",
+    "The result is a branching diagram, called a dendrogram, that shows how points join up at every level of closeness.",
+    "A real advantage is that the number of groups need not be fixed in advance; the tree can simply be cut wherever it is useful.",
+    "The price is that comparing and merging all the groups grows steeply as the dataset gets larger."
+   ],
+   [
+    "DBSCAN groups points by density, treating any place where many points crowd close together as a single cluster.",
+    "Because it follows the crowd rather than a fixed centre, it can trace clusters of any shape, including curved and irregular ones.",
+    "Points sitting alone in sparse regions are labelled as noise instead of being forced into a group, which makes it good at spotting outliers.",
+    "It does need a sense of scale — how close counts as close — to be set beforehand."
+   ],
+   [
+    "A Gaussian Mixture Model treats the data as a blend of several overlapping bell-shaped clouds.",
+    "Instead of assigning each point to exactly one group, it gives soft memberships, so a point can belong seventy per cent to one cloud and thirty per cent to another.",
+    "It learns the position and spread of each cloud through a patient back-and-forth refining process.",
+    "This softness makes it more flexible than k-means whenever real groups overlap at their edges."
+   ],
+   [
+    "Spectral clustering first builds a similarity graph, linking each point to its neighbours by how alike they are.",
+    "It then rewrites that graph as a large table of similarities and extracts its most informative directions through a linear-algebra step.",
+    "In this reshaped space the curved groups that defeated k-means become straight and easy, so a simple method can finish the job.",
+    "It is the first method here that handles curved shapes gracefully, which is exactly the case where k-means fails.",
+    "Its heavy lifting is pure linear algebra on a large similarity table — the very operation a quantum computer performs natively, making this the natural bridge to quantum."
+   ]
+  ]
+ },
+ "spectral": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Spectral clustering is the classical method that finally handles curved data, and the way it pulls that off is exactly what makes it the stepping stone into quantum.",
+    "b": [
+     "stepping stone into quantum"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The trick: change the space, not the method"
+   },
+   {
+    "t": "p",
+    "x": "The core move is to stop describing each point by its raw position and instead describe it by which other points it is close to; this turns the dataset into a network of connections, where being alike simply means being linked.",
+    "b": [
+     "network of connections"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "From that network the method extracts a handful of its most informative patterns — the directions along which the network naturally wants to split — and re-plots every point using those patterns as fresh coordinates.",
+    "b": [
+     "most informative patterns"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "In this redrawn space the curves flatten: two interleaved crescents that no straight line could separate become two plain, well-spaced blobs that ordinary k-means can then finish.",
+    "b": [
+     "the curves flatten"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The picture on this slide captures it — data that is hopelessly tangled on one side becomes cleanly separable once it is lifted into the new space on the other.",
+    "b": [
+     "cleanly separable"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why this points at quantum"
+   },
+   {
+    "t": "b",
+    "x": "The expensive part is a single heavy piece of linear algebra carried out on a large table that records how similar every pair of points is.",
+    "b": [
+     "linear algebra"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "A quantum computer is, at its core, a machine built for precisely this kind of linear algebra: manipulating large tables of numbers is its native operation rather than an add-on.",
+    "b": [
+     "its native operation"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The whole pipeline can stay intact while a quantum-built measure of similarity is swapped in, one that can be richer than any straight-line distance and can expose structure a classical measure would miss.",
+    "b": [
+     "richer than any straight-line distance"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Only the similarity changes; everything else in the pipeline stays the same, which is why this is the cleanest bridge into the quantum part."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Similarity graph",
+    "def": "A network that links each data point to the others it most resembles, turning a plain dataset into a web of connections."
+   },
+   {
+    "term": "Linear algebra",
+    "def": "The branch of maths that manipulates large grids of numbers all at once — the core operation both spectral clustering and quantum computers rely on."
+   },
+   {
+    "term": "Eigenvectors",
+    "def": "The natural, most informative directions hidden inside a grid of numbers, which spectral clustering uses as new coordinates for the data."
+   },
+   {
+    "term": "Quantum feature map",
+    "def": "A quantum recipe that turns each data point into a quantum state, giving a new and potentially richer way to measure how similar two points are."
+   }
+  ],
+  "cards": []
+ },
+ "cost": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Before reaching for quantum, it pays to see exactly where classical clustering spends its money, because the bill always lands in the same place.",
+    "b": [
+     "the same place"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Climbing the cost ladder"
+   },
+   {
+    "t": "p",
+    "x": "The ladder on this slide climbs from cheap to ruinous; at the bottom, comparing two individual points is quick and barely depends on how much data there is.",
+    "b": [
+     "from cheap to ruinous"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "One full pass of k-means is still manageable, since its cost rises in step with the number of points, the number of groups, and the number of features — a plain multiplication.",
+    "b": [
+     "still manageable"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Building a full table of how similar every point is to every other point is far worse, because the number of pairs grows with the square of the number of points, so ten times the data means roughly a hundred times the work.",
+    "b": [
+     "the square of the number of points"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Analysing that table with the heavy linear-algebra step is worse again, growing with the cube of the number of points, which is what makes it buckle at large scale.",
+    "b": [
+     "the cube of the number of points"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The common thread"
+   },
+   {
+    "t": "p",
+    "x": "Every rung that hurts is doing one of just two things: measuring similarity between many high-dimensional points, or performing linear algebra on a large point-by-point table; nothing else on the ladder is expensive.",
+    "b": [
+     "just two things"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "That is no accident — it is precisely the narrow corner where quantum methods claim leverage, since measuring overlaps and handling large tables of numbers is what quantum hardware does naturally.",
+    "b": [
+     "the narrow corner where quantum methods claim leverage"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "With the costly corner pinned down, the case for a quantum approach is earned rather than merely assumed."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Computational cost (Big-O)",
+    "def": "A shorthand for how the work grows as a dataset gets bigger — whether it rises gently, squares, or cubes."
+   },
+   {
+    "term": "Grows with the square",
+    "def": "Doubling the data makes the work roughly four times larger, and ten times the data makes it about a hundred times larger."
+   },
+   {
+    "term": "Grows with the cube",
+    "def": "Doubling the data makes the work roughly eight times larger — the kind of growth that stalls at scale."
+   },
+   {
+    "term": "Similarity matrix",
+    "def": "A large grid holding how alike every point is to every other point — the object the expensive linear-algebra steps chew on."
+   }
+  ],
+  "cards": []
+ },
+ "curse": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Two walls stop classical clustering once data becomes genuinely large and complex, and together they explain why a quantum measure of similarity starts to look attractive.",
+    "b": [
+     "Two walls"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Wall one — the curse of dimensionality"
+   },
+   {
+    "t": "p",
+    "x": "When each point carries only a few features, the ideas of near and far stay meaningful; but as the number of features climbs into the hundreds or thousands, something strange happens to distance itself.",
+    "b": [
+     "something strange happens to distance"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "In very high-dimensional data the closest point and the farthest point end up almost the same distance away, so the gap between nearest and farthest nearly disappears.",
+    "b": [
+     "almost the same distance away"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Once everything looks roughly equidistant, the whole idea of a nearest neighbour loses its meaning, and any method leaning on straight-line distance — k-means included — quietly stops telling points apart.",
+    "b": [
+     "stops telling points apart"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Wall two — the kernel-trick wall"
+   },
+   {
+    "t": "p",
+    "x": "The classical repair is the kernel trick: rather than comparing points directly, it treats them as if lifted into a much richer space where curved groups become separable, using a chosen similarity formula.",
+    "b": [
+     "the kernel trick"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The catch is bookkeeping, because the trick needs a full point-by-point table of similarities whose memory grows with the square of the number of points, so it crashes on large datasets.",
+    "b": [
+     "grows with the square of the number of points"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "This is the precise opening for a quantum kernel: a similarity that can be richer than the classical one and is produced by the physics of the device instead of stored in a giant classical table.",
+    "b": [
+     "produced by the physics of the device"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The problem now reads as a need for a better and cheaper measure of similarity — exactly what the quantum part sets out to deliver."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Curse of dimensionality",
+    "def": "As data gains more and more features, points spread so thin that near and far blur together and distance stops being useful."
+   },
+   {
+    "term": "Euclidean distance",
+    "def": "Everyday straight-line distance between two points — the ruler measurement most clustering methods use to judge closeness."
+   },
+   {
+    "term": "Kernel trick",
+    "def": "A classical shortcut that compares points as if they had been lifted into a richer space, so curved groups become separable."
+   },
+   {
+    "term": "Gram matrix",
+    "def": "The full point-by-point table of similarities the kernel trick must hold in memory, which balloons with the square of the dataset size."
+   }
+  ],
+  "cards": []
+ },
+ "future1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The field is racing on two fronts at once: building machines whose errors shrink instead of snowball, and letting artificial intelligence and quantum computing rescue each other's weak spots."
+   },
+   {
+    "t": "note",
+    "x": "Behind every headline speed-up sits one quiet gatekeeper — how fast ordinary data can be loaded into the machine."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Qubit",
+    "def": "The quantum version of a bit: instead of being only 0 or 1, it can hold a blend of both at once until it is measured."
+   },
+   {
+    "term": "Fault-tolerant",
+    "def": "A machine built so that small hardware mistakes do not wreck the overall calculation."
+   },
+   {
+    "term": "Logical qubit",
+    "def": "One reliable qubit made out of many error-prone physical qubits working together so their errors cancel instead of adding up."
+   },
+   {
+    "term": "QRAM",
+    "def": "A proposed quantum memory that loads many pieces of ordinary data into a quantum computer at the same time, rather than one at a time."
+   }
+  ],
+  "cards": [
+   [
+    "Today's quantum chips make errors so often that a long calculation drowns in noise; \"fault-tolerant\" means spreading one dependable qubit across many shaky physical ones so their mistakes cancel out instead of piling up.",
+    "IBM has published a dated plan for a machine called Starling in 2029 that would hold 200 of these dependable qubits and run 100 million operations, with a larger successor, Blue Jay, aimed at 2,000.",
+    "Google is targeting its first genuinely useful error-corrected machine around 2029, and expects to need roughly a million physical qubits to reach it.",
+    "Quantinuum and the photonics firm PsiQuantum have their own dated targets for the same window, so several independent groups now point at the end of this decade rather than a vague someday."
+   ],
+   [
+    "Artificial intelligence and quantum computing have stopped being separate stories and now feed each other directly.",
+    "Google DeepMind's AlphaQubit, published in Nature in 2024, is a neural network that reads a quantum chip's noisy error signals and works out which faults actually happened, decoding them 6 to 30 percent more accurately than the previous best method.",
+    "That same kind of AI helper is being used to squeeze useful results out of today's noisy machines while true error correction is still years away.",
+    "Running the other way, the quantum feature maps seen earlier in this session hand ordinary machine-learning methods a new kind of similarity to work with."
+   ],
+   [
+    "The catch behind almost every promised quantum speed-up is mundane: getting the everyday data into the machine fast enough to matter.",
+    "The proposed fix is QRAM, a special quantum memory that can hand many data points to the processor at once; without it, the largest speed-ups stay on paper.",
+    "In June 2026 a group at Zhejiang University built the first working superconducting version of one QRAM design, addressing 4-bit and 8-bit data as an early proof of concept.",
+    "Progress on this single problem is what would turn the exponential speed-ups from a promise into a working tool."
+   ]
+  ]
+ },
+ "talent": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Every roadmap in this session runs into the same wall, and it is not a machine — it is people who understand how the whole stack fits together."
+   },
+   {
+    "t": "p",
+    "x": "Hardware is being built at speed across the world, but the far scarcer resource is trained minds who can turn that hardware into working software and applications."
+   },
+   {
+    "t": "head",
+    "x": "The shortage, in numbers"
+   },
+   {
+    "t": "b",
+    "x": "Industry projects roughly 250,000 new quantum roles by 2030 and about 840,000 by 2035.",
+    "b": [
+     "250,000 new quantum roles by 2030",
+     "840,000 by 2035"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Trained supply is tiny — in 2025 there were about three job openings for every qualified hire, and roughly half of that year's roles went unfilled.",
+    "b": [
+     "three job openings for every qualified hire",
+     "half of that year's roles went unfilled"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why a faculty room is the fix"
+   },
+   {
+    "t": "p",
+    "x": "This is a teaching-and-training gap, not a hardware gap, which makes it the one bottleneck a classroom can close directly."
+   },
+   {
+    "t": "b",
+    "x": "Each new course seeded and each strong student pointed toward quantum machine learning turns into India's comparative advantage compounding year on year.",
+    "b": [
+     "India's comparative advantage compounding"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The value-capturing layer is algorithms and software, and that layer is built by people a university trains — not bought off a shelf."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum machine learning (QML)",
+    "def": "Using a quantum computer to help find patterns in data — the subject of this whole session."
+   },
+   {
+    "term": "Swap test",
+    "def": "A small quantum circuit that measures how alike two data points are, returning a number near 1 when they are almost identical."
+   },
+   {
+    "term": "Kernel",
+    "def": "A mathematical recipe that scores how similar two data points are, which clustering methods use to decide what belongs together."
+   },
+   {
+    "term": "National Quantum Mission",
+    "def": "India's eight-year, roughly 6,000-crore-rupee government programme to build quantum computers, networks and sensors."
+   }
+  ],
+  "cards": [
+   [
+    "Clustering, kernels and the swap test can all be taught from first principles with no quantum hardware at all — the ideas in this session and a laptop are enough.",
+    "A single quantum-machine-learning module can be added to an existing machine-learning or data-science course without rebuilding the whole syllabus.",
+    "The two PennyLane notebooks from this session (PennyLane is a free quantum-programming toolkit) run on any ordinary laptop's processor, so a class can reproduce the moons demo the same afternoon.",
+    "Strong students can be pointed toward the National Quantum Mission hubs and toward internships at firms such as QpiAI and BosonQ Psi."
+   ]
+  ]
+ },
+ "thanks": {
+  "body": [
+   {
+    "t": "b",
+    "x": "Archit Srivastava, Founder of AiQyaM — reachable at architsrivastava3115@gmail.com, with the full paper list on Google Scholar (profile NbPUdWMAAAAJ).",
+    "b": [
+     "architsrivastava3115@gmail.com"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Both PennyLane notebooks shown today run on any ordinary laptop with no quantum hardware, and are free to reuse and adapt in class.",
+    "b": [
+     "no quantum hardware"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "An open invitation stands to bring students along to the next faculty cohort.",
+    "b": [
+     "bring students along"
+    ]
+   }
+  ],
+  "defs": [
+   {
+    "term": "AiQyaM",
+    "def": "India's first quantum-hardware community, founded by the speaker in 2020."
+   },
+   {
+    "term": "PennyLane",
+    "def": "A free software toolkit for writing quantum programs that run on a normal laptop."
+   }
+  ],
+  "cards": []
+ },
+ "swap1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The swap test is a tiny quantum circuit whose only job is to measure how alike two pieces of data are, and that single skill is the beating heart of quantum clustering.",
+    "b": [
+     "measure how alike two pieces of data are",
+     "beating heart of quantum clustering"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why similarity is the whole game"
+   },
+   {
+    "t": "p",
+    "x": "Clustering is really just sorting things by how alike they are, so every method keeps asking the same question over and over: how similar are these two points?"
+   },
+   {
+    "t": "b",
+    "x": "The swap test answers exactly that question using one spare qubit, called an ancilla, that acts like a referee comparing two data points and reporting back how close they are.",
+    "b": [
+     "one spare qubit",
+     "referee"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The intuition: interference"
+   },
+   {
+    "t": "p",
+    "x": "The trick relies on interference, the same wave behaviour that makes ripples on a pond reinforce where they meet or flatten out where they clash."
+   },
+   {
+    "t": "b",
+    "x": "The referee qubit is set up so the two data points are quietly compared against each other, and whether that comparison reinforces or cancels shifts the odds of what the referee will read out.",
+    "b": [
+     "reinforces or cancels"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "When the two points are nearly identical the waves reinforce strongly, and when the points are completely unrelated the waves partly cancel, so the outcome the referee reports is a direct read-out of their similarity.",
+    "b": [
+     "nearly identical",
+     "completely unrelated"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A single reading gives only one yes-or-no answer, so the circuit is run many times and the fraction of one particular answer is counted, and that fraction sits near one for alike points and near one-half for unrelated ones.",
+    "b": [
+     "near one",
+     "one-half"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The formula printed on the diagram is only this paragraph rewritten in symbols; the plain words carry the entire idea."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Swap test",
+    "def": "A small quantum circuit whose whole job is to report how similar two pieces of data are, boiled down to one measurable number."
+   },
+   {
+    "term": "Ancilla qubit",
+    "def": "A spare helper qubit added to a circuit not to store data but to run or read off a calculation, here acting as a referee that reports similarity."
+   },
+   {
+    "term": "Qubit",
+    "def": "The quantum version of a bit: instead of being only 0 or 1, it can hold a blend of both at once until it is measured."
+   },
+   {
+    "term": "Interference",
+    "def": "The wave effect where two possibilities reinforce each other or cancel out, the same way ripples on a pond can add up or flatten."
+   }
+  ],
+  "cards": []
+ },
+ "swap2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The same swap test, walked one step at a time, is exactly what runs on the quantum computer to turn two data points into a single similarity number.",
+    "b": [
+     "one step at a time",
+     "single similarity number"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The recipe, step by step"
+   },
+   {
+    "t": "b",
+    "x": "First, the two data points are loaded into two separate groups of qubits, and one extra referee qubit is set to its starting zero position.",
+    "b": [
+     "two separate groups of qubits",
+     "referee qubit"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A gate called a Hadamard puts the referee into an even blend of its two settings at once, so it is poised to compare the points rather than being committed to any one answer.",
+    "b": [
+     "Hadamard",
+     "even blend"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A controlled-swap gate then tries to swap the two data points depending on the referee, and because the referee is in a blend, both swapped and not-swapped happen together and are made to interfere.",
+    "b": [
+     "controlled-swap gate",
+     "interfere"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A second Hadamard folds those two possibilities back together, and only then is the referee qubit finally measured.",
+    "b": [
+     "measured"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Reading the answer"
+   },
+   {
+    "t": "p",
+    "x": "The chance the referee lands back on zero is the number that matters, and it is highest when the two points are alike and lowest when they are unrelated."
+   },
+   {
+    "t": "b",
+    "x": "If the two points are identical the referee returns zero almost every time, and if they are completely unrelated it returns zero only about half the time, with the whole scale in between reading off the similarity.",
+    "b": [
+     "almost every time",
+     "about half the time"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The quiet marvel is that this circuit stays the same tiny size no matter how many features each data point carries, which is why Lloyd, Mohseni and Rebentrost used it in 2013 as the seed of quantum k-means.",
+    "b": [
+     "same tiny size",
+     "seed of quantum k-means"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Running the circuit once is never enough; it is repeated many times and the answers are tallied, because a single quantum measurement reveals only a glimpse of the underlying similarity."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Hadamard gate",
+    "def": "A basic quantum operation that puts a qubit into an even fifty-fifty blend of its two settings at once."
+   },
+   {
+    "term": "Controlled-swap gate",
+    "def": "A gate that swaps two things only when a controlling qubit says so; because that control can be in a blend, both swapped and not-swapped happen together."
+   },
+   {
+    "term": "Orthogonal states",
+    "def": "Two data points that are completely unrelated and share nothing in common, the exact opposite of identical."
+   },
+   {
+    "term": "Quantum k-means",
+    "def": "A quantum version of the familiar k-means clustering method that measures distances with the swap test instead of ordinary arithmetic."
+   }
+  ],
+  "cards": []
+ },
+ "qmeans": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Quantum k-means keeps the familiar k-means recipe exactly as it is and swaps out only one part, the step where distances are measured, replacing arithmetic with the swap test.",
+    "b": [
+     "keeps the familiar k-means recipe",
+     "only one part"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "What actually changes"
+   },
+   {
+    "t": "b",
+    "x": "The looping logic is untouched: pick starting centres, assign every point to its nearest centre, move each centre to the average of its members, and repeat, the very same dance classical k-means already does.",
+    "b": [
+     "looping logic is untouched"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The one substitution is in the assign step, where the classical straight-line distance is replaced by a swap-test similarity computed on data that has been loaded into quantum states.",
+    "b": [
+     "assign step",
+     "swap-test similarity"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "Because the data now lives in a quantum state, the comparison happens inside an enormously larger space than the original spreadsheet columns, which is exactly what the feature-space row of the table is pointing at."
+   },
+   {
+    "t": "head",
+    "x": "Why the scaling row matters"
+   },
+   {
+    "t": "b",
+    "x": "Classical k-means must, in effect, walk past every point one by one, so its cost grows in a straight line with the number of points: double the data and the work doubles.",
+    "b": [
+     "grows in a straight line"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "With an ideal quantum memory feeding the circuit, the cost of a single distance can in principle shrink to something that grows only with the logarithm of the data size, so the sheer count of points barely moves the needle.",
+    "b": [
+     "ideal quantum memory",
+     "barely moves the needle"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "This q-means framework was set out by Kerenidis, Landman, Luongo and Prakash, and later sharpened to give a solid quadratic runtime improvement over the best comparable classical method.",
+    "b": [
+     "Kerenidis, Landman, Luongo and Prakash",
+     "quadratic runtime improvement"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Every one of those speed claims carries an asterisk: it assumes a fast quantum memory, QRAM, that does not yet exist at scale, which is why the honest reality-check follows next."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum k-means (q-means)",
+    "def": "A quantum redo of ordinary k-means clustering that keeps the same loop but measures similarity with a quantum circuit."
+   },
+   {
+    "term": "Centroid",
+    "def": "The average position of all the points in a cluster, its centre of gravity, which each point is compared against."
+   },
+   {
+    "term": "QRAM",
+    "def": "A hoped-for fast quantum memory that could load ordinary data into a quantum state quickly; it does not yet exist at useful scale."
+   },
+   {
+    "term": "Hilbert space",
+    "def": "The very large mathematical space a quantum state lives in, far bigger than the handful of columns in the original data."
+   }
+  ],
+  "cards": []
+ },
+ "qkernel": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "The second, more practical route does not try to make k-means faster at all; it changes what similar even means, building a richer notion of similarity that a classical computer struggles to copy.",
+    "b": [
+     "changes what similar even means",
+     "struggles to copy"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The idea in one move"
+   },
+   {
+    "t": "p",
+    "x": "Instead of speeding up the old distance, a quantum circuit is used to invent a new one, deliberately chosen so that patterns invisible to ordinary distance become obvious."
+   },
+   {
+    "t": "b",
+    "x": "Each data point is pushed through a quantum feature map, a short circuit that spreads the point out into a vast quantum space where tangled shapes can come apart cleanly.",
+    "b": [
+     "quantum feature map",
+     "tangled shapes can come apart"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The swap test then measures how alike every pair of points is in that new space, and all those similarity numbers are collected into a single grid called the kernel matrix.",
+    "b": [
+     "kernel matrix"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why this is the near-term winner"
+   },
+   {
+    "t": "b",
+    "x": "That grid is exactly the ingredient the clustering methods faculty already teach, such as spectral clustering, expect to be handed, so the quantum part slots straight into a familiar pipeline.",
+    "b": [
+     "spectral clustering",
+     "familiar pipeline"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The circuits involved are shallow and forgiving of today's noisy hardware, which means this approach actually runs on real machines now, not in some hoped-for future.",
+    "b": [
+     "shallow",
+     "runs on real machines now"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "On the heatmap the payoff is visible as clean square blocks along the diagonal: points that belong together score high with each other, and a good kernel makes those blocks stand out sharply.",
+    "b": [
+     "clean square blocks"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The bet behind the whole approach is that the quantum feature map reaches a space genuinely expensive to fake on a classical computer; where it does not, an ordinary kernel would do just as well."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum feature map",
+    "def": "A short quantum circuit that spreads each data point out into a huge quantum space where tangled patterns can come apart cleanly."
+   },
+   {
+    "term": "Kernel matrix",
+    "def": "A grid holding the similarity score for every pair of data points, the single ingredient most clustering methods actually need."
+   },
+   {
+    "term": "Spectral clustering",
+    "def": "A classical method that groups data by studying the structure of its similarity graph, able to separate curved, interlocking shapes that k-means cannot."
+   },
+   {
+    "term": "NISQ",
+    "def": "Short for Noisy Intermediate-Scale Quantum: today's real quantum computers, still small and error-prone, so circuits have to stay short."
+   }
+  ],
+  "cards": []
+ },
+ "demo": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "A short live notebook makes the whole argument concrete: on a dataset shaped like two interlocking crescents, plain k-means fails and the quantum kernel succeeds.",
+    "b": [
+     "two interlocking crescents",
+     "plain k-means fails and the quantum kernel succeeds"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The setup"
+   },
+   {
+    "t": "b",
+    "x": "The notebook, called qml_clustering_demo, builds two interleaved half-moons of points, a classic shape that curves back on itself so that no straight line can separate the two groups.",
+    "b": [
+     "two interleaved half-moons",
+     "no straight line can separate"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A small two-qubit circuit, feeding each point in more than once for extra expressiveness, turns every pair of points into a quantum-kernel similarity score.",
+    "b": [
+     "two-qubit circuit",
+     "similarity score"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Only each point's closest neighbours are kept, forming a sparse similarity graph, which is then handed to standard spectral clustering.",
+    "b": [
+     "closest neighbours",
+     "spectral clustering"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The verdict, in one number"
+   },
+   {
+    "t": "p",
+    "x": "The quality of a grouping is scored by a standard measure that reaches one for a perfect match to the true crescents and sits near zero for random guessing."
+   },
+   {
+    "t": "b",
+    "x": "Ordinary k-means scores only about 0.48, because its straight-line thinking slices clean through both crescents and cuts each moon in half.",
+    "b": [
+     "about 0.48",
+     "cuts each moon in half"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The quantum-kernel spectral method scores about 0.67, recovering the two crescents that k-means could not see, and it does so on two qubits, on an ordinary laptop, with no quantum hardware at all.",
+    "b": [
+     "about 0.67",
+     "no quantum hardware at all"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "This is a curated example whose geometry happens to favour the quantum kernel; honest teaching always pits it against a strong classical baseline before claiming any advantage."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Adjusted Rand Index (ARI)",
+    "def": "A score for how well a grouping matches the true answer: one means a perfect match, and near zero means no better than random guessing."
+   },
+   {
+    "term": "Quantum kernel",
+    "def": "A similarity score between two data points computed by a quantum circuit, designed to reveal patterns ordinary distance misses."
+   },
+   {
+    "term": "Data re-uploading",
+    "def": "A trick of feeding each data point into the circuit more than once, which lets a small circuit express richer patterns."
+   },
+   {
+    "term": "Spectral clustering",
+    "def": "A classical grouping method that reads the structure of a similarity graph and can separate curved, interlocking shapes."
+   }
+  ],
+  "cards": []
+ },
+ "ownwork": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Today's material is not borrowed theory: the presenter, Archit Srivastava, has already built and run these circuits, and his 2021 paper Quantum Finance, An Overview shows the same machinery at work.",
+    "b": [
+     "already built and run these circuits",
+     "Quantum Finance"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "What the paper did"
+   },
+   {
+    "t": "b",
+    "x": "Srivastava's team took a classic finance problem, choosing which handful of assets to hold to balance return against risk, and rewrote it in a form a quantum computer can chew on.",
+    "b": [
+     "balance return against risk"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The problem was folded into an energy landscape, with the rule about how many assets to pick added as a penalty, so that the best portfolio corresponds to the lowest point of that landscape.",
+    "b": [
+     "energy landscape",
+     "lowest point"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A variational quantum circuit, tuned step by step to slide downhill toward that lowest point, was then used to find the winning selection.",
+    "b": [
+     "variational quantum circuit",
+     "tuned step by step"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Two frameworks, one physics"
+   },
+   {
+    "t": "b",
+    "x": "The very same problem was coded twice, once in IBM's Qiskit and once in Xanadu's PennyLane, which is precisely the framework choice this room of teachers now faces.",
+    "b": [
+     "Qiskit",
+     "PennyLane"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The Qiskit run landed on its best portfolio with about ninety-four percent confidence, and the PennyLane run converged to its own optimal selection, with both reaching the same underlying answer.",
+    "b": [
+     "about ninety-four percent confidence",
+     "same underlying answer"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Why it connects to today"
+   },
+   {
+    "t": "p",
+    "x": "The tunable circuit used there is the same species of circuit as the quantum feature map used for clustering: one is adjusted to find a lowest energy, the other is read out to measure similarity, but the hardware building blocks are identical."
+   },
+   {
+    "t": "note",
+    "x": "The lesson for this room is continuity: the circuit optimised to solve a portfolio is a close cousin of the circuit evaluated to cluster data, so one skill set carries across both."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Variational Quantum Eigensolver (VQE)",
+    "def": "A method that tunes a quantum circuit step by step to find the lowest-energy answer to a problem."
+   },
+   {
+    "term": "QUBO / Ising form",
+    "def": "A way of rewriting a decision problem as an energy landscape, so the best answer becomes the lowest point to roll down to."
+   },
+   {
+    "term": "Qiskit",
+    "def": "IBM's free software toolkit for writing and running quantum programs."
+   },
+   {
+    "term": "PennyLane",
+    "def": "Xanadu's free software toolkit for quantum computing and quantum machine learning, used in today's clustering notebook."
+   }
+  ],
+  "cards": []
+ },
+ "reality1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Honesty is what earns a technical room's trust, so the speedups just described come with two large asterisks that must be stated plainly.",
+    "b": [
+     "two large asterisks"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The data-loading bottleneck"
+   },
+   {
+    "t": "p",
+    "x": "A quantum computer can only work its magic once the classical data is inside it, and getting the data in is far harder than it sounds."
+   },
+   {
+    "t": "b",
+    "x": "The dramatic, exponential speedup for quantum k-means quietly assumes a special fast quantum memory that can load data into a quantum state almost instantly.",
+    "b": [
+     "exponential speedup",
+     "fast quantum memory"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "That memory, known as QRAM, does not yet exist at any useful scale, so the assumption has to be spoken aloud every single time a speedup is claimed, not buried in a footnote.",
+    "b": [
+     "QRAM",
+     "does not yet exist at any useful scale"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The dequantization warning"
+   },
+   {
+    "t": "p",
+    "x": "Even where the hardware existed, some quantum advantages turned out to be less special than they first appeared."
+   },
+   {
+    "t": "b",
+    "x": "Starting in 2018, the computer scientist Ewin Tang and others showed that several exponentially faster quantum results could be matched by ordinary classical algorithms, once those classical methods were allowed the same shortcuts for sampling data.",
+    "b": [
+     "Ewin Tang",
+     "matched by ordinary classical algorithms"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The durable lesson is that a genuine quantum advantage lives only where the quantum similarity itself is truly hard to fake classically, not merely where the data-loading was assumed away.",
+    "b": [
+     "truly hard to fake classically"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Stating these limits openly does not weaken the case; a room of researchers respects the candour far more than an oversold promise."
+   }
+  ],
+  "defs": [
+   {
+    "term": "QRAM",
+    "def": "A hoped-for fast quantum memory that would load ordinary data into a quantum state; the big speedups assume it, but it does not yet exist at scale."
+   },
+   {
+    "term": "Dequantization",
+    "def": "Showing that a supposedly quantum-only speedup can actually be matched by an ordinary classical computer once the classical method is given the same shortcuts."
+   },
+   {
+    "term": "Exponential speedup",
+    "def": "A dramatic kind of speed gain where the quantum method's effort barely grows even as the problem gets vastly bigger."
+   }
+  ],
+  "cards": []
+ },
+ "reality2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "With the caveats on the table, here is where the quantum advantage is real today, where it is not, and how to say it in one honest sentence.",
+    "b": [
+     "where the quantum advantage is real today"
+    ]
+   }
+  ],
+  "defs": [
+   {
+    "term": "NISQ",
+    "def": "Short for Noisy Intermediate-Scale Quantum: today's real quantum computers, small and error-prone, so useful circuits have to stay short."
+   },
+   {
+    "term": "Barren plateau",
+    "def": "A training trap where a deep, over-flexible quantum circuit gives almost no signal about which way to adjust it, so the learning stalls."
+   },
+   {
+    "term": "Quantum kernel",
+    "def": "A similarity score between data points computed by a quantum circuit, richer than ordinary straight-line distance."
+   },
+   {
+    "term": "Feature generator",
+    "def": "Using the quantum circuit only to invent a better similarity, then handing that off to the classical clustering methods people already use."
+   }
+  ],
+  "cards": [
+   [
+    "Today's quantum machines are noisy and can only run short circuits before errors pile up, which is exactly why the clustering methods worth teaching now keep their circuits shallow.",
+    "Shallow quantum kernels are attractive precisely because they tolerate a little noise instead of demanding perfect hardware.",
+    "A second trap called a barren plateau strikes deep, over-flexible circuits: their tuning signal flattens out almost everywhere, so the training gets lost with no downhill direction to follow.",
+    "The practical rule is to keep circuits shallow and structured, which sidesteps both the noise and the plateau at once."
+   ],
+   [
+    "The honest sweet spot is data that is already quantum in nature or has rich structure, where a quantum description fits naturally rather than being forced onto it.",
+    "It also shows up in small but genuinely hard similarity problems, where a classical kernel struggles yet the dataset is modest enough to run today.",
+    "The most reliable role right now is as a feature generator: the quantum circuit invents a richer similarity, and the familiar classical clustering methods do the rest.",
+    "CERN's unsupervised clustering of collision data is the clearest case so far of a quantum model genuinely beating classical on real hardware."
+   ],
+   [
+    "Quantum clustering is not k-means running faster on the spreadsheet sitting on a laptop today.",
+    "It is a genuinely new kind of similarity, one that can run on real hardware right now and feed straight into the methods faculty already teach.",
+    "The dramatic asymptotic speedups are real on paper but still wait on better hardware and on a working quantum memory.",
+    "Said plainly: not faster arithmetic, but a different and richer way to measure how alike two things are."
+   ]
+  ]
+ },
+ "megaintro": {
+  "body": [
+   {
+    "t": "p",
+    "x": "The largest scientific instruments humanity has ever built — radio-telescope arrays, particle colliders, neutrino detectors and gravitational-wave observatories — all share one problem: they produce a flood of measurements with no answer key attached."
+   },
+   {
+    "t": "p",
+    "x": "A single radio array like the SKA pours out data faster than the entire global internet and archives it by the exabyte, the collider at CERN stores collision data in the same exabyte range, the DUNE neutrino experiment records tens of petabytes of 3D images every year, and LIGO watches a four-kilometre ruler shift by less than one ten-thousandth of the width of a proton.",
+    "b": [
+     "faster than the entire global internet",
+     "exabyte",
+     "four-kilometre ruler"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "Because almost none of that data arrives pre-sorted into known categories, making sense of it is fundamentally a task of finding structure without labels — exactly what clustering and anomaly detection are built to do.",
+    "b": [
+     "clustering and anomaly detection"
+    ]
+   }
+  ],
+  "defs": [
+   {
+    "term": "Unlabelled data",
+    "def": "Measurements that arrive with no answer key, so nobody has marked which ones are signal, which are noise, and which might be a discovery."
+   },
+   {
+    "term": "Exabyte",
+    "def": "A unit of storage equal to a billion billion bytes, roughly a million times the capacity of a large laptop."
+   },
+   {
+    "term": "Clustering",
+    "def": "Automatically grouping data points that resemble one another, without being told in advance what the groups are."
+   },
+   {
+    "term": "Anomaly detection",
+    "def": "Automatically spotting the rare data points that do not fit any of the usual patterns."
+   }
+  ],
+  "cards": []
+ },
+ "ligo1": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "LIGO listens for gravitational waves — ripples in space itself — by measuring how a four-kilometre laser beam stretches by an almost unimaginably tiny amount. What ultimately limits it is not better engineering but the quantum fuzziness of light."
+   },
+   {
+    "t": "head",
+    "x": "The quantum limit"
+   },
+   {
+    "t": "p",
+    "x": "Even a perfect laser is grainy: its light arrives in a restless jitter set by the quantum vacuum, and that jitter blurs the measurement. This floor is called the standard quantum limit, and for decades it capped how faint a signal the detector could hear."
+   },
+   {
+    "t": "b",
+    "x": "Squeezed light is engineered light in which that unavoidable quantum jitter is pushed out of the property being measured and into a property that does not matter, leaving the measurement quieter than the vacuum normally allows.",
+    "b": [
+     "Squeezed light"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The A+ upgrade"
+   },
+   {
+    "t": "b",
+    "x": "The A+ upgrade injects a specially prepared quantum vacuum through a new 300-metre filter cavity, so the squeezing can be tuned separately at every frequency the detector cares about — low notes and high notes both get quieter.",
+    "b": [
+     "300-metre filter cavity"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The measured quantum-noise reduction reached 4.0 decibels at the Hanford site and 5.8 decibels at the Livingston site, an improvement that holds from tens of hertz up into the kilohertz range.",
+    "b": [
+     "4.0 decibels",
+     "5.8 decibels"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "That extra sensitivity stretches each detector's reach by about 15 to 18 percent, which raises the rate of detected black-hole and neutron-star mergers by as much as 65 percent during the fourth observing run.",
+    "b": [
+     "15 to 18 percent",
+     "65 percent"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "This is quantum technology used not to compute but to measure, and every extra detection it buys becomes fresh, unlabelled data for the clustering pipelines downstream."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Gravitational waves",
+    "def": "Tiny ripples in the fabric of space and time, set off by violent events such as two black holes colliding."
+   },
+   {
+    "term": "Standard quantum limit",
+    "def": "The natural noise floor set by the graininess of light itself, below which an ordinary measurement cannot reach."
+   },
+   {
+    "term": "Squeezed light",
+    "def": "Specially prepared light whose unavoidable quantum jitter is shifted away from the quantity being measured, making that measurement sharper."
+   },
+   {
+    "term": "Decibel",
+    "def": "A ratio scale for comparing signal strengths; here, more decibels means more of the quantum noise has been removed."
+   }
+  ],
+  "cards": []
+ },
+ "ligo2": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "A gravitational-wave detector is so sensitive that it also picks up thousands of unrelated noise blips, called glitches, that can hide or imitate a real signal. Sorting those blips is itself an unsupervised-learning problem."
+   },
+   {
+    "t": "head",
+    "x": "Cleaning the noise — Gravity Spy"
+   },
+   {
+    "t": "p",
+    "x": "Gravity Spy is a project that combines tens of thousands of human volunteers with a neural network to sort detector glitches by their shape, so the look-alikes can be grouped together and removed."
+   },
+   {
+    "t": "b",
+    "x": "The effort has organised glitches into 23 visual classes, drawing on more than 30,000 volunteers and over 7 million individual classifications.",
+    "b": [
+     "23 visual classes",
+     "30,000 volunteers",
+     "7 million"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A newer network that fuses several views of each glitch reaches 94.1 percent accuracy, with a reliability score (the area under the ROC curve) of 0.965 — grouping noise by resemblance, which is clustering in spirit.",
+    "b": [
+     "94.1 percent",
+     "0.965"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The quantum angle and the Indian detector"
+   },
+   {
+    "t": "b",
+    "x": "A quantum machine-learning method called quantum variational rewinding treats each reading as a possible anomaly against a learned model of the background hum, and does so in time that grows only linearly with the data — faster in principle than the quasilinear matched-filtering used today.",
+    "b": [
+     "quantum variational rewinding",
+     "linearly"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "LIGO-India broke ground on 23 April 2026 at Aundha in Maharashtra and will add a third pair of four-kilometre arms, aiming to switch on around 2030 at a cost of roughly 2,600 crore rupees.",
+    "b": [
+     "23 April 2026",
+     "four-kilometre arms",
+     "2,600 crore"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A third detector on a different continent sharpens the whole network's ability to pinpoint where in the sky each signal came from.",
+    "b": [
+     "pinpoint where in the sky"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "None of these steps needs a pre-labelled catalogue of glitches or signals; the structure has to be discovered from the data itself."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Glitch",
+    "def": "A brief burst of instrument noise that can mimic or bury a genuine gravitational-wave signal."
+   },
+   {
+    "term": "Neural network",
+    "def": "A computer model loosely inspired by the brain that learns to recognise patterns from examples."
+   },
+   {
+    "term": "Matched filtering",
+    "def": "The standard way of finding a signal by sliding a library of expected waveforms across the data to look for a match."
+   },
+   {
+    "term": "AUC (area under the ROC curve)",
+    "def": "A single score from 0 to 1 for how well a classifier separates two categories; 1.0 is perfect and 0.5 is a coin flip."
+   }
+  ],
+  "cards": []
+ },
+ "cern": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "At CERN's Large Hadron Collider, protons are smashed together hundreds of millions of times a second, and almost every collision is already-understood physics. Any genuinely new physics would show up as a rare event that does not match the familiar patterns — an anomaly."
+   },
+   {
+    "t": "head",
+    "x": "The headline unsupervised win"
+   },
+   {
+    "t": "p",
+    "x": "CERN set up its Quantum Technology Initiative in 2020, and the standout result so far sits in exactly this kind of pattern-free search."
+   },
+   {
+    "t": "b",
+    "x": "A neural network called an autoencoder first squeezes each messy collision into a short numerical fingerprint, and a quantum kernel then measures how alike those fingerprints are so a quantum version of k-means and k-medians can group them.",
+    "b": [
+     "autoencoder",
+     "quantum kernel"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "On real quantum hardware this quantum clustering was found to significantly outperform the classical version in a specific regime — the clearest genuine advantage for unsupervised quantum clustering shown on hardware to date (Communications Physics, 2024).",
+    "b": [
+     "significantly outperform",
+     "Communications Physics, 2024"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "The rest of the toolbox"
+   },
+   {
+    "t": "b",
+    "x": "Working out which particle made which track was rewritten as a QUBO — an optimisation puzzle a quantum annealer can attack — and run on a D-Wave machine with 33 qubits over about 500 tracks.",
+    "b": [
+     "QUBO",
+     "33 qubits"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "An annealing-inspired classical method then sped that same task up by roughly four orders of magnitude, showing that quantum ideas can pay off even on ordinary computers.",
+    "b": [
+     "four orders of magnitude"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A quantum support-vector machine hunting the Higgs signature matched classical accuracy at up to 20 qubits and 50,000 events — solid parity rather than a breakthrough.",
+    "b": [
+     "20 qubits and 50,000 events",
+     "parity"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The upgraded collider will store data in the exabyte range and demand 50 to 100 times today's computing, pressure that keeps unsupervised methods central."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Autoencoder / latent space",
+    "def": "A neural network that compresses each data point into a short fingerprint capturing its essential features, and the compact space those fingerprints live in."
+   },
+   {
+    "term": "Quantum kernel",
+    "def": "A way of measuring how similar two data points are by encoding them into a quantum state so the physics itself performs the comparison."
+   },
+   {
+    "term": "QUBO",
+    "def": "A puzzle written as choosing yes or no for many switches to make a score as low as possible, a form a quantum annealer can solve."
+   },
+   {
+    "term": "Quantum annealer",
+    "def": "A special-purpose quantum machine that finds low-energy solutions by slowly settling into them, well suited to optimisation puzzles."
+   }
+  ],
+  "cards": []
+ },
+ "iter": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Fusion reactors try to bottle a gas hotter than the core of the Sun inside powerful magnetic fields. That gas, a plasma, is twitchy and can collapse in an instant, so keeping it stable is a control and pattern-recognition problem."
+   },
+   {
+    "t": "head",
+    "x": "AI keeping the plasma alive"
+   },
+   {
+    "t": "p",
+    "x": "ITER is the giant international reactor being built to prove that fusion can produce far more energy than it consumes, and machine learning is already steering the smaller machines that lead up to it."
+   },
+   {
+    "t": "b",
+    "x": "In a 2022 result, DeepMind and EPFL used reinforcement learning to command a tokamak's magnetic coils directly and hold several different plasma shapes — the first time such learning controlled the magnets of a real fusion machine.",
+    "b": [
+     "reinforcement learning",
+     "first time"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "On the DIII-D tokamak in 2024, a reinforcement-learning controller forecast a dangerous tearing instability up to 300 milliseconds ahead and adjusted the machine to stay stable.",
+    "b": [
+     "300 milliseconds"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "A predictor trained on two tokamaks in 2019 could warn of collapses on a third machine it had never seen — vital because ITER may get only about 30 milliseconds of warning.",
+    "b": [
+     "30 milliseconds"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Sorting states, and the quantum role"
+   },
+   {
+    "t": "b",
+    "x": "Unsupervised classification sorts the plasma into its natural operating regimes — the calm low-confinement and high-confinement modes and the dangerous disruptive ones — without being told the categories in advance.",
+    "b": [
+     "low-confinement and high-confinement"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "On the quantum side, algorithms are being written for plasma turbulence and transport, while diamond-based NV-centre magnetometers promise radiation-hard sensors that keep working close to the reactor.",
+    "b": [
+     "NV-centre magnetometers"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "ITER's revised plan targets producing at least ten times the energy it consumes by 2044."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Plasma",
+    "def": "A superheated, electrically charged gas — the fourth state of matter that fuels stars and fusion reactors."
+   },
+   {
+    "term": "Tokamak",
+    "def": "A doughnut-shaped chamber that uses magnetic fields to hold a fusion plasma away from the walls."
+   },
+   {
+    "term": "Reinforcement learning",
+    "def": "A kind of machine learning where a controller learns by trial and error, rewarded whenever its actions lead to a good outcome."
+   },
+   {
+    "term": "Disruption",
+    "def": "A sudden loss of control in which the fusion plasma collapses, potentially damaging the machine."
+   }
+  ],
+  "cards": []
+ },
+ "skadune": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Two more mega-experiments generate data far too vast to sort by hand, so both lean on pipelines that find structure without any labels at all."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Neutrino",
+    "def": "A tiny, almost massless particle that streams through ordinary matter, and even whole planets, almost without stopping."
+   },
+   {
+    "term": "Radio-frequency interference (RFI)",
+    "def": "Unwanted human-made radio signals — phones, satellites, engines — that contaminate a radio telescope's data."
+   },
+   {
+    "term": "Autoencoder",
+    "def": "A neural network that learns to compress data into a compact fingerprint and rebuild it, useful for spotting whatever does not fit."
+   },
+   {
+    "term": "DBSCAN",
+    "def": "A clustering method that groups points packed closely together and labels isolated points as noise, without being told how many groups to expect."
+   }
+  ],
+  "cards": [
+   [
+    "The SKA is a radio-telescope array so large its antennas number over a hundred thousand on the low-frequency side alone, all working together as one instrument.",
+    "It streams data at around 8 terabits per second and archives more than 700 petabytes a year, building toward roughly 8.5 exabytes — over 100 times the world's current internet traffic.",
+    "Because nobody can hand-label that flood, an autoencoder paired with a nearest-neighbour search flags radio interference automatically, and the DBSCAN algorithm groups the false alarms together.",
+    "A quantum-kernel classifier sorting galaxies into spiral versus elliptical scored 0.946 on its accuracy curve, statistically tied with the best classical method.",
+    "Its first image in March 2025 captured 85 galaxies using under 1 percent of the planned antennas."
+   ],
+   [
+    "DUNE studies neutrinos, near-ghostly particles, using four giant tanks of liquid argon totalling 70,000 tonnes, buried about 1.5 kilometres underground.",
+    "It will record 30 to 60 petabytes a year, with every neutrino event captured as a detailed 3D image of particle tracks.",
+    "Clustering is used to pull apart overlapping tracks and particle showers, while neural networks reconstruct what actually happened.",
+    "A quantum method combining projected quantum kernels with a quantum convolutional network told straight tracks from spray-like cascades about 80 percent of the time on IBM's 127-qubit hardware, on par with classical tools.",
+    "Assembly is underway, with the huge cryostat's steel lowered underground in 2026."
+   ]
+  ]
+ },
+ "sensing": {
+  "body": [
+   {
+    "t": "lead",
+    "x": "Quantum sensing turns delicate quantum states of atoms and light into measuring instruments of extraordinary precision. Each one is also a new source of rich, unlabelled data."
+   },
+   {
+    "t": "head",
+    "x": "Feeling gravity and time"
+   },
+   {
+    "t": "p",
+    "x": "By dropping ultra-cold atoms and reading their quantum wave nature, these devices measure forces and time far more finely than any classical instrument can."
+   },
+   {
+    "t": "b",
+    "x": "A cold-atom gravity sensor built in Birmingham made the first outdoor detection of a buried tunnel about a metre underground, promising surveys roughly ten times faster and a way to watch carbon-dioxide plumes at underground storage sites.",
+    "b": [
+     "first outdoor detection of a buried tunnel",
+     "ten times faster"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "The most advanced optical atomic clocks are so steady they would drift by less than a second over the entire age of the universe, precise enough to sense a few centimetres of height difference through Einstein's relativity.",
+    "b": [
+     "less than a second over the entire age of the universe",
+     "a few centimetres"
+    ]
+   },
+   {
+    "t": "head",
+    "x": "Magnetism and the hunt for the invisible"
+   },
+   {
+    "t": "b",
+    "x": "A class of optical magnetometers can now feel magnetic fields around ten billion times weaker than the Earth's, surpassing the superconducting SQUID sensors that long held the record.",
+    "b": [
+     "ten billion times weaker",
+     "SQUID"
+    ]
+   },
+   {
+    "t": "b",
+    "x": "Kilometre-scale atom interferometers such as MAGIS-100, AION and AEDGE are being built to hunt gravitational waves and dark matter — the unseen material thought to make up most of the universe's mass — in a frequency band that sits between what space-based and ground-based observatories can hear.",
+    "b": [
+     "MAGIS-100, AION and AEDGE"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "Every one of these instruments streams out ultra-precise measurements that, like the mega-science data before them, arrive without labels and become clustering's next raw material."
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum sensing",
+    "def": "Using the fragile quantum behaviour of atoms or light as an extraordinarily sensitive measuring device."
+   },
+   {
+    "term": "Optical atomic clock",
+    "def": "The most accurate clock ever made, keeping time by the ultra-fast vibration of atoms illuminated with laser light."
+   },
+   {
+    "term": "Atom interferometer",
+    "def": "An instrument that splits and recombines the wave nature of atoms to measure tiny forces, motions, or ripples in space."
+   },
+   {
+    "term": "SQUID",
+    "def": "A superconducting sensor that was, until recently, the gold standard for detecting extremely weak magnetic fields."
+   }
+  ],
+  "cards": []
+ },
+ "megasyn": {
+  "body": [
+   {
+    "t": "p",
+    "x": "Every one of these giant experiments tells the same story: they emit enormous, extreme-dimensional data that nobody has labelled, which is precisely the home turf of clustering and anomaly detection.",
+    "b": [
+     "extreme-dimensional data that nobody has labelled"
+    ]
+   },
+   {
+    "t": "p",
+    "x": "Quantum technology helps from both ends — quantum kernels and annealers embed the data in vast mathematical spaces to expose hidden structure, while quantum sensors create an entirely new class of ultra-precise measurements that themselves become fresh unlabelled data streams.",
+    "b": [
+     "quantum kernels and annealers",
+     "quantum sensors"
+    ]
+   },
+   {
+    "t": "note",
+    "x": "The honest caveat: across astronomy, neutrinos and gravitational waves most quantum-machine-learning results so far merely match the best classical methods — the one clear win on real hardware is CERN's unsupervised clustering of collision events.",
+    "b": [
+     "CERN's unsupervised clustering"
+    ]
+   }
+  ],
+  "defs": [
+   {
+    "term": "Quantum kernel",
+    "def": "A way to gauge the similarity between two data points by encoding them into quantum states so the physics performs the comparison."
+   },
+   {
+    "term": "Quantum annealer",
+    "def": "A special-purpose quantum machine that solves optimisation puzzles by slowly settling into a low-energy answer."
+   },
+   {
+    "term": "At parity",
+    "def": "Performing equally well, no better and no worse, than the existing classical method."
+   }
+  ],
+  "cards": []
+ }
+}

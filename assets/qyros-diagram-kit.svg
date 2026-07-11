@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute">
+  
+  <defs>
+    
+    <symbol id="qy-sq-terminal" viewBox="0 0 24 24"><rect x="8" y="8" width="8" height="8" fill="currentColor"></rect></symbol>
+    <symbol id="qy-sq-open" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="1.25"></rect></symbol>
+    <symbol id="qy-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5" fill="currentColor"></circle></symbol>
+    <symbol id="qy-dot-open" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.25"></circle></symbol>
+    <symbol id="qy-junction-t" viewBox="0 0 24 24"><path d="M2 12h20M12 12v10" stroke="currentColor" stroke-width="1.25" fill="none"></path><rect x="9" y="9" width="6" height="6" fill="currentColor"></rect></symbol>
+    <symbol id="qy-junction-x" viewBox="0 0 24 24"><path d="M2 12h20M12 2v20" stroke="currentColor" stroke-width="1.25" fill="none"></path><rect x="9" y="9" width="6" height="6" fill="currentColor"></rect></symbol>
+    <symbol id="qy-hop" viewBox="0 0 24 24"><path d="M2 12h6a4 4 0 0 1 8 0h6M12 2v6M12 16v6" stroke="currentColor" stroke-width="1.25" fill="none"></path></symbol>
+    <symbol id="qy-port" viewBox="0 0 24 24"><path d="M2 12h10" stroke="currentColor" stroke-width="1.25"></path><rect x="12" y="6" width="10" height="12" fill="none" stroke="currentColor" stroke-width="1.25"></rect><circle cx="17" cy="12" r="2" fill="currentColor"></circle></symbol>
+
+    
+    <symbol id="qy-plus" viewBox="0 0 24 24"><path d="M12 7v10M7 12h10" stroke="currentColor" stroke-width="1.25" fill="none"></path></symbol>
+    <symbol id="qy-cross" viewBox="0 0 24 24"><path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="1.25" fill="none"></path></symbol>
+    <symbol id="qy-tick-corners" viewBox="0 0 48 48"><path d="M2 10V2h8M38 2h8v8M46 38v8h-8M10 46H2v-8" stroke="currentColor" stroke-width="1.25" fill="none"></path></symbol>
+    <symbol id="qy-bracket-l" viewBox="0 0 12 48"><path d="M10 2H3v44h7" stroke="currentColor" stroke-width="1.25" fill="none"></path></symbol>
+    <symbol id="qy-bracket-r" viewBox="0 0 12 48"><path d="M2 2h7v44H2" stroke="currentColor" stroke-width="1.25" fill="none"></path></symbol>
+    <symbol id="qy-dim" viewBox="0 0 72 16"><path d="M2 2v12M70 2v12M2 8h68M8 5l-6 3 6 3M64 5l6 3-6 3" stroke="currentColor" stroke-width="1" fill="none"></path></symbol>
+
+    
+    <symbol id="qy-arrow" viewBox="0 0 24 24"><path d="M4 12h14M13 7l6 5-6 5" stroke="currentColor" stroke-width="1.25" fill="none"></path></symbol>
+    <symbol id="qy-arrowhead" viewBox="0 0 12 12"><path d="M2 1l8 5-8 5" stroke="currentColor" stroke-width="1.25" fill="none"></path></symbol>
+    <symbol id="qy-arrow-dash" viewBox="0 0 24 24"><path d="M4 12h13" stroke="currentColor" stroke-width="1.25" stroke-dasharray="3 2.5" fill="none"></path><path d="M13 7l6 5-6 5" stroke="currentColor" stroke-width="1.25" fill="none"></path></symbol>
+    <symbol id="qy-arrow-both" viewBox="0 0 24 24"><path d="M6 12h12M10 7l-5 5 5 5M14 7l5 5-5 5" stroke="currentColor" stroke-width="1.25" fill="none"></path></symbol>
+    <symbol id="qy-arrow-loop" viewBox="0 0 24 24"><path d="M6 16a7 7 0 1 1 12 0" stroke="currentColor" stroke-width="1.25" fill="none"></path><path d="M15 12l3 5 5-2" stroke="currentColor" stroke-width="1.25" fill="none"></path></symbol>
+
+    
+    <symbol id="qy-node" viewBox="0 0 96 48"><rect x="1" y="1" width="94" height="46" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect></symbol>
+    <symbol id="qy-node-filled" viewBox="0 0 96 48"><rect x="0" y="0" width="96" height="48" fill="currentColor"></rect></symbol>
+    <symbol id="qy-node-accent" viewBox="0 0 96 48"><rect x="1" y="1" width="94" height="46" fill="#FFFFFF" stroke="#01A982" stroke-width="1.25"></rect><rect x="1" y="1" width="4" height="46" fill="#01A982"></rect></symbol>
+    <symbol id="qy-node-dashed" viewBox="0 0 96 48"><rect x="1" y="1" width="94" height="46" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="5 4"></rect></symbol>
+    <symbol id="qy-node-circle" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></circle></symbol>
+    <symbol id="qy-node-diamond" viewBox="0 0 56 56"><path d="M28 3l25 25-25 25L3 28z" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path></symbol>
+    <symbol id="qy-node-pill" viewBox="0 0 96 40"><rect x="1" y="1" width="94" height="38" rx="19" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect></symbol>
+    <symbol id="qy-node-hex" viewBox="0 0 64 56"><path d="M18 3h28l14 25-14 25H18L4 28z" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path></symbol>
+    <symbol id="qy-node-db" viewBox="0 0 56 64"><path d="M4 12v40c0 5 11 9 24 9s24-4 24-9V12" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path><ellipse cx="28" cy="12" rx="24" ry="9" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></ellipse></symbol>
+    <symbol id="qy-node-doc" viewBox="0 0 56 64"><path d="M4 2h34l14 14v46H4z" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path><path d="M38 2v14h14" fill="none" stroke="currentColor" stroke-width="1.25"></path></symbol>
+    <symbol id="qy-node-stack" viewBox="0 0 72 56"><rect x="13" y="1" width="58" height="38" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M7 9v38h58" fill="none" stroke="currentColor" stroke-width="1.25"></path><path d="M1 17v38h58" fill="none" stroke="currentColor" stroke-width="1.25"></path></symbol>
+    <symbol id="qy-node-cloud" viewBox="0 0 80 48"><path d="M20 42a12 12 0 0 1-2-24 16 16 0 0 1 30-6 12 12 0 0 1 14 12 10 10 0 0 1-4 18z" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path></symbol>
+    <symbol id="qy-node-io" viewBox="0 0 96 44"><path d="M17 2h78l-16 40H1z" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path></symbol>
+
+    
+    <symbol id="qy-gate" viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect></symbol>
+    <symbol id="qy-gate-h" viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M11 9v14M21 9v14M11 16h10" stroke="currentColor" stroke-width="1.5" fill="none"></path></symbol>
+    <symbol id="qy-gate-x" viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M11 9l10 14M21 9L11 23" stroke="currentColor" stroke-width="1.5" fill="none"></path></symbol>
+    <symbol id="qy-gate-y" viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M11 9l5 7 5-7M16 16v7" stroke="currentColor" stroke-width="1.5" fill="none"></path></symbol>
+    <symbol id="qy-gate-z" viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M11 9h10L11 23h10" stroke="currentColor" stroke-width="1.5" fill="none"></path></symbol>
+    <symbol id="qy-gate-s" viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M20 11c0-2-8-3-8 1 0 4 8 3 8 7 0 4-8 3-8 1" stroke="currentColor" stroke-width="1.5" fill="none"></path></symbol>
+    <symbol id="qy-gate-t" viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M10 9h12M16 9v14" stroke="currentColor" stroke-width="1.5" fill="none"></path></symbol>
+    <symbol id="qy-gate-p" viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M12 23V9h5a5 5 0 0 1 0 9h-5" stroke="currentColor" stroke-width="1.5" fill="none"></path></symbol>
+    <symbol id="qy-gate-rz" viewBox="0 0 40 32"><rect x="1" y="1" width="38" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M9 22V10h4a4 4 0 0 1 1 7.8L18 22M23 12h9l-9 10h9" stroke="currentColor" stroke-width="1.4" fill="none"></path></symbol>
+    <symbol id="qy-gate-accent" viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFFFFF" stroke="#01A982" stroke-width="1.5"></rect><path d="M11 9v14M21 9v14M11 16h10" stroke="#01A982" stroke-width="1.5" fill="none"></path></symbol>
+    <symbol id="qy-ctrl" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor"></circle><path d="M12 0v8M12 16v8" stroke="currentColor" stroke-width="1.25"></path></symbol>
+    <symbol id="qy-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.25"></circle><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.25"></path></symbol>
+    <symbol id="qy-swap-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.5" fill="none"></path></symbol>
+    <symbol id="qy-measure" viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M7 22a9 9 0 0 1 18 0M16 22L23 12" fill="none" stroke="currentColor" stroke-width="1.25"></path></symbol>
+    <symbol id="qy-barrier" viewBox="0 0 12 48"><path d="M6 2v44" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"></path></symbol>
+    <symbol id="qy-wire-q" viewBox="0 0 48 8"><path d="M0 4h48" stroke="currentColor" stroke-width="1.25"></path></symbol>
+    <symbol id="qy-wire-c" viewBox="0 0 48 8"><path d="M0 2.5h48M0 5.5h48" stroke="currentColor" stroke-width="1"></path></symbol>
+    <symbol id="qy-ket0" viewBox="0 0 28 24"><path d="M4 3v18M24 3l-7 9 7 9" stroke="currentColor" stroke-width="1.25" fill="none"></path><ellipse cx="13" cy="12" rx="4.5" ry="7" fill="none" stroke="currentColor" stroke-width="1.25"></ellipse></symbol>
+    <symbol id="qy-bloch" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="1.25"></circle><ellipse cx="24" cy="24" rx="20" ry="6" fill="none" stroke="currentColor" stroke-width="0.9" stroke-dasharray="3 2"></ellipse><path d="M24 4v40M4 24h40" stroke="currentColor" stroke-width="0.9"></path><path d="M24 24L36 12" stroke="#01A982" stroke-width="1.5"></path><circle cx="36" cy="12" r="2.5" fill="#01A982"></circle></symbol>
+    <symbol id="qy-qpu-chip" viewBox="0 0 48 48"><rect x="9" y="9" width="30" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M17 9V3M31 9V3M17 45v-6M31 45v-6M9 17H3M9 31H3M45 17h-6M45 31h-6" stroke="currentColor" stroke-width="1.25"></path><circle cx="18" cy="18" r="2.5" fill="currentColor"></circle><circle cx="30" cy="18" r="2.5" fill="currentColor"></circle><circle cx="18" cy="30" r="2.5" fill="currentColor"></circle><circle cx="30" cy="30" r="2.5" fill="currentColor"></circle><path d="M18 18h12M18 18v12M30 18v12M18 30h12" stroke="currentColor" stroke-width="1"></path></symbol>
+    <symbol id="qy-cryostat" viewBox="0 0 40 56"><path d="M8 2h24v10H8zM12 12h16v10H12zM15 22h10v10h-10zM17 32h6v14h-6" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path><path d="M20 46v8" stroke="currentColor" stroke-width="1.25"></path><circle cx="20" cy="54" r="2" fill="currentColor"></circle></symbol>
+
+    
+    <symbol id="qy-truck" viewBox="0 0 64 40"><rect x="1" y="6" width="38" height="22" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M39 12h13l9 9v7H39z" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path><circle cx="14" cy="32" r="5" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></circle><circle cx="49" cy="32" r="5" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></circle></symbol>
+    <symbol id="qy-parcel" viewBox="0 0 44 44"><path d="M22 2l19 10v20L22 42 3 32V12z" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path><path d="M3 12l19 10 19-10M22 22v20" fill="none" stroke="currentColor" stroke-width="1.25"></path></symbol>
+    <symbol id="qy-warehouse" viewBox="0 0 56 44"><path d="M2 16L28 3l26 13v25H2z" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path><rect x="18" y="24" width="20" height="17" fill="none" stroke="currentColor" stroke-width="1.25"></rect><path d="M18 30h20M18 36h20" stroke="currentColor" stroke-width="1"></path></symbol>
+    <symbol id="qy-factory" viewBox="0 0 56 44"><path d="M4 42V18l14 8v-8l14 8v-8l14 8v16z" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path><rect x="8" y="4" width="7" height="14" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect></symbol>
+    <symbol id="qy-pin" viewBox="0 0 32 44"><path d="M16 42C16 42 4 26 4 15a12 12 0 0 1 24 0c0 11-12 27-12 27z" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></path><circle cx="16" cy="15" r="4.5" fill="currentColor"></circle></symbol>
+    <symbol id="qy-pallet" viewBox="0 0 48 40"><rect x="6" y="4" width="16" height="12" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><rect x="24" y="4" width="16" height="12" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><rect x="14" y="16" width="18" height="12" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M2 32h44M6 32v6M24 32v6M42 32v6" stroke="currentColor" stroke-width="1.25"></path></symbol>
+    <symbol id="qy-container" viewBox="0 0 60 32"><rect x="1" y="1" width="58" height="30" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M9 1v30M17 1v30M25 1v30M33 1v30M41 1v30M49 1v30" stroke="currentColor" stroke-width="0.9"></path></symbol>
+    <symbol id="qy-route" viewBox="0 0 72 40"><path d="M6 34C22 34 20 8 38 8c16 0 14 22 28 22" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"></path><rect x="2" y="30" width="8" height="8" fill="currentColor"></rect><circle cx="66" cy="30" r="4" fill="none" stroke="currentColor" stroke-width="1.25"></circle></symbol>
+    <symbol id="qy-forklift" viewBox="0 0 52 40"><rect x="4" y="10" width="20" height="16" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></rect><path d="M24 26V6h6l6 12v8" fill="none" stroke="currentColor" stroke-width="1.25"></path><path d="M36 30h12M36 30V10" stroke="currentColor" stroke-width="1.25"></path><circle cx="10" cy="32" r="4" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></circle><circle cx="28" cy="32" r="4" fill="#FFFFFF" stroke="currentColor" stroke-width="1.25"></circle></symbol>
+
+    
+    <symbol id="qy-annotate-ellipse" viewBox="0 0 120 56"><path d="M60 5 C 95 3, 116 14, 115 28 C 114 44, 88 52, 57 51 C 26 50, 4 42, 5 27 C 6 13, 30 6, 64 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></symbol>
+    <symbol id="qy-squiggle" viewBox="0 0 96 12"><path d="M2 7 C 8 2, 14 11, 20 6 C 26 2, 32 11, 38 6 C 44 2, 50 11, 56 6 C 62 2, 68 11, 74 6 C 80 2, 86 10, 94 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></symbol>
+    <symbol id="qy-hand-arrow" viewBox="0 0 96 48"><path d="M4 42 C 30 40, 62 34, 86 12 M78 10 l 10 -2 -1 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></symbol>
+    <symbol id="qy-hand-underline" viewBox="0 0 96 14"><path d="M3 6 C 30 3, 60 3, 93 5 M 8 10 C 34 8, 62 8, 88 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></symbol>
+    <symbol id="qy-hand-box" viewBox="0 0 96 56"><path d="M6 8 C 36 4, 66 5, 90 7 C 93 20, 93 34, 91 48 C 60 52, 32 51, 7 49 C 4 36, 4 21, 6 8 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></symbol>
+    <symbol id="qy-hand-bracket" viewBox="0 0 20 72"><path d="M16 4 C 8 6, 6 14, 7 24 C 8 32, 6 36, 3 36 C 6 36, 8 40, 7 48 C 6 58, 8 66, 16 68" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></symbol>
+    <symbol id="qy-hand-star" viewBox="0 0 40 40"><path d="M20 4 C 21 12, 24 16, 33 18 C 25 21, 22 25, 21 34 C 19 26, 15 22, 7 20 C 15 18, 18 13, 20 4 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></symbol>
+    <symbol id="qy-hand-check" viewBox="0 0 40 32"><path d="M5 18 C 10 21, 13 25, 15 28 C 20 18, 27 10, 36 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></symbol>
+    <symbol id="qy-hand-cross-out" viewBox="0 0 48 24"><path d="M4 6 C 18 10, 32 14, 44 18 M 44 5 C 30 10, 16 15, 4 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></symbol>
+    <symbol id="qy-hand-loop" viewBox="0 0 56 40"><path d="M6 34 C 2 18, 14 6, 28 6 C 42 6, 54 16, 50 26 C 46 36, 30 38, 24 30 C 20 24, 26 18, 32 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></symbol>
+    <symbol id="qy-hand-highlight" viewBox="0 0 96 20"><path d="M4 10 C 30 8, 62 8, 92 10" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" opacity="0.22"></path></symbol>
+    <symbol id="qy-hand-exclaim" viewBox="0 0 20 44"><path d="M10 4 C 11 12, 11 20, 10 30 M 10 37 c .5 1 .5 2 0 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></symbol>
+    <symbol id="qy-hand-numbered" viewBox="0 0 36 36"><path d="M18 3 C 28 3, 34 9, 33 18 C 32 28, 26 34, 17 33 C 8 32, 3 26, 3 18 C 3 9, 9 3, 20 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path><path d="M15 12l5-3v18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></symbol>
+  </defs>
+</svg>

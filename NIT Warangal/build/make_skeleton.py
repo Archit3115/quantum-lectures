@@ -1,0 +1,233 @@
+#!/usr/bin/env python3
+"""Emit skeleton.json — the fixed backbone of the verbose Session-1 deck.
+I own: layout, diagram placement, stat numbers, tables, card shells, and the 'must' facts.
+The content workflow only writes verbose teaching PROSE (body blocks + card lines) per slide id."""
+import json,os
+S=[]
+def add(**k): S.append(k)
+
+# ---------------- FRONT ----------------
+add(id="title",kind="title",sec=0,title="Quantum Unsupervised Learning (Clustering)")
+add(id="agenda",kind="agenda",sec=0,kicker="Contents",title="What we'll build in the next two hours",
+    brief="One line per section explaining what it delivers; motivate the arc idea→classical→quantum→honest picture→impact.")
+add(id="aboutbio",kind="aboutbio",sec=0,kicker="About the speaker",title="Archit Srivastava",
+    brief="Verbose spoken bio the presenter reads: current role Senior Manager Data Engineering at PUMA Bengaluru; prior o9 Solutions + HPE (quantum PoCs); founder AiQyaM (India's first quantum-hardware community, 2020) and CIRQuIT at RVCE; Senior Research Associate Quantum Computing India; GKQCTP/IQDC with Innogress Ventures; early intern BosonQ Psi. Electronics & Instrumentation background, ~4 yrs industry.")
+add(id="aboutresearch",kind="aboutresearch",sec=0,kicker="About the speaker",title="What I research — and why this talk is first-hand",
+    brief="Verbose: 5+ papers, 25+ talks across 10+ universities / 200+ faculty, Conf42; research areas: black-hole physics & gravitational waves via quantum+AI, photonic quantum computing/hardware, earlier quantum cryptography, quantum finance, quantum-hardware paradigms; tie to why today's material is built + run, not abstract. Papers list filled from Scholar research.")
+add(id="roadmap",kind="roadmap",sec=0,kicker="How this session works",title="Start from what you know — add one quantum idea at a time",
+    brief="Verbose: the design principle (every quantum idea introduced from a classical anchor faculty already teach); the spine sentence clustering=representation+similarity+objective and quantum changes the similarity; note two live PennyLane CPU notebooks, no hardware needed.",
+    flow=["The idea\n(unsupervised)","Classical tools\n(k-means, spectral)","The quantum turn\n(swap test, kernels)","The honest picture\n(demo + caveats)","Impact\n(industry, India)"])
+
+# ---------------- §1 INTRODUCTION ----------------
+add(id="d1",kind="divider",sec=1,num="01",title="Introduction",accent="blue",
+    summary="Why should an Indian university invest attention in quantum machine learning — now?")
+add(id="whynow1",kind="textimg",sec=1,kicker="Section 1 · Introduction",title="2025: the year quantum advantage became measured fact",
+    img={"f":"timeline.png","side":"right"},
+    brief="Verbose: 2025 moved quantum advantage from promise to measured fact; set up the three firsts on the timeline; land the faculty point that this is now a computational tool students will be asked about.",
+    must=["Willow 105 qubits Nature Dec 2024 below-threshold Λ≈2.14","Quantum Echoes Nature Oct 2025 ~13,000× verifiable","D-Wave Advantage2 Science Mar 2025 (contested)"])
+add(id="whynow2",kind="cards",sec=1,kicker="Section 1 · Introduction",title="Three peer-reviewed firsts, one year",
+    cards=[{"title":"Google Willow","accent":"blue"},{"title":"Quantum Echoes","accent":"magenta"},{"title":"D-Wave Advantage2","accent":"teal"}],
+    brief="For each card write 3-4 verbose lines the presenter reads: what it is, the number, why it matters. Be honest (Willow=first below-threshold QEC; Echoes=first verifiable advantage; D-Wave=useful-problem supremacy but contested).",
+    must=["Willow Λ≈2.14, distance-7","Echoes ~13,000× via OTOCs on 65 qubits","Advantage2 4400+ qubits, spin-glass, contested"])
+add(id="market1",kind="stats",sec=1,kicker="Section 1 · Introduction",title="The stakes: a commercial tipping point",
+    stats=[{"num":"$1.3–2.7T","label":"economic value by 2035 (McKinsey QTM 2026)","accent":"blue"},
+           {"num":"$12.6B","label":"quantum start-up investment in 2025 — 6.3× 2024","accent":"teal"},
+           {"num":">$1B","label":"quantum-computing revenue 2025 → ~$4.4B by 2028","accent":"purple"},
+           {"num":"$450–850B","label":"BCG economic-value estimate by 2040","accent":"magenta"}],
+    brief="Verbose framing under the tiles: the discourse moved from 'if' to 'when'; the value is in the algorithm/software/AI layer (the outcomes), not selling processors — India's strength.")
+add(id="market2",kind="textimg",sec=1,kicker="Section 1 · Introduction",title="The line that lands in a faculty room: talent",
+    img={"f":"talent_gap.png","side":"right"},
+    brief="Verbose: the talent gap is the whole reason an FDP exists; explain the numbers as spoken narration and land 'that gap is your mandate — and your students' opportunity'.",
+    must=["~250k roles by 2030, ~840k by 2035","~3 openings per qualified hire; ~half of 2025 roles unfilled"])
+add(id="deluge",kind="textimg",sec=1,kicker="Section 1 · Introduction",title="Why unsupervised learning: the data is unlabelled",
+    img={"f":"data_deluge.png","side":"right"},
+    brief="Verbose: ~80% of real data is unlabelled; labels are expensive/scarce/impossible; clustering is the first sense-making; preview mega-science scale; define the problem as topological/geometric.",
+    must=["~80% unlabelled","SKA ~PB/s, HL-LHC exabytes/yr, one RNA-seq 20k+ genes"])
+add(id="unsup",kind="textimg",sec=1,kicker="Section 1 · Introduction",title="Unsupervised learning = sorting coins in the dark",
+    img={"f":"ml_map.png","side":"right"},
+    brief="Verbose: the one-sentence definition (finds structure in unlabelled data) + the coins-in-the-dark intuition spelled out fully; then the ML map supervised/unsupervised/reinforcement in spoken form.")
+add(id="ingredients",kind="cards",sec=1,kicker="Section 1 · Introduction",title="Every clustering method is three choices",
+    cards=[{"title":"1 · Representation","accent":"blue"},{"title":"2 · Similarity / distance","accent":"magenta"},{"title":"3 · Objective / rule","accent":"teal"}],
+    brief="Each card: verbose explanation of the ingredient with an example. Under the cards, a strong spoken thesis line: quantum mostly changes ingredient 2 and how fast we compute it — the spine of the session.")
+
+# ---------------- §2 CLASSICAL ----------------
+add(id="d2",kind="divider",sec=2,num="02",title="Classical Unsupervised Learning",accent="teal",
+    summary="The honest version of the tools you already teach — and where they hit a wall.")
+add(id="kmeans1",kind="textimg",sec=2,kicker="Section 2 · Classical",title="k-means: nearest-centroid reasoning",
+    img={"f":None,"side":"right"},flowV=["Initialise k centroids (k-means++)","Assign each point to nearest centroid","Update each centroid to the mean of its points","Repeat until assignments stop changing"],
+    brief="Verbose: walk Lloyd's loop step by step as spoken narration; introduce the objective J; emphasise the assign step is n×k distance computations — the line quantum will push.",
+    must=["J = Σ_k Σ_{x∈C_k} ||x−μ_k||²","assign = n×k distances"])
+add(id="kmeans2",kind="textimg",sec=2,kicker="Section 2 · Classical",title="k-means: strengths, and the blind spot",
+    img={"f":"kmeans_fail.png","side":"right"},
+    brief="Verbose: strengths (simple, fast, scales to millions); weaknesses (fix k, assumes round equal linearly-separable blobs, init/outlier sensitive); the blind spot: fails on non-convex shapes because nearest-centroid is a straight-line idea; point at the diagram.")
+add(id="landscape",kind="cards",sec=2,kicker="Section 2 · Classical",title="Beyond k-means — the landscape",
+    cards=[{"title":"Hierarchical / agglomerative","accent":"blue"},{"title":"DBSCAN","accent":"teal"},{"title":"Gaussian Mixture (GMM)","accent":"purple"},{"title":"Spectral clustering","accent":"magenta"}],
+    brief="Each card: verbose 3-4 lines. Spend the richest lines on spectral clustering (similarity graph → Laplacian eigenvectors → k-means in that space; handles non-convex; heavy step is linear algebra on a similarity matrix — the bridge to quantum).")
+add(id="spectral",kind="textimg",sec=2,kicker="Section 2 · Classical",title="Spectral clustering — the bridge to quantum",
+    img={"f":"separability.png","side":"right"},
+    brief="Verbose: why straight-line thinking fails on curved data; how spectral lifts data via eigenvectors of the graph Laplacian; the heavy step is eigen-decomposition of an n×n similarity matrix; a quantum computer is a native linear-algebra machine; a quantum feature map gives a richer similarity for the SAME pipeline.")
+add(id="cost",kind="textimg",sec=2,kicker="Section 2 · Classical",title="Where the classical cost lives",
+    img={"f":"complexity_ladder.png","side":"left"},
+    brief="Verbose spoken walk of the cost ladder; everything expensive is computing similarities between many high-D vectors and linear algebra on n×n matrices; that is exactly the corner quantum targets; 'now we've earned the quantum part'.",
+    must=["O(d) → O(n·k·d) → O(n²·d) → O(n³)"])
+add(id="curse",kind="textimg",sec=2,kicker="Section 2 · Classical",title="The curse of dimensionality + the kernel-trick wall",
+    img={"f":"curse.png","side":"right"},
+    brief="Verbose: in high-D the nearest/farthest distance ratio → 1, so proximity dissolves and Euclidean distance loses discriminative power; the classical fix is the kernel trick (RBF Gram matrix) but that is O(n²) memory and crashes at scale; sets up why a quantum kernel is attractive.")
+
+# ---------------- §3 QUANTUM ----------------
+add(id="d3",kind="divider",sec=3,num="03",title="Quantum Unsupervised Learning",accent="purple",
+    summary="Just enough quantum, from first principles — no hand-waving, no black boxes.")
+add(id="qmtool",kind="statement",sec=3,accent="purple",title="Quantum mechanics as a tool, not math.",
+    brief="Verbose supporting sentence(s): quantum clustering doesn't run classical arithmetic faster — it uses physical phenomena (superposition, interference, entanglement) to perform geometric evaluations that cannot be efficiently mapped onto classical von Neumann hardware.")
+add(id="qubit",kind="textimg",sec=3,kicker="Section 3 · Quantum",title="A qubit: superposition on the Bloch sphere",
+    img={"f":"bloch_sphere.png","side":"right"},
+    brief="Verbose: |ψ⟩=α|0⟩+β|1⟩ with |α|²+|β|²=1; amplitudes are complex; |α|² is probability of 0; superposition = genuinely both before measurement; the Bloch sphere is a continuous direction, not one bit.",
+    must=["|ψ⟩ = α|0⟩ + β|1⟩, |α|²+|β|²=1"])
+add(id="twon",kind="textimg",sec=3,kicker="Section 3 · Quantum",title="n qubits → 2ⁿ amplitudes: the resource and the catch",
+    img={"f":"amplitude_growth.png","side":"left"},
+    brief="Verbose: n qubits live in 2ⁿ complex amplitudes; 50 qubits ≈ 10¹⁵ evolving together — the resource; the honest catch: measurement collapses to n classical bits, you can't read all 2ⁿ; the art is interference so the useful answer is what you measure; this honesty buys credibility.")
+add(id="encoding",kind="cards",sec=3,kicker="Section 3 · Quantum",title="Loading classical data: amplitude vs angle encoding",
+    cards=[{"title":"Amplitude encoding","accent":"blue"},{"title":"Angle encoding","accent":"teal"}],
+    brief="Each card verbose: amplitude encoding loads a vector into amplitudes, d-dim needs ⌈log₂ d⌉ qubits (exponential compression), great for dim-reduction; angle encoding puts features into gate rotation angles, ideal for shallow NISQ circuits (the demo's route). Note other schemes exist but these carry the story.")
+add(id="featuremap",kind="textimg",sec=3,kicker="Section 3 · Quantum",title="Quantum feature maps → a space hard to fake classically",
+    img={"f":"featuremap.png","side":"right"},
+    brief="Verbose: a feature map φ encodes each point into |φ(x)⟩ via a parameterised circuit, projecting into an exponentially high-dim Hilbert space where classically-inseparable structure becomes separable; highly-entangled SU(2)/ZZ maps improve cluster stability; the bet is the map reaches a space expensive to simulate.")
+add(id="benchmark",kind="stats",sec=3,kicker="Section 3 · Quantum",title="Quantum kernels on real datasets — shallow circuits",
+    stats=[{"num":"88.6%","label":"quantum-kernel clustering accuracy on Iris (SU(2) map)","accent":"blue"},
+           {"num":"91.0%","label":"and on the Breast-Cancer dataset","accent":"teal"}],
+    brief="Verbose framing: these results came on shallow, near-term-feasible circuits — evidence quantum kernels give a richer similarity landscape than classical distance; but be honest it's competitive, not a blowout.")
+add(id="overlap",kind="text",sec=3,kicker="Section 3 · Quantum",title="Inner product = similarity: the whole game",
+    brief="Verbose: the natural quantity a quantum computer gives between |a⟩ and |b⟩ is the overlap ⟨a|b⟩; inner products ARE similarities; distance is one step away (‖a−b‖²=2−2⟨a|b⟩ for normalised vectors); so we need one small circuit turning an overlap into a measurable probability — the swap test.",
+    must=["‖a−b‖² = 2 − 2·⟨a|b⟩"])
+add(id="swap1",kind="textimg",sec=3,kicker="Section 3 · Quantum",title="The Swap Test — the idea",
+    img={"f":"swap_test_circuit.png","side":"right"},
+    brief="Verbose: the swap test estimates |⟨a|b⟩|² using one ancilla qubit; explain WHY it works intuitively (interference on the ancilla encodes the overlap); the punchline formula.",
+    must=["P(ancilla=0) = ½ + ½·|⟨a|b⟩|²"])
+add(id="swap2",kind="textimg",sec=3,kicker="Section 3 · Quantum",title="The Swap Test — walk the circuit, read the result",
+    img={"f":"swap_test_circuit.png","side":"right"},
+    brief="Verbose step-by-step: prepare |a⟩,|b⟩,ancilla|0⟩ → Hadamard ancilla → controlled-SWAP → Hadamard ancilla → measure; similar→P₀ near 1, orthogonal→P₀=½; the power: constant-size circuit measures similarity of d-dimensional states; seed of Lloyd–Mohseni–Rebentrost quantum k-means (2013).")
+add(id="qmeans",kind="table",sec=3,kicker="Section 3 · Quantum",title="Quantum k-means (q-means): assemble the pieces",
+    table=[["","Classical k-means","Quantum q-means"],["Distance","sequential Euclidean","swap-test inner product"],["Feature space","original dimensionality","exponential Hilbert space"],["Scaling in n","strictly linear O(n)","sub-linear / logarithmic*"],["Non-linear","needs heavy Gram matrix","native via SU(2)/ZZ maps"],["Hardware","CPU / GPU","QPU (+ QRAM for max speedup)"]],
+    brief="Verbose left-column narration: same Lloyd's loop, but the assign step uses the swap test on amplitude-encoded points; under ideal QRAM per-distance cost ~O(log(nd)); framework by Kerenidis, Landman, Luongo & Prakash; refined bounds give a quadratic runtime improvement over the best classical δ-k-means. Note the * caveat (QRAM).")
+add(id="qkernel",kind="textimg",sec=3,kicker="Section 3 · Quantum",title="Quantum-kernel clustering — the NISQ-friendly route",
+    img={"f":"kernel_heatmap.png","side":"right"},flowV=["Data x","Quantum feature map |φ(x)⟩","Kernel matrix K (swap test)","Spectral clustering"],
+    brief="Verbose: instead of speeding up k-means, change the similarity to one expensive to fake classically; K(xᵢ,xⱼ)=|⟨φ(xᵢ)|φ(xⱼ)⟩|²; feed K into any kernel method you teach (spectral, kernel k-means); shallow, NISQ-tolerant, runs today; closes the loop with spectral clustering; the heatmap shows the block structure a good kernel exposes.",
+    must=["K(xᵢ,xⱼ) = |⟨φ(xᵢ)|φ(xⱼ)⟩|²"])
+add(id="demo",kind="textimg",sec=3,kicker="Section 3 · Quantum",title="Live demo — k-means fails on the moons; the kernel doesn't",
+    img={"f":"moons_result.png","side":"left"},
+    brief="Verbose: describe qml_clustering_demo.ipynb; two interleaved moons; 2-qubit data-reuploading feature map, kNN-sparsified, fed to SpectralClustering; k-means ARI≈0.48 slices through, quantum-kernel spectral ARI≈0.67 recovers them; 2 qubits, runs on a laptop, no hardware; teaching honesty: curated example where geometry favours the kernel — say so, always benchmark against a strong classical baseline.")
+add(id="nb1",kind="notebook",sec=3,kicker="Section 3 · Quantum · Live notebook",title="The notebook, cell by cell — the unlabelled data",
+    imgs=["nb_cell1.png"],
+    lit=[{"t":"lead","x":"qml_clustering_demo.ipynb — real PennyLane, laptop CPU, no hardware","b":["qml_clustering_demo.ipynb"]},
+         {"t":"b","x":"Cell 1: 120 points shaped as two interleaved moons, standardised","b":["two interleaved moons"]},
+         {"t":"b","x":"True labels kept only to score the result — never used to cluster","b":["never used to cluster"]},
+         {"t":"b","x":"Task: recover the two crescents from similarity alone","b":["similarity alone"]},
+         {"t":"note","x":"Structure must emerge from geometry, not from labels."}])
+add(id="nb2",kind="notebook",sec=3,kicker="Section 3 · Quantum · Live notebook",title="The notebook — a 2-qubit quantum kernel in PennyLane",
+    imgs=["nb_cell2.png","nb_cell3.png"],
+    lit=[{"t":"lead","x":"Cell 2: a 2-qubit angle-encoding feature map defines the kernel","b":["angle-encoding feature map"]},
+         {"t":"b","x":"Map applied to one point, inverse applied to the other","b":["inverse"]},
+         {"t":"b","x":"P(all-zeros) = |⟨φ(x1)|φ(x2)⟩|² — a similarity computed by physics","b":["computed by physics"]},
+         {"t":"b","x":"A point with itself scores 1.0, as it must","b":["scores 1.0"]},
+         {"t":"b","x":"Cell 3: evaluate every pair → the kernel matrix K","b":["kernel matrix K"]},
+         {"t":"note","x":"The heatmap's block structure is what the clustering step reads."}])
+add(id="nb3",kind="notebook",sec=3,kicker="Section 3 · Quantum · Live notebook",title="The notebook — k-means fails; the quantum kernel recovers the moons",
+    imgs=["nb_cell4.png"],
+    lit=[{"t":"lead","x":"Cell 4: the verdict"},
+         {"t":"b","x":"Keep each point's 14 nearest neighbours from the kernel → local graph","b":["14 nearest neighbours"]},
+         {"t":"b","x":"Spectral clustering runs on that graph","b":["Spectral clustering"]},
+         {"t":"b","x":"Classical k-means: ARI = 0.42 — cuts both crescents","b":["ARI = 0.42"]},
+         {"t":"b","x":"Quantum-kernel spectral: ARI = 0.69 — recovers the moons","b":["ARI = 0.69"]},
+         {"t":"b","x":"Two qubits, laptop, no hardware — the win is a richer similarity","b":["richer similarity"]},
+         {"t":"note","x":"Curated geometry favouring the quantum kernel; always benchmark a strong classical baseline."}])
+add(id="ownwork",kind="textimg",sec=3,kicker="Section 3 · Quantum",title="From my own work — VQE portfolios, Qiskit vs PennyLane",
+    img={"f":"vqe_circuit.png","side":"right"},
+    brief="Verbose first-person: Quantum Finance — An Overview (EasyChair 6071, 2021); mapped mean-variance portfolio optimization → QUBO → Ising → solved with a VQE; implemented in BOTH Qiskit and PennyLane (the framework choice this room faces); Qiskit optimal [0 1 0 1]@0.94, PennyLane VQE→[1 0 1]; the bridge: the VQE ansatz (RX/RY+CNOT) is the same species of circuit as today's feature map — optimise it to minimise a Hamiltonian there, evaluate it to measure similarity here.")
+add(id="reality1",kind="textimg",sec=3,kicker="Section 3 · Quantum",title="Reality check — QRAM and dequantization",
+    img={"f":"advantage_quadrant.png","side":"right"},
+    brief="Verbose honest: data loading is the bottleneck — the exponential k-means speedup assumes QRAM, which doesn't exist at scale (state the assumption every time); dequantization (Ewin Tang 2018+) matched several 'exponential' QML speedups classically under the same sampling assumptions; faculty respect this candor.")
+add(id="reality2",kind="cards",sec=3,kicker="Section 3 · Quantum",title="Where the quantum advantage is genuine",
+    cards=[{"title":"NISQ noise & barren plateaus","accent":"magenta"},{"title":"Where the win is real","accent":"teal"},{"title":"The honest one-liner","accent":"blue"}],
+    brief="Cards verbose: (1) NISQ noise → keep circuits shallow (hence shallow kernels), barren plateaus → deep variational maps can have vanishing gradients; (2) genuine win = quantum-native/structured data, small-but-hard kernels, feature generator feeding classical methods; (3) 'Not k-means faster on your CSV — a new kind of similarity you can run now.'")
+
+# ---------------- §4 INDUSTRY + MEGA-SCIENCE ----------------
+add(id="d4",kind="divider",sec=4,num="04",title="Industry & Current Research",accent="magenta",
+    summary="From commercial pilots to the world's largest physics experiments — where quantum clustering runs now.")
+add(id="turning",kind="stats",sec=4,kicker="Section 4 · Industry & Research",title="2025–26: from lab curiosity to commercial pilots",
+    stats=[{"num":"300+","label":"enterprises now engaged in quantum (McKinsey 2026)","accent":"blue"},
+           {"num":"6.3×","label":"jump in start-up investment 2024→2025","accent":"teal"},
+           {"num":"~90%","label":"of that investment to quantum computing","accent":"purple"},
+           {"num":"$4.4B","label":"projected QC revenue by 2028","accent":"magenta"}],
+    brief="Verbose: the discourse shifted from 'if' to modelling 'when' quantum disrupts each sector; the common pattern is high-dimensional unlabelled data where the expensive step is computing similarities — the corner quantum targets; finance/pharma/climate are the vanguard, mega-science runs the hardest versions.")
+add(id="finance",kind="cards",sec=4,kicker="Section 4 · Industry & Research",title="Financial services — the early adopters",
+    cards=[{"title":"Option pricing & risk","accent":"blue"},{"title":"Fraud detection","accent":"teal"},{"title":"Deep hedging","accent":"purple"}],
+    brief="Cards verbose. Option pricing: JPMorgan×IBM, IQAE, quadratic speedup over Monte Carlo (error ε needs 1/ε samples not 1/ε²). Fraud: QSVM with ZZ-feature-maps (IBM Safer Payments/Qiskit), VQC F1 up to 0.88, robust across 5 noise types, hybrid QSVM→classical routing. Deep hedging: JPMorgan×QC Ware, portfolio opt is unsupervised structure-finding on a covariance matrix.")
+add(id="pharma",kind="stats",sec=4,kicker="Section 4 · Industry & Research",title="Pharmaceuticals, healthcare & genomics",
+    stats=[{"num":"97.3%","label":"Dynamic Quantum Clustering of RNA-seq (20,057 genes) → 90-gene panel, no labels","accent":"teal"},
+           {"num":"90.9%","label":"DQC concordance with clinical glioma outcomes","accent":"purple"},
+           {"num":"8-qubit","label":"Algorithmiq × Quantum Circuits dual-rail QPU for enzyme pharmacokinetics","accent":"blue"},
+           {"num":"de novo","label":"structure-based drug design — 'correct first, then scale'","accent":"magenta"}],
+    brief="Verbose: genomics is the ultimate clustering challenge — phenotypic significance among tens of thousands of correlated genes, no preset labels; DQC organised bulk RNA-seq into clusters mirroring the LGG→GBM disease continuum, then a 90-gene panel lifted accuracy to 97.3%; biochemistry is natively quantum, dual-rail qubits detect errors as photon-loss erasures and post-select.")
+add(id="climate",kind="cards",sec=4,kicker="Section 4 · Industry & Research",title="Sustainability, climate & energy",
+    cards=[{"title":"Carbon capture (MOFs)","accent":"teal"},{"title":"Catalysis","accent":"blue"},{"title":"Grid & sensing","accent":"purple"}],
+    brief="Cards verbose. MOFs: Quantinuum×TotalEnergies, quantum fragmentation models CO₂ binding in Metal-Organic Frameworks, PrISMa tool. Catalysis: simulate N₂ dissociation on platinum, ammonia catalysts ≈2% of global CO₂, push efficiency to ~100%. Grid: quantum k-means (angle+amplitude) on German grid +67.8% balanced accuracy; cold-atom gravity sensors monitor CO₂ storage plumes.")
+add(id="megaintro",kind="statement",sec=4,accent="ink",title="The biggest experiments ever built are unsupervised-learning machines.",
+    img={"f":"data_deluge.png","side":"right"},
+    brief="Verbose (white text on dark): SKA ~8 Tbit/s → ~8.5 EB archive; HL-LHC (2029–42) >10× data, exabytes, ~50–100× compute; DUNE 30–60 PB/yr of 3D argon images; LIGO reads a 4-km ruler perturbed by 10⁻¹⁹ m; all of it extreme-dimensional, mostly UNLABELLED — clustering/anomaly-detection/unsupervised-representation territory.")
+add(id="ligo1",kind="textimg",sec=4,kicker="Section 4 · Mega-Science",title="LIGO — squeezed light beats the quantum limit",
+    img={"f":"ligo_squeeze.png","side":"right"},
+    brief="Verbose: frequency-dependent squeezing (A+) injects engineered quantum vacuum via new 300 m filter cavities; 4.0 dB (Hanford)/5.8 dB (Livingston) quantum-noise reduction; extends range 15–18% → up to +65% detection rate in O4; beats the standard quantum limit across tens of Hz to kHz.",
+    must=["4.0 dB / 5.8 dB","+65% detection rate"])
+add(id="ligo2",kind="text",sec=4,kicker="Section 4 · Mega-Science",title="LIGO — ML glitch clustering, quantum anomaly detection, LIGO-India",
+    brief="Verbose: Gravity Spy (citizen science + CNN) sorts detector glitches into 23 classes, >30k volunteers, >7M classifications, new multi-view CNN 94.1% accuracy / AUC 0.965 — unsupervised-flavoured glitch clustering; quantum ML 'quantum variational rewinding' treats readings as anomalies in background noise, linear-time vs quasilinear matched filtering; LIGO-India broke ground 23 Apr 2026 (Aundha, Maharashtra), two 4-km arms, ~2030, ≈₹2,600 cr.")
+add(id="cern",kind="textimg",sec=4,kicker="Section 4 · Mega-Science",title="CERN / LHC — quantum clustering of collision events",
+    img={"f":"cern_clustering.png","side":"right"},
+    brief="Verbose: CERN Quantum Technology Initiative (est. 2020); the headline unsupervised WIN — quantum anomaly detection in the LHC latent space (QK-means/QK-medians + quantum kernel on autoencoder features) found a regime where the quantum model significantly outperforms classical on real hardware (Commun. Phys. 7, 334, 2024); track reconstruction as a QUBO on a D-Wave annealer (33 qubits, ~500 tracks), annealing-inspired classical then ~4-orders speed-up; QSVM for Higgs (ttH) matched classical up to 20 qubits/50k events; HL-LHC storage enters the exabyte regime, compute ~50–100× today's.")
+add(id="iter",kind="textimg",sec=4,kicker="Section 4 · Mega-Science",title="ITER & fusion — clustering plasma states, dodging disruptions",
+    img={"f":"iter_plasma.png","side":"right"},
+    brief="Verbose: DeepMind×EPFL (Nature 2022) deep-RL directly controlled a tokamak's magnetic coils — first RL magnetic control on a real machine; DIII-D (Nature 2024) RL controller forecasts tearing instabilities up to 300 ms ahead and steers actuators to stay stable; cross-machine disruption prediction (FRNN, Nature 2019) trained on DIII-D+JET predicts on an untrained machine — crucial for ITER's ~30 ms warning; unsupervised classification separates L-mode/H-mode/disruptive regimes; quantum: algorithms for plasma turbulence/transport, NV-center diamond magnetometry (to ~1.2 T) for radiation-hard diagnostics; ITER new baseline Q≥10 by 2044.")
+add(id="skadune",kind="cards",sec=4,kicker="Section 4 · Mega-Science",title="SKA & DUNE — label-free pipelines on petascale data",
+    cards=[{"title":"SKA — radio astronomy","accent":"blue"},{"title":"DUNE — neutrinos","accent":"teal"}],
+    brief="Two big cards, verbose. SKA: ~8 Tbit/s to correlators, >700 PB/yr → ~8.5 EB, >100× current internet traffic; convolutional-autoencoder + nearest-latent-neighbour flags RFI without labels, DBSCAN groups false positives; quantum-kernel SVM for galaxy morphology ROC AUC 0.946 (at parity); first image Mar 2025: 85 galaxies with <1% of antennas. DUNE: 4 LArTPC modules, 70 kt, ~1.5 km underground, 30–60 PB/yr; each event a 3D image → CNN/graph-net reconstruction, clustering separates overlapping tracks/showers; Neural Projected Quantum Kernels + QCNN classify track vs cascade ~80% on IBM 127-qubit hardware (parity); cryostat steel lowered 2026.")
+add(id="sensing",kind="textimg",sec=4,kicker="Section 4 · Mega-Science",title="Quantum sensing — a new class of instruments (and data)",
+    img={"f":"sensing_sensitivity.png","side":"right"},
+    brief="Verbose: cold-atom gravimeter 2.2 µGal·Hz⁻¹ᐟ², Birmingham's gradiometer made the first outdoor detection of a buried tunnel (~10× faster surveys); optical clocks 8.1×10⁻¹⁹ systematic uncertainty (cm-level chronometric levelling, tests of relativity); SERF magnetometers ~4.5 fT·Hz⁻¹ᐟ² surpassing SQUIDs; km-scale atom interferometers MAGIS-100/AION/AEDGE hunt GW & dark matter in the mid-band between LISA and LIGO.")
+add(id="megasyn",kind="statement",sec=4,accent="deep",title="Mega-science pattern: extreme unlabelled data = clustering's home turf.",
+    brief="Verbose (dark): mega-science emits extreme-dimensional unlabelled data — clustering's home turf; quantum helps from BOTH ends: kernels/annealers embed the data (mostly parity today, but a real win for CERN's unsupervised latent-space clustering) and quantum sensors generate a new class of ultra-precise measurements that themselves become unlabelled streams; honest caveat: most quantum-ML results are at parity, not yet superior.")
+
+# ---------------- §5 INDIA ----------------
+add(id="d5",kind="divider",sec=5,num="05",title="The Indian Landscape",accent="deep",
+    summary="India is building the hardware. This room builds the people who will use it.")
+add(id="nqm1",kind="textimg",sec=5,kicker="Section 5 · India",title="The National Quantum Mission",
+    img={"f":"nqm_targets.png","side":"right"},
+    brief="Verbose: ₹6,003.65 crore approved 19 Apr 2023, 2023–2031 (~$0.73B); staged compute 20–50 (yr3)→50–100 (yr5)→50–1000 (yr8), superconducting+photonic; 152 researchers/43 institutions/17 states — a national footprint relevant to every college in the room.")
+add(id="nqm2",kind="cards",sec=5,kicker="Section 5 · India",title="Four thematic hubs — hub-and-spoke",
+    cards=[{"title":"Computing — IISc Bengaluru","accent":"blue"},{"title":"Communication — IIT Madras + C-DOT","accent":"teal"},{"title":"Sensing & Metrology — IIT Bombay","accent":"purple"},{"title":"Materials & Devices — IIT Delhi","accent":"magenta"}],
+    brief="Each hub card: 2-3 verbose lines on its mandate (indigenous processors & the 20→1000 qubit targets; QKD/secure networks/satellite links; magnetometers/atomic clocks/navigation; qubit materials/cryo devices). Note each is a Section-8 company, operational since Oct 2024.")
+add(id="eco",kind="cards",sec=5,kicker="Section 5 · India",title="Indigenous ecosystem — shipping, not slideware",
+    cards=[{"title":"QpiAI (Bengaluru)","accent":"blue"},{"title":"Amaravati Quantum Valley","accent":"teal"},{"title":"Academic + startups","accent":"purple"}],
+    brief="Cards verbose. QpiAI: Indus 25-qubit (Apr 2025), Kaveri 64-qubit (Nov 2025, commercial late 2026), $65.6M raised, roadmap 1000 qubits by 2030. Amaravati: launched 7 Feb 2026 (IBM+TCS+Andhra Pradesh), IBM Quantum System Two 156-qubit Heron India's largest, commissioning ~Sept 2026, L&T infrastructure. Academic: IISER Pune 20-qubit ion-trap end-2026; ~1000 km quantum comms (QNu Labs ARMOS QKD, Apr 2026); 8→17 NQM startups (QNu, Dimira, Quanastra, Prenishq…). Also national PQC roadmap Feb 2026.")
+add(id="funding",kind="textimg",sec=5,kicker="Section 5 · India",title="The honest funding number — and India's real edge",
+    img={"f":"funding_bars.png","side":"left"},
+    brief="Verbose: India's ~$0.73B/8yr sits against China ~$15B, US $2.5B+, UK £2.5B/10yr, Germany ~€2–3B; India is funded to compete selectively, not to outspend anyone; its edge is algorithms, software and a vast talent pool — the value-capturing layer; the winning move is the algorithm-and-application layer, which is exactly what QML/clustering/quantum-vision are; faculty respect candor.")
+add(id="viksit",kind="textimg",sec=5,kicker="Section 5 · India",title="Quantum is a pillar of Viksit Bharat 2047",
+    img={"f":None,"side":"right"},cards=[{"title":"The gap to close (be honest)","accent":"deep"}],
+    brief="Verbose left column: Viksit Bharat@2047 = fully developed India by the centenary; India already took Aadhaar/UPI/Digital India to population scale (proven ability to run frontier tech at planet scale); the next leap 'world's back office'→'world's innovation engine' needs deep R&D and sovereign tech ecosystems; a coordinated stack NQM+IndiaAI+Supercomputing+Semicon India+ANRF (₹1-lakh-crore RDI fund); sovereignty = secure comms & indigenous hardware, not renting foreign quantum cloud. Card 'gap to close': R&D toward 2–3% of GDP by 2047, reverse brain drain, high-tech jobs; every faculty member is a lever; 'Viksit Bharat 2047 will be built by the cohort in your classrooms right now.'")
+
+# ---------------- §6 FUTURE ----------------
+add(id="d6",kind="divider",sec=6,num="06",title="The Future",accent="ink",
+    summary="The single largest bottleneck globally is people who understand this stack. You are the lever.")
+add(id="future1",kind="cards",sec=6,kicker="Section 6 · The Future",title="Where the field goes — fault-tolerance & AI × Quantum",
+    cards=[{"title":"Fault-tolerant roadmaps","accent":"blue"},{"title":"AI × Quantum","accent":"teal"},{"title":"The data-loading frontier","accent":"purple"}],
+    brief="Cards verbose. Fault-tolerance: IBM Starling 2029 (200 logical qubits, 100M gates), Blue Jay → 2000 logical; Google useful error-corrected ~2029, ~1M physical; Quantinuum Helios→Apollo 2029; PsiQuantum photonic million-qubit. AI×Quantum: AlphaQubit (DeepMind Nature 2024) neural decoder 6–30% better, AI decoders rescue NISQ, the fields have merged. Data-loading: QRAM is the Achilles heel; Zhejiang first superconducting bucket-brigade QRAM demo (Jun 2026, 4/8-bit); progress here unlocks the exponential speedups.")
+add(id="talent",kind="textimg",sec=6,kicker="Section 6 · The Future",title="The bottleneck is people — you are the lever",
+    img={"f":"talent_gap.png","side":"left"},cards=[{"title":"Call to action for faculty","accent":"blue"}],
+    brief="Verbose: the single largest global bottleneck is people who understand the stack; ~250k roles by 2030, ~840k by 2035, tiny qualified supply; every course you seed and student you point at QML is India's comparative advantage compounding. Card CTA: clustering/kernels/swap-test are teachable from first principles no hardware; add one QML module to an existing ML course; use the notebooks (any laptop, CPU); point strong students at NQM hubs and QpiAI/BosonQ/startup internships.")
+add(id="thanks",kind="thanks",sec=6,title="Thank you.",
+    brief="Verbose closing line + contact block: Archit Srivastava, Founder AiQyaM; email architsrivastava3115@gmail.com; Google Scholar NbPUdWMAAAAJ; notebooks run on any laptop; invite them to bring students to the next cohort.")
+
+out=os.path.join(os.path.dirname(__file__),"skeleton.json")
+json.dump(S,open(out,"w"),indent=1,ensure_ascii=False)
+print(f"wrote {out}  ({len(S)} slides)")
+for sec in range(7):
+    print(f"  sec {sec}: {sum(1 for s in S if s['sec']==sec)} slides")
